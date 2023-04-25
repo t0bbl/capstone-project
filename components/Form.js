@@ -7,13 +7,11 @@ const FormContainer = styled.form`
 
 const Input = styled.input`
   padding: 0.5rem;
-  font-size: inherit;
   border: 3px solid black;
   border-radius: 0.5rem;
 `;
 
 const Textarea = styled.textarea`
-  font-family: inherit;
   border: 3px solid black;
   border-radius: 0.5rem;
   padding: 0.5rem;
