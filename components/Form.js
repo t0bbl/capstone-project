@@ -25,7 +25,8 @@ const Input = styled.input`
   }
   &:focus {
     outline: none;
-    color: purple;
+    color: indigo;
+    box-shadow: 2px 2px 5px indigo;
   }
 `;
 
