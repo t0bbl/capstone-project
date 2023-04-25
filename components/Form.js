@@ -6,6 +6,7 @@ const FormContainer = styled.form`
   color: teal;
   display: flex;
   flex-direction: column;
+  margin: 50% 0%;
 `;
 
 const Input = styled.input`
