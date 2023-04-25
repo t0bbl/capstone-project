@@ -6,10 +6,10 @@ export const StyledButton = styled.button`
   right: 0.5rem;
   background-color: teal;
   padding: 0.8rem;
-  border-radius: 0.6rem;
-  color: black;
+  color: yellow;
   text-decoration: none;
   font-weight: bold;
   border: none;
   font-size: inherit;
+  transform: skew(10deg);
 `;

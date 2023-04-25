@@ -1,20 +1,32 @@
 import styled from "styled-components";
 
 const FormContainer = styled.form`
-  display: grid;
   gap: 0.5rem;
   background-color: yellow;
   color: teal;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Input = styled.input`
   padding: 0.5rem;
   border: 3px solid black;
-  border-radius: 0.5rem;
-  background-color: yellow;
-  color: teal;
+  border-radius: 0.1rem;
+  background-color: teal;
+  color: yellow;
   width: 90%;
+  margin: 0 5%;
   text-align: center;
+  border: 2px solid teal;
+  transform: skew(10deg);
+
+  ::placeholder {
+    color: yellow;
+  }
+  &:focus {
+    outline: none;
+    color: purple;
+  }
 `;
 
 export default function Form() {
