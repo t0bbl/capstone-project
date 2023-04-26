@@ -2,5 +2,7 @@ import styled from "styled-components";
 
 export const StyledText = styled.p`
   color: indigo;
-  margin: 20% 5%;
+  text-align: center;
+  margin: 10vw 2vw;
+  /* margin: 20% 5%; */
 `;
