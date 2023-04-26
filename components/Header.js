@@ -15,8 +15,6 @@ const Headline = styled.header`
 
 export default function Header() {
   return (
-    <>
       <Headline>AiMySh!rtUp</Headline>
-    </>
   );
 }
