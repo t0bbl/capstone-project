@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-const Head = styled.p`
+const Headline = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,8 +15,8 @@ const Head = styled.p`
 
 export default function Header() {
   return (
-    <div>
-      <Head>AiMySh!rtUp</Head>
-    </div>
+    <>
+      <Headline>AiMySh!rtUp</Headline>
+    </>
   );
 }

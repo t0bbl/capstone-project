@@ -3,19 +3,14 @@ import { StyledButton } from "@/components/StyledButton";
 import { useRouter } from "next/router";
 
 export default function Form() {
+  const router = useRouter();
+
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    handleClick(event);
-  }
-
-  const router = useRouter();
-
-  const handleClick = (event) => {
-    event.preventDefault();
     router.push("https://i.imgur.com/7KpCS0Y.jpg");
-  };
+  }
 
   return (
     <FormContainer onSubmit={handleSubmit}>
@@ -24,8 +19,6 @@ export default function Form() {
         name="firstKeyword"
         type="text"
         placeholder="FIRST"
-        oninvalid="this.setCustomValidity('TYPE HERE IDIOT')"
-        oninput="setCustomValidity('')"
         required
       />
       <Input
