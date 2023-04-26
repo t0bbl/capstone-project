@@ -1,33 +1,42 @@
 import Image from "next/image.js";
 import styled from "styled-components";
+import { StyledA } from "./StyledLink";
 
 export default function ChooseFourPics() {
   return (
     <FourPicsContainer>
-      <FourPics
-        alt="image number 1"
-        src="https://i.imgur.com/SglfvOg.jpeg/"
-        width="400"
-        height="400"
-      />
-      <FourPics
-        alt="image number 2"
-        src="https://i.imgur.com/SglfvOg.jpeg/"
-        width="400"
-        height="400"
-      />
-      <FourPics
-        alt="image number 3"
-        src="https://i.imgur.com/SglfvOg.jpeg/"
-        width="400"
-        height="400"
-      />
-      <FourPics
-        alt="image number 4"
-        src="https://i.imgur.com/SglfvOg.jpeg/"
-        width="400"
-        height="400"
-      />
+      <StyledA href="https://i.imgur.com/SglfvOg.jpeg/">
+        <FourPics
+          alt="image number 1"
+          src="https://i.imgur.com/SglfvOg.jpeg/"
+          width="400"
+          height="400"
+        />
+      </StyledA>
+      <StyledA href="https://i.imgur.com/SglfvOg.jpeg/">
+        <FourPics
+          alt="image number 2"
+          src="https://i.imgur.com/SglfvOg.jpeg/"
+          width="400"
+          height="400"
+        />
+      </StyledA>
+      <StyledA href="https://i.imgur.com/SglfvOg.jpeg/">
+        <FourPics
+          alt="image number 3"
+          src="https://i.imgur.com/SglfvOg.jpeg/"
+          width="400"
+          height="400"
+        />
+      </StyledA>
+      <StyledA href="https://i.imgur.com/SglfvOg.jpeg/">
+        <FourPics
+          alt="image number 4"
+          src="https://i.imgur.com/SglfvOg.jpeg/"
+          width="400"
+          height="400"
+        />
+      </StyledA>
     </FourPicsContainer>
   );
 }
