@@ -16,7 +16,7 @@ const Headline = styled.header`
 
 export default function Header() {
   return (
-    <StyledA href="./">
+    <StyledA href={"/"}>
       <Headline>AiMySh!rtUp</Headline>
     </StyledA>
   );

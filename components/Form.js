@@ -9,7 +9,7 @@ export default function Form() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    router.push("https://i.imgur.com/7KpCS0Y.jpg");
+    router.push("/ChooseFour/index.js");
   }
 
   return (
