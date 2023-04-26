@@ -4,7 +4,7 @@ const introText =
   "Give us three Keywords for our AI to SH!T YOUR AI UP. or sth, idunnu, whoami";
 
 const Intro = styled.p`
-  color: teal;
+  color: indigo;
   margin: 20% 5%;
 `;
 

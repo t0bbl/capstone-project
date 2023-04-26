@@ -1,4 +1,55 @@
 import styled from "styled-components";
+import { StyledButton } from "@/components/StyledButton";
+import { useRouter } from "next/router";
+
+export default function Form() {
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData);
+    handleClick(event);
+  }
+
+  const router = useRouter();
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    router.push("https://i.imgur.com/7KpCS0Y.jpg");
+  };
+
+  return (
+    <FormContainer onSubmit={handleSubmit}>
+      <Input
+        id="firstKeyword"
+        name="firstKeyword"
+        type="text"
+        placeholder="FIRST"
+        oninvalid="this.setCustomValidity('TYPE HERE IDIOT')"
+        oninput="setCustomValidity('')"
+        required
+      />
+      <Input
+        id="secondKeyword"
+        name="secondKeyword"
+        type="text"
+        placeholder="SECOND"
+        oninvalid="this.setCustomValidity('TYPE HERE IDIOT')"
+        oninput="setCustomValidity('')"
+        required
+      />
+      <Input
+        id="thirdKeyword"
+        name="thirdKeyword"
+        type="text"
+        placeholder="THIRD"
+        oninvalid="this.setCustomValidity('TYPE HERE IDIOT')"
+        oninput="setCustomValidity('')"
+        required
+      />
+      <StyledButton type="submit">Generate</StyledButton>
+    </FormContainer>
+  );
+}
 
 const FormContainer = styled.form`
   gap: 0.5rem;
@@ -13,45 +64,22 @@ const Input = styled.input`
   padding: 0.5rem;
   border: 3px solid black;
   border-radius: 0.1rem;
-  background-color: teal;
+  background-image: linear-gradient(135deg, teal 40%, indigo);
   color: yellow;
   width: 90%;
   margin: 0 5%;
   text-align: center;
-  border: 2px solid teal;
+  border: none;
   transform: skew(10deg);
 
   ::placeholder {
     color: yellow;
+    opacity: 0.5;
   }
   &:focus {
     outline: none;
-    color: indigo;
+    color: yellow;
+
     box-shadow: 2px 2px 5px indigo;
   }
 `;
-
-export default function Form() {
-  return (
-    <FormContainer>
-      <Input
-        id="firstKeyword"
-        name="firstKeyword"
-        type="text"
-        placeholder="FIRST"
-      />
-      <Input
-        id="secondKeyword"
-        name="secondKeyword"
-        type="text"
-        placeholder="SECOND"
-      />
-      <Input
-        id="thirdKeyword"
-        name="thirdKeyword"
-        type="text"
-        placeholder="THIRD"
-      />
-    </FormContainer>
-  );
-}

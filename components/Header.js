@@ -9,8 +9,8 @@ const Head = styled.p`
   font-size: 1.5rem;
   margin: 0;
   padding: 1rem 0rem;
-  color: teal;
-  background-color: yellow;
+  color: yellow;
+  background-image: linear-gradient(135deg, teal 40%, indigo);
 `;
 
 export default function Header() {
