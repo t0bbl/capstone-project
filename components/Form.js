@@ -26,8 +26,6 @@ export default function Form() {
         name="secondKeyword"
         type="text"
         placeholder="SECOND"
-        oninvalid="this.setCustomValidity('TYPE HERE IDIOT')"
-        oninput="setCustomValidity('')"
         required
       />
       <Input
@@ -35,8 +33,6 @@ export default function Form() {
         name="thirdKeyword"
         type="text"
         placeholder="THIRD"
-        oninvalid="this.setCustomValidity('TYPE HERE IDIOT')"
-        oninput="setCustomValidity('')"
         required
       />
       <StyledButton type="submit">Generate</StyledButton>
