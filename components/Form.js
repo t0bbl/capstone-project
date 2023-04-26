@@ -35,7 +35,7 @@ export default function Form() {
         placeholder="THIRD"
         required
       />
-      <StyledButton type="submit">Generate</StyledButton>
+      <StyledButton type="submit"> Generate </StyledButton>
     </FormContainer>
   );
 }
