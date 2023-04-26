@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { StyledButton } from "@/components/StyledButton";
+import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 
 export default function Form() {

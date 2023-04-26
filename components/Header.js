@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { StyledA } from "./StyledLink";
 
 const Headline = styled.header`
   display: flex;
@@ -15,6 +16,8 @@ const Headline = styled.header`
 
 export default function Header() {
   return (
+    <StyledA href="./">
       <Headline>AiMySh!rtUp</Headline>
+    </StyledA>
   );
 }
