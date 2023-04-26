@@ -1,12 +1,12 @@
 import Header from "../components/Header";
 import Form from "../components/Form";
-import IntroText from "../components/IntroText";
+import Text, { texts } from "../components/Text";
 
 export default function HomePage() {
   return (
     <>
       <Header />
-      <IntroText />
+      <Text texts={texts.intro} />
       <Form />
     </>
   );
