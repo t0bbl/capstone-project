@@ -1,13 +1,13 @@
 import Header from "../../components/Header";
 import Text, { texts } from "@/components/Text";
-import ChooseFourPics from "@/components/ChooseFourPics";
+import ChooseFourVariations from "./[imageID]";
 
 export default function ChooseFour() {
   return (
     <>
       <Header />
       <Text texts={texts.ChooseFourIntro} />
-      <ChooseFourPics />
+      <ChooseFourVariations />
       <Text texts={texts.ChooseFourBottom} />
     </>
   );

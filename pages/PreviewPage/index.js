@@ -10,10 +10,12 @@ const imageName = "8nUXl6s.jpeg";
 
 export default function PreviewPage() {
   const router = useRouter();
+  const imageID = "8nUXl6s";
+  const { slug } = router.query;
 
   function handleVariations(event) {
     event.preventDefault();
-    router.push(event.target.value);
+    router.push(`../Variations/${imageID}`);
   }
 
   const downloadImage = () => {
