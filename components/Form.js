@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { StyledButton } from "@/components/StyledButton";
+import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 
 export default function Form() {
@@ -9,7 +9,7 @@ export default function Form() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    router.push("https://i.imgur.com/7KpCS0Y.jpg");
+    router.push("/ChooseFour/");
   }
 
   return (
