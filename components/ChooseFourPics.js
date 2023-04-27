@@ -5,10 +5,10 @@ import { StyledA } from "./StyledLink";
 export default function ChooseFourPics() {
   return (
     <FourPicsContainer>
-      <StyledA href="https://i.imgur.com/SglfvOg.jpeg/">
+      <StyledA href="/PreviewPage/">
         <FourPics
           alt="image number 1"
-          src="https://i.imgur.com/SglfvOg.jpeg/"
+          src="https://i.imgur.com/8nUXl6s.jpeg/"
           width="400"
           height="400"
         />
@@ -21,18 +21,18 @@ export default function ChooseFourPics() {
           height="400"
         />
       </StyledA>
-      <StyledA href="https://i.imgur.com/SglfvOg.jpeg/">
+      <StyledA href="https://i.imgur.com/rTEFFzZ.webp?maxwidth=1520&fidelity=grand/">
         <FourPics
           alt="image number 3"
-          src="https://i.imgur.com/SglfvOg.jpeg/"
+          src="https://i.imgur.com/rTEFFzZ.webp?maxwidth=1520&fidelity=grand/"
           width="400"
           height="400"
         />
       </StyledA>
-      <StyledA href="https://i.imgur.com/SglfvOg.jpeg/">
+      <StyledA href="https://i.imgur.com/SME5yCA.jpeg/">
         <FourPics
           alt="image number 4"
-          src="https://i.imgur.com/SglfvOg.jpeg/"
+          src="https://i.imgur.com/SME5yCA.jpeg/"
           width="400"
           height="400"
         />

@@ -1,4 +1,4 @@
-import StyledImage from "./StyledImage";
+import { StyledImage } from "./StyledImage";
 
 export default function PreviewPicture() {
   return (
