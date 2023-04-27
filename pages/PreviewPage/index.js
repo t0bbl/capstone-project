@@ -17,8 +17,12 @@ export default function PreviewPage() {
   }
 
   const downloadImage = () => {
-    saveAs(imageSrc, imageName); // Put your image url here.
+    saveAs(imageSrc, imageName);
   };
+
+  function handlePrint() {
+    alert("you printed your Shirt!");
+  }
 
   return (
     <>
@@ -38,7 +42,7 @@ export default function PreviewPage() {
         <StyledButton type="button" value="/Saved/" onClick={downloadImage}>
           SAVE
         </StyledButton>
-        <StyledButton type="button" value="/Print/" onClick={handleClick}>
+        <StyledButton type="button" value="/Print/" onClick={handlePrint}>
           PRINT
         </StyledButton>
       </Container>
