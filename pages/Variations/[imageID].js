@@ -26,7 +26,7 @@ export default function ChooseFourVariations() {
       <StyledA href="https://i.imgur.com/SglfvOg.jpeg/">
         <FourPics
           alt="image number 2"
-          src="https://i.imgur.com/SglfvOg.jpeg/"
+          src="https://i.imgur.com/8nUXl6s.jpeg/"
           width="400"
           height="400"
         />
@@ -34,7 +34,7 @@ export default function ChooseFourVariations() {
       <StyledA href="https://i.imgur.com/rTEFFzZ.webp?maxwidth=1520&fidelity=grand/">
         <FourPics
           alt="image number 3"
-          src="https://i.imgur.com/rTEFFzZ.webp?maxwidth=1520&fidelity=grand/"
+          src="https://i.imgur.com/8nUXl6s.jpeg/"
           width="400"
           height="400"
         />
@@ -42,7 +42,7 @@ export default function ChooseFourVariations() {
       <StyledA href="https://i.imgur.com/SME5yCA.jpeg/">
         <FourPics
           alt="image number 4"
-          src="https://i.imgur.com/SME5yCA.jpeg/"
+          src="https://i.imgur.com/8nUXl6s.jpeg/"
           width="400"
           height="400"
         />
