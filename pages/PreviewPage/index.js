@@ -11,7 +11,7 @@ const imageName = "8nUXl6s.jpeg";
 export default function PreviewPage() {
   const router = useRouter();
 
-  function handleClick(event) {
+  function handleVariations(event) {
     event.preventDefault();
     router.push(event.target.value);
   }
@@ -31,9 +31,9 @@ export default function PreviewPage() {
         <PreviewPicture imageSrc={imageSrc} imageName={imageName} />
         <StyledButton
           type="button"
-          value="/ChooseFour/"
+          value="/Variations/"
           className="variations"
-          onClick={handleClick}
+          onClick={handleVariations}
         >
           Give me Variations!
         </StyledButton>
