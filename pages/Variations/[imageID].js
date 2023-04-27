@@ -17,7 +17,7 @@ export default function ChooseFourVariations() {
     <FourPicsContainer>
       <StyledA href="/PreviewPage/">
         <FourPics
-          alt="image number 1"
+          alt="image  number 1"
           src="https://i.imgur.com/8nUXl6s.jpeg/"
           width="400"
           height="400"
