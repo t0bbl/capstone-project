@@ -1,5 +1,4 @@
 import { StyledText } from "./StyledText";
-import { useState } from "react";
 
 export const texts = {
   intro:

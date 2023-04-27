@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Header from "../../components/Header";
 import PreviewPicture from "../../components/PreviewPicture";
 import { saveAs } from "file-saver";
+import { css } from "styled-components";
 
 const imageSrc = "https://i.imgur.com/8nUXl6s.jpeg/";
 const imageName = "8nUXl6s.jpeg";
@@ -11,11 +12,10 @@ const imageName = "8nUXl6s.jpeg";
 export default function PreviewPage() {
   const router = useRouter();
   const imageID = "8nUXl6s";
-  const { slug } = router.query;
 
   function handleVariations(event) {
     event.preventDefault();
-    router.push(`../Variations/${imageID}`);
+    router.push(`/Variations/${imageID}`);
   }
 
   const downloadImage = () => {
@@ -31,20 +31,15 @@ export default function PreviewPage() {
       <Header />
       <Container>
         <PreviewPicture imageSrc={imageSrc} imageName={imageName} />
-        <StyledButton
-          type="button"
-          value="/Variations/"
-          className="variations"
-          onClick={handleVariations}
-        >
+        <StyledButton type="button" onClick={handleVariations} center>
           Give me Variations!
         </StyledButton>
       </Container>
-      <Container className="bottomButtons">
-        <StyledButton type="button" value="/Saved/" onClick={downloadImage}>
+      <Container bottomButtons>
+        <StyledButton type="button" onClick={downloadImage}>
           SAVE
         </StyledButton>
-        <StyledButton type="button" value="/Print/" onClick={handlePrint}>
+        <StyledButton type="button" onClick={handlePrint}>
           PRINT
         </StyledButton>
       </Container>
@@ -59,10 +54,13 @@ const Container = styled.div`
   align-items: center;
   margin-top: 10vw;
   gap: 20vw;
-  &.bottomButtons {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-  }
+
+  ${(props) =>
+    props.bottomButtons &&
+    css`
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: center;
+    `}
 `;
