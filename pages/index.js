@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import Form from "../components/Form";
-import Text, { texts } from "../components/Text";
+import Text from "../components/Text";
+import { texts } from "../data/text";
 
 export default function HomePage() {
   return (

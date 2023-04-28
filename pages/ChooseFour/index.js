@@ -1,5 +1,6 @@
 import Header from "../../components/Header";
-import Text, { texts } from "@/components/Text";
+import Text from "@/components/Text";
+import { texts } from "../../data/text";
 import FourPicsTable from "@/components/ChooseFourPics";
 
 export default function ChooseFour() {
