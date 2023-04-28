@@ -7,7 +7,7 @@ export default function FourPicsTable() {
     <FourPicsContainer>
       <StyledA href="/PreviewPage/">
         <StyledImage
-          OneOfFourPictures
+          oneOfFourPictures
           alt="image number 1"
           src="https://i.imgur.com/8nUXl6s.jpeg/"
           width="400"
@@ -16,7 +16,7 @@ export default function FourPicsTable() {
       </StyledA>
       <StyledA href="/PreviewPage/">
         <StyledImage
-          OneOfFourPictures
+          oneOfFourPictures
           alt="image number 2"
           src="https://i.imgur.com/SglfvOg.jpeg/"
           width="400"
@@ -25,7 +25,7 @@ export default function FourPicsTable() {
       </StyledA>
       <StyledA href="/PreviewPage/">
         <StyledImage
-          OneOfFourPictures
+          oneOfFourPictures
           alt="image number 3"
           src="https://i.imgur.com/rTEFFzZ.webp?maxwidth=1520&fidelity=grand/"
           width="400"
@@ -34,7 +34,7 @@ export default function FourPicsTable() {
       </StyledA>
       <StyledA href="/PreviewPage/">
         <StyledImage
-          OneOfFourPictures
+          oneOfFourPictures
           alt="image number 4"
           src="https://i.imgur.com/SME5yCA.jpeg/"
           width="400"

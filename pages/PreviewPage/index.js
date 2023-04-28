@@ -13,8 +13,7 @@ export default function PreviewPage() {
   const router = useRouter();
   const imageID = "8nUXl6s";
 
-  function handleVariations(event) {
-    event.preventDefault();
+  function handleVariations() {
     router.push(`/Variations/${imageID}`);
   }
 

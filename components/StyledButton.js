@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { css } from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledButton = styled.button`
   background-image: linear-gradient(135deg, teal 40%, indigo);
