@@ -1,6 +1,6 @@
 import Header from "../../components/Header";
 import Text from "@/components/Text";
-import ChooseFourVariations from "./[imageID]";
+import FourPicsTable from "@/components/FourPicsTable";
 import { texts } from "../../data/text";
 
 export default function ChooseFour() {
@@ -8,7 +8,7 @@ export default function ChooseFour() {
     <>
       <Header />
       <Text texts={texts.ChooseFourIntro} />
-      <ChooseFourVariations />
+      <FourPicsTable />
       <Text texts={texts.ChooseFourBottom} />
     </>
   );
