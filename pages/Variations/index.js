@@ -1,6 +1,7 @@
 import Header from "../../components/Header";
-import Text, { texts } from "@/components/Text";
+import Text from "@/components/Text";
 import ChooseFourVariations from "./[imageID]";
+import { texts } from "../../data/text";
 
 export default function ChooseFour() {
   return (
