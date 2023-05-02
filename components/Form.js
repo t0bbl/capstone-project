@@ -2,22 +2,22 @@ import styled from "styled-components";
 import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 import crypto from "crypto";
-import useSWRMutation from "swr";
+import useSWRMutation from "swr/mutation";
+
+async function sendRequest(url, { arg }) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(arg),
+  });
+
+  const { status } = await response.json();
+  console.log(status);
+}
 
 export default function Form() {
-  async function sendRequest(url, { arg }) {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(arg),
-    });
-
-    const { status } = await response.json();
-    console.log(status);
-  }
-
   const { trigger } = useSWRMutation("/API/shirts/index.js", sendRequest);
   const router = useRouter();
 
@@ -27,7 +27,7 @@ export default function Form() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const shirtData = Object.fromEntries(formData);
-    trigger(shirtData);
+    trigger("/API/shirts/index.js", shirtData);
     router.push("/ChooseFour/${id}");
   }
 
