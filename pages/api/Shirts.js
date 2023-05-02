@@ -1,5 +1,5 @@
-import dbConnect from "../../db/connect";
-import Shirt from "../../db/models/Shirt";
+import dbConnect from "../../../db/connect";
+import Shirt from "../../../db/models/Shirt";
 
 export default async function handler(req, res) {
   await dbConnect();

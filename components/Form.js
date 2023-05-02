@@ -13,22 +13,24 @@ async function sendRequest(url, { arg }) {
     body: JSON.stringify(arg),
   });
 
-  const { status } = await response.json();
-  console.log(status);
+  const data = await response.json();
+  console.log(data.status);
 }
 
 export default function Form() {
-  const { trigger } = useSWRMutation("/API/shirts/index.js", sendRequest);
+  const { trigger } = useSWRMutation("../pages/api/", sendRequest);
   const router = useRouter();
 
   const id = crypto.randomBytes(16).toString("hex");
+  console.log(id);
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const shirtData = Object.fromEntries(formData);
-    trigger("/API/shirts/index.js", shirtData);
-    router.push("/ChooseFour/${id}");
+    trigger(shirtData);
+    console.log(shirtData);
+    router.push(`/ChooseFour/${id}`);
   }
 
   return (
