@@ -3,8 +3,11 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const shirtSchema = new Schema({
+  shirtID: { type: String, required: true },
   searchID: { type: String, required: false },
-  tags: [{ type: String }],
+  keywordOne: { type: String, required: true },
+  keywordTwo: { type: String, required: true },
+  keywordThree: { type: String, required: true },
   imageSRC: { type: String, required: false },
   isParent: { type: Boolean, required: false },
   parentID: { type: String, required: false },

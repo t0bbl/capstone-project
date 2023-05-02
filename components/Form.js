@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 import crypto from "crypto";
-import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
 async function sendRequest(url, { arg }) {
@@ -15,7 +14,7 @@ async function sendRequest(url, { arg }) {
   });
 
   const { status } = await response.json();
-  console.log(status);
+  console.log(status + " from sendRequest");
 }
 
 export default function Form() {
@@ -30,18 +29,17 @@ export default function Form() {
     trigger(shirtData);
     router.push(`/ChooseFour/${id}`);
   }
-
   return (
     <FormContainer onSubmit={handleSubmit}>
       <Input
-        id={id}
-        name="firstKeyword"
+        name="keywordOne"
+        searchID={id}
         type="text"
         placeholder="FIRST"
         required
       />
-      <Input name="secondKeyword" type="text" placeholder="SECOND" required />
-      <Input name="thirdKeyword" type="text" placeholder="THIRD" required />
+      <Input name="keywordTwo" type="text" placeholder="SECOND" required />
+      <Input name="keywordThree" type="text" placeholder="THIRD" required />
       <StyledButton type="submit" generate>
         Generate
       </StyledButton>
