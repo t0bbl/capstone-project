@@ -1,39 +1,54 @@
 import styled from "styled-components";
 import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
-import dbConnect from "../db/connect.js";
 import crypto from "crypto";
-
-const id = crypto.randomBytes(16).toString("hex");
+import useSWRMutation from "swr";
 
 export default function Form() {
+  async function sendRequest(url, { arg }) {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(arg),
+    });
+
+    const { status } = await response.json();
+    console.log(status);
+  }
+
+  const { trigger } = useSWRMutation("/API/shirts/index.js", sendRequest);
   const router = useRouter();
+
+  const id = crypto.randomBytes(16).toString("hex");
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const data = Object.fromEntries(formData);
+    const shirtData = Object.fromEntries(formData);
+    trigger(shirtData);
     router.push("/ChooseFour/${id}");
   }
 
   return (
     <FormContainer onSubmit={handleSubmit}>
       <Input
-        id="firstKeyword"
+        id={id}
         name="firstKeyword"
         type="text"
         placeholder="FIRST"
         required
       />
       <Input
-        id="secondKeyword"
+        id={id}
         name="secondKeyword"
         type="text"
         placeholder="SECOND"
         required
       />
       <Input
-        id="thirdKeyword"
+        id={id}
         name="thirdKeyword"
         type="text"
         placeholder="THIRD"
