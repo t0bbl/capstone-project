@@ -16,13 +16,6 @@ export default function Form() {
     router.push("/ChooseFour/${id}");
   }
 
-  db.shirts.insertOne({
-    SearchID: id,
-    tags: ["firstKeyword", "secondKeyword", "thirdKeyword"],
-    isParent: true,
-    parentID: null,
-  });
-
   return (
     <FormContainer onSubmit={handleSubmit}>
       <Input
