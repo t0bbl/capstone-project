@@ -20,7 +20,7 @@ async function sendRequest(url, { arg }) {
 
 export default function Form() {
   const router = useRouter();
-  const { trigger } = useSWRMutation("../pages/api/Shirts", sendRequest);
+  const { trigger } = useSWRMutation("/api/Shirts", sendRequest);
   const id = crypto.randomBytes(16).toString("hex");
 
   function handleSubmit(event) {
