@@ -2,14 +2,20 @@ import { StyledImage } from "./StyledImage";
 import { StyledA } from "./StyledLink";
 import styled from "styled-components";
 
-export default function FourPicsTable() {
+export default function FourPicsTable({
+  imageID,
+  picSRC1,
+  picSRC2,
+  picSRC3,
+  picSRC4,
+}) {
   return (
     <FourPicsContainer>
       <StyledA href="/PreviewPage/">
         <StyledImage
           oneOfFourPictures
           alt="image number 1"
-          src="https://i.imgur.com/8nUXl6s.jpeg/"
+          src={picSRC1}
           width="400"
           height="400"
         />
@@ -18,7 +24,7 @@ export default function FourPicsTable() {
         <StyledImage
           oneOfFourPictures
           alt="image number 2"
-          src="https://i.imgur.com/SglfvOg.jpeg/"
+          src={picSRC2}
           width="400"
           height="400"
         />
@@ -27,7 +33,7 @@ export default function FourPicsTable() {
         <StyledImage
           oneOfFourPictures
           alt="image number 3"
-          src="https://i.imgur.com/rTEFFzZ.webp?maxwidth=1520&fidelity=grand/"
+          src={picSRC3}
           width="400"
           height="400"
         />
@@ -36,7 +42,7 @@ export default function FourPicsTable() {
         <StyledImage
           oneOfFourPictures
           alt="image number 4"
-          src="https://i.imgur.com/SME5yCA.jpeg/"
+          src={picSRC4}
           width="400"
           height="400"
         />

@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 
 const shirtSchema = new Schema({
   id: { type: String, required: true },
+  searchID: { type: String, required: true },
   tags: [string, string, string],
   imageSRC: { type: String, required: true },
   isParent: { type: Boolean, required: true },

@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
+import dbConnect from "../db/connect.js";
+import crypto from "crypto";
+
+const id = crypto.randomBytes(16).toString("hex");
 
 export default function Form() {
   const router = useRouter();
@@ -9,8 +13,15 @@ export default function Form() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
-    router.push("/ChooseFour/");
+    router.push("/ChooseFour/${id}");
   }
+
+  db.shirts.insertOne({
+    SearchID: id,
+    tags: ["firstKeyword", "secondKeyword", "thirdKeyword"],
+    isParent: true,
+    parentID: null,
+  });
 
   return (
     <FormContainer onSubmit={handleSubmit}>
