@@ -3,10 +3,9 @@ import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWR from "swr";
-
 import useSWRMutation from "swr/mutation";
-const url = "/api/Shirts";
-async function sendRequest(arg) {
+
+async function sendRequest(url, { arg }) {
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -15,23 +14,20 @@ async function sendRequest(arg) {
     body: JSON.stringify(arg),
   });
 
-  const data = await response.json();
-  console.log(data.status);
+  const { status } = await response.json();
+  console.log(status);
 }
 
 export default function Form() {
-  const { trigger } = useSWRMutation(url, sendRequest);
   const router = useRouter();
-
+  const { trigger } = useSWRMutation("../pages/api/", sendRequest);
   const id = crypto.randomBytes(16).toString("hex");
-  console.log(id);
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const shirtData = Object.fromEntries(formData);
     trigger(shirtData);
-    console.log(shirtData);
     router.push(`/ChooseFour/${id}`);
   }
 
@@ -44,20 +40,8 @@ export default function Form() {
         placeholder="FIRST"
         required
       />
-      <Input
-        id={id}
-        name="secondKeyword"
-        type="text"
-        placeholder="SECOND"
-        required
-      />
-      <Input
-        id={id}
-        name="thirdKeyword"
-        type="text"
-        placeholder="THIRD"
-        required
-      />
+      <Input name="secondKeyword" type="text" placeholder="SECOND" required />
+      <Input name="thirdKeyword" type="text" placeholder="THIRD" required />
       <StyledButton type="submit" generate>
         Generate
       </StyledButton>

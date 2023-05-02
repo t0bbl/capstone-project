@@ -17,12 +17,12 @@ export default function FourPicsTable({
           src={picSRC1}
           width="400"
           height="400"
-          fourpictures
+          $fourpictures
         />
       </StyledA>
       <StyledA href="/PreviewPage/">
         <StyledImage
-          fourpictures
+          $fourpictures
           alt="image number 2"
           src={picSRC2}
           width="400"
@@ -31,7 +31,7 @@ export default function FourPicsTable({
       </StyledA>
       <StyledA href="/PreviewPage/">
         <StyledImage
-          fourpictures
+          $fourpictures
           alt="image number 3"
           src={picSRC3}
           width="400"
@@ -40,7 +40,7 @@ export default function FourPicsTable({
       </StyledA>
       <StyledA href="/PreviewPage/">
         <StyledImage
-          fourpictures
+          $fourpictures
           alt="image number 4"
           src={picSRC4}
           width="400"
