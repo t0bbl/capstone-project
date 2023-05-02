@@ -2,9 +2,11 @@ import styled from "styled-components";
 import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 import crypto from "crypto";
-import useSWRMutation from "swr/mutation";
+import useSWR from "swr";
 
-async function sendRequest(url, { arg }) {
+import useSWRMutation from "swr/mutation";
+const url = "/api/Shirts";
+async function sendRequest(arg) {
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -18,7 +20,7 @@ async function sendRequest(url, { arg }) {
 }
 
 export default function Form() {
-  const { trigger } = useSWRMutation("../pages/api/", sendRequest);
+  const { trigger } = useSWRMutation(url, sendRequest);
   const router = useRouter();
 
   const id = crypto.randomBytes(16).toString("hex");

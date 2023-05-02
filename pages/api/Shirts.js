@@ -1,5 +1,5 @@
-import dbConnect from "../../../db/connect";
-import Shirt from "../../../db/models/Shirt";
+import dbConnect from "../../db/connect";
+import Shirt from "../../db/models/Shirt";
 
 export default async function handler(req, res) {
   await dbConnect();
@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     try {
       const shirts = await Shirt.find({ searchID: req.query.searchID });
       if (!shirts) {
-        res.status(404).json({ status: "not found" });
+        res.status(404).json({ status: "not found! robs" });
       }
       res.status(200).json(shirts);
     } catch (error) {

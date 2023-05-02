@@ -5,7 +5,7 @@ export const StyledImage = styled(Image)`
   width: 90vw;
   height: auto;
   ${(props) =>
-    props.oneOfFourPictures &&
+    props.fourpictures &&
     css`
       width: 45vw;
       height: auto;
