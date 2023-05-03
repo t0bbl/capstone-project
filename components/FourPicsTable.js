@@ -17,46 +17,49 @@ export default function FourPicsTable() {
   if (error) {
     return <div>error...</div>;
   }
-
   return (
-    <FourPicsContainer>
-      <StyledA href={`/PreviewPage/${shirt.picSRC1}`}>
-        <StyledImage
-          alt="image number 1"
-          src={shirt.picSRC1}
-          width="400"
-          height="400"
-          $fourpictures
-        />
-      </StyledA>
-      <StyledA href={`/PreviewPage/${shirt.picSRC2}`}>
-        <StyledImage
-          $fourpictures
-          alt="image number 2"
-          src={shirt.picSRC2}
-          width="400"
-          height="400"
-        />
-      </StyledA>
-      <StyledA href={`/PreviewPage/${shirt.picSRC3}`}>
-        <StyledImage
-          $fourpictures
-          alt="image number 3"
-          src={shirt.picSRC3}
-          width="400"
-          height="400"
-        />
-      </StyledA>
-      <StyledA href={`/PreviewPage/${shirt.picSRC4}`}>
-        <StyledImage
-          $fourpictures
-          alt="image number 4"
-          src={shirt.picSRC4}
-          width="400"
-          height="400"
-        />
-      </StyledA>
-    </FourPicsContainer>
+    <>
+      {shirt.map((shirt) => (
+        <FourPicsContainer key={shirt._id}>
+          <StyledA href={`/PreviewPage/${shirt.picSRC1}`}>
+            <StyledImage
+              alt="image number 1"
+              src={shirt.picSRC1}
+              width="400"
+              height="400"
+              $fourpictures
+            />
+          </StyledA>
+          <StyledA href={`/PreviewPage/${shirt.picSRC2}`}>
+            <StyledImage
+              $fourpictures
+              alt="image number 2"
+              src={shirt.picSRC2}
+              width="400"
+              height="400"
+            />
+          </StyledA>
+          <StyledA href={`/PreviewPage/${shirt.picSRC3}`}>
+            <StyledImage
+              $fourpictures
+              alt="image number 3"
+              src={shirt.picSRC3}
+              width="400"
+              height="400"
+            />
+          </StyledA>
+          <StyledA href={`/PreviewPage/${shirt.picSRC4}`}>
+            <StyledImage
+              $fourpictures
+              alt="image number 4"
+              src={shirt.picSRC4}
+              width="400"
+              height="400"
+            />
+          </StyledA>
+        </FourPicsContainer>
+      ))}
+    </>
   );
 }
 
