@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const shirtData = req.body;
-
+      console.log(shirtData);
       const shirt = new Shirt(shirtData);
       await shirt.save();
       res.status(201).json({ status: "shirt created" });

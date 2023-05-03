@@ -10,7 +10,6 @@ const shirtSchema = new Schema({
   keywordThree: { type: String, required: true },
   imageSRC: { type: String, required: false },
   isParent: { type: Boolean, required: false },
-  parentID: { type: String, required: false },
 });
 
 const Shirt = mongoose.models.Shirt || mongoose.model("Shirt", shirtSchema);

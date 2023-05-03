@@ -3,8 +3,9 @@ import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
+import { useState } from "react";
 
-async function sendRequest(url, { shirtData }) {
+async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -19,24 +20,19 @@ async function sendRequest(url, { shirtData }) {
 export default function Form() {
   const router = useRouter();
   const { trigger } = useSWRMutation("/api/Shirts", sendRequest);
-  const id = crypto.randomBytes(16).toString("hex");
+  const searchID = crypto.randomBytes(16).toString("hex");
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const shirtData = Object.fromEntries(formData);
+    shirtData.searchID = searchID;
     trigger(shirtData);
-    router.push(`/ChooseFour/${id}`);
+    router.push(`/ChooseFour/${searchID}`);
   }
   return (
     <FormContainer onSubmit={handleSubmit}>
-      <Input
-        name="keywordOne"
-        searchID={id}
-        type="text"
-        placeholder="FIRST"
-        required
-      />
+      <Input name="keywordOne" type="text" placeholder="FIRST" required />
       <Input name="keywordTwo" type="text" placeholder="SECOND" required />
       <Input name="keywordThree" type="text" placeholder="THIRD" required />
       <StyledButton type="submit" generate>
