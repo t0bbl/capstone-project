@@ -4,15 +4,14 @@ import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
 
-async function sendRequest(url, { arg }) {
+async function sendRequest(url, { shirtData }) {
   const response = await fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(arg),
+    body: JSON.stringify(shirtData),
   });
-
   const { status } = await response.json();
   console.log(status + " from sendRequest");
 }

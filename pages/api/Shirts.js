@@ -7,11 +7,12 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const shirtData = req.body;
-      await Shirt.create(shirtData);
-      console.log(shirtData);
+
+      const shirt = new Shirt(shirtData);
+      await shirt.save();
       res.status(201).json({ status: "shirt created" });
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      res.status(400).json(console.error(error));
     }
   }
 }
