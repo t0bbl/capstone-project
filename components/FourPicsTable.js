@@ -8,13 +8,8 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function FourPicsTable() {
   const router = useRouter();
-  const searchID = router.query;
-  console.log(searchID);
-  const {
-    data: shirt,
-    isLoading,
-    error,
-  } = useSWR(`/api/shirts?searchID=${searchID}`, fetcher);
+  const { searchID } = router.query;
+  const { data: shirt, isLoading, error } = useSWR(`/api/${searchID}`, fetcher);
 
   if (isLoading) {
     return <div>loading...</div>;
@@ -25,7 +20,7 @@ export default function FourPicsTable() {
 
   return (
     <FourPicsContainer>
-      <StyledA href={`/PreviewPage/${shirt.picSRC1 || "default-image.jpg"}`}>
+      <StyledA href={`/PreviewPage/${shirt.picSRC1}`}>
         <StyledImage
           alt="image number 1"
           src={shirt.picSRC1}
@@ -34,7 +29,7 @@ export default function FourPicsTable() {
           $fourpictures
         />
       </StyledA>
-      <StyledA href={`/PreviewPage/${shirt.picSRC2 || "default-image.jpg"}`}>
+      <StyledA href={`/PreviewPage/${shirt.picSRC2}`}>
         <StyledImage
           $fourpictures
           alt="image number 2"
@@ -43,7 +38,7 @@ export default function FourPicsTable() {
           height="400"
         />
       </StyledA>
-      <StyledA href={`/PreviewPage/${shirt.picSRC3 || "default-image.jpg"}`}>
+      <StyledA href={`/PreviewPage/${shirt.picSRC3}`}>
         <StyledImage
           $fourpictures
           alt="image number 3"
@@ -52,7 +47,7 @@ export default function FourPicsTable() {
           height="400"
         />
       </StyledA>
-      <StyledA href={`/PreviewPage/${shirt.picSRC4 || "default-image.jpg"}`}>
+      <StyledA href={`/PreviewPage/${shirt.picSRC4}`}>
         <StyledImage
           $fourpictures
           alt="image number 4"

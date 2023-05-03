@@ -16,7 +16,7 @@ async function sendRequest(url, { arg: shirtData }) {
     body: JSON.stringify(shirtData),
   });
   const { status } = await response.json();
-  console.log(status + " from sendRequest");
+  console.log(status + " from POST request");
 }
 
 export default function Form() {
