@@ -5,6 +5,10 @@ const { Schema } = mongoose;
 const shirtSchema = new Schema({
   shirtID: { type: String, required: false },
   searchID: { type: String, required: false },
+  picSRC1: { type: String, required: false },
+  picSRC2: { type: String, required: false },
+  picSRC3: { type: String, required: false },
+  picSRC4: { type: String, required: false },
   keywordOne: { type: String, required: true },
   keywordTwo: { type: String, required: true },
   keywordThree: { type: String, required: true },

@@ -3,7 +3,6 @@ import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
-import { useState } from "react";
 
 async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
