@@ -3,11 +3,16 @@ import Shirt from "../../db/models/Shirt";
 
 export default async function handler(req, res) {
   await dbConnect();
+  // console.log(req.query, "hallo");
 
   if (req.method === "GET") {
     try {
-      const shirts = await Shirt.find();
-      return res.status(200).json(shirts);
+      // console.log(req.query);
+      const searchID = req.query.searchID;
+      // console.log(searchID);
+      const matchedShirts = await Shirt.find({ searchID: searchID });
+
+      return res.status(200).json(matchedShirts);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
@@ -15,7 +20,6 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const shirtData = req.body;
-      console.log(shirtData);
       const shirt = new Shirt(shirtData);
       await shirt.save();
       res.status(201).json({ status: "shirt created" });

@@ -4,6 +4,9 @@ import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
 
+const previewPicture =
+  "https://png.pngtree.com/png-clipart/20191120/original/pngtree-load-the-png-image_5054175.jpg";
+
 async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
     method: "POST",
@@ -26,6 +29,10 @@ export default function Form() {
     const formData = new FormData(event.target);
     const shirtData = Object.fromEntries(formData);
     shirtData.searchID = searchID;
+    shirtData.picSRC1 = previewPicture;
+    shirtData.picSRC2 = previewPicture;
+    shirtData.picSRC3 = previewPicture;
+    shirtData.picSRC4 = previewPicture;
     trigger(shirtData);
     router.push(`/ChooseFour/${searchID}`);
   }
