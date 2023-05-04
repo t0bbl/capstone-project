@@ -24,7 +24,7 @@ export default function FourPicsTable() {
   return (
     <>
       <FourPicsContainer key={shirts.picSRC}>
-        <StyledA href={`/PreviewPage/${shirts.variant1slug}`}>
+        <StyledA href={`/PreviewPage/${shirts.variant1slug}?option=optionB`}>
           <StyledImage
             alt="image number 1"
             src={shirts.variant1}
@@ -33,7 +33,7 @@ export default function FourPicsTable() {
             $fourpictures
           />
         </StyledA>
-        <StyledA href={`/PreviewPage/${shirts.variant2slug}`}>
+        <StyledA href={`/PreviewPage/${shirts.variant2slug}?option=optionB`}>
           <StyledImage
             $fourpictures
             alt="image number 2"
@@ -42,7 +42,7 @@ export default function FourPicsTable() {
             height="400"
           />
         </StyledA>
-        <StyledA href={`/PreviewPage/${shirts.variant3slug}`}>
+        <StyledA href={`/PreviewPage/${shirts.variant3slug}?option=optionB`}>
           <StyledImage
             $fourpictures
             alt="image number 3"
@@ -51,7 +51,7 @@ export default function FourPicsTable() {
             height="400"
           />
         </StyledA>
-        <StyledA href={`/PreviewPage/${shirts.variant4slug}`}>
+        <StyledA href={`/PreviewPage/${shirts.variant4slug}?option=optionB`}>
           <StyledImage
             $fourpictures
             alt="image number 4"

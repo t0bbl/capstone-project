@@ -12,6 +12,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 export default function PreviewPage() {
   const router = useRouter();
   const { searchID } = router.query;
+  const option = router.query.option;
 
   const {
     data: shirts,
@@ -36,6 +37,7 @@ export default function PreviewPage() {
   function handleOnClick() {
     router.push(`/Variations/${searchID}`);
   }
+
   return (
     <>
       <Header />
@@ -45,7 +47,13 @@ export default function PreviewPage() {
           imageSrc={shirts.picSRC}
           imageName={shirts.picSRCSlug}
         />
-        <StyledButton type="button" onClick={handleOnClick} center>
+        <StyledButton
+          type="button"
+          onClick={handleOnClick}
+          option={option}
+          style={{ display: option === "optionB" ? "none" : "inline-block" }}
+          center
+        >
           Give me Variations!
         </StyledButton>
       </Container>
