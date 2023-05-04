@@ -25,9 +25,9 @@ export default function PreviewPage() {
     return <div>error...</div>;
   }
 
-  // const downloadImage = () => {
-  //   shirts.map((shirt) => saveAs(shirt.picSRC1, shirt.picSRC1SlugJPG));
-  // };
+  const downloadImage = () => {
+    saveAs(shirts.picSRC, shirts.picSRCSlugJPG);
+  };
 
   function handlePrint() {
     alert("you printed your Shirt!");
@@ -51,10 +51,7 @@ export default function PreviewPage() {
         </StyledButton>
       </Container>
       <Container bottomButtons>
-        <StyledButton
-          type="button"
-          // onClick={downloadImage}
-        >
+        <StyledButton type="button" onClick={downloadImage}>
           SAVE
         </StyledButton>
         <StyledButton type="button" onClick={handlePrint}>
