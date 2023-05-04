@@ -47,21 +47,53 @@ export default function Form() {
       picSRC: previewPicture1,
       picSRCSlug: previewPictureSlug1,
       picSRCSlugJPG: previewPictureSlugJPG,
+      variant1: previewPicture1,
+      variant1slug: previewPictureSlug1,
+      variant2: previewPicture1,
+      variant2slug: previewPictureSlug1,
+      variant3: previewPicture1,
+      variant3slug: previewPictureSlug1,
+      variant4: previewPicture1,
+      variant4slug: previewPictureSlug1,
     };
     shirtData.pic2 = {
       picSRC: previewPicture2,
       picSRCSlug: previewPictureSlug2,
       picSRCSlugJPG: previewPictureSlugJPG,
+      variant1: previewPicture2,
+      variant1slug: previewPictureSlug2,
+      variant2: previewPicture2,
+      variant2slug: previewPictureSlug2,
+      variant3: previewPicture2,
+      variant3slug: previewPictureSlug2,
+      variant4: previewPicture2,
+      variant4slug: previewPictureSlug2,
     };
     shirtData.pic3 = {
       picSRC: previewPicture3,
       picSRCSlug: previewPictureSlug3,
       picSRCSlugJPG: previewPictureSlugJPG,
+      variant1: previewPicture3,
+      variant1slug: previewPictureSlug3,
+      variant2: previewPicture3,
+      variant2slug: previewPictureSlug3,
+      variant3: previewPicture3,
+      variant3slug: previewPictureSlug3,
+      variant4: previewPicture3,
+      variant4slug: previewPictureSlug3,
     };
     shirtData.pic4 = {
       picSRC: previewPicture4,
       picSRCSlug: previewPictureSlug4,
       picSRCSlugJPG: previewPictureSlugJPG,
+      variant1: previewPicture4,
+      variant1slug: previewPictureSlug4,
+      variant2: previewPicture4,
+      variant2slug: previewPictureSlug4,
+      variant3: previewPicture4,
+      variant3slug: previewPictureSlug4,
+      variant4: previewPicture4,
+      variant4slug: previewPictureSlug4,
     };
 
     trigger(shirtData);

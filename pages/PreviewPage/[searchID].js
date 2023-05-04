@@ -14,10 +14,9 @@ export default function PreviewPage() {
   const { searchID } = router.query;
   const {
     data: shirts,
-
+    isLoading,
     error,
   } = useSWR(`/api/ChooseVariation/${searchID}`, fetcher);
-  const isLoading = !shirts && !error;
   if (isLoading) {
     return <div>loading...</div>;
   }
@@ -32,7 +31,10 @@ export default function PreviewPage() {
   function handlePrint() {
     alert("you printed your Shirt!");
   }
-  console.log(shirts.picSRC);
+
+  function handleOnClick() {
+    router.push(`/Variations/${searchID}`);
+  }
   return (
     <>
       <Header />
@@ -42,11 +44,7 @@ export default function PreviewPage() {
           imageSrc={shirts.picSRC}
           imageName={shirts.picSRCSlug}
         />
-        <StyledButton
-          type="button"
-          //onClick={handleVariations}
-          center
-        >
+        <StyledButton type="button" onClick={handleOnClick} center>
           Give me Variations!
         </StyledButton>
       </Container>
