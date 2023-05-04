@@ -9,7 +9,11 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 export default function FourPicsTable() {
   const router = useRouter();
   const { searchID } = router.query;
-  const { data: shirt, isLoading, error } = useSWR(`/api/${searchID}`, fetcher);
+  const {
+    data: shirts,
+    isLoading,
+    error,
+  } = useSWR(`/api/${searchID}`, fetcher);
 
   if (isLoading) {
     return <div>loading...</div>;
@@ -17,42 +21,43 @@ export default function FourPicsTable() {
   if (error) {
     return <div>error...</div>;
   }
+  console.log({ shirts });
   return (
     <>
-      {shirt.map((shirt) => (
+      {shirts.map((shirt) => (
         <FourPicsContainer key={shirt._id}>
-          <StyledA href={`/PreviewPage/${shirt.picSRC1}`}>
+          <StyledA href={`/PreviewPage/${shirt.pic1.picSRCSlug}`}>
             <StyledImage
               alt="image number 1"
-              src={shirt.picSRC1}
+              src={shirt.pic1.picSRC}
               width="400"
               height="400"
               $fourpictures
             />
           </StyledA>
-          <StyledA href={`/PreviewPage/${shirt.picSRC2}`}>
+          <StyledA href={`/PreviewPage/${shirt.pic2.picSRCSlug}`}>
             <StyledImage
               $fourpictures
               alt="image number 2"
-              src={shirt.picSRC2}
+              src={shirt.pic2.picSRC}
               width="400"
               height="400"
             />
           </StyledA>
-          <StyledA href={`/PreviewPage/${shirt.picSRC3}`}>
+          <StyledA href={`/PreviewPage/${shirt.pic3.picSRCSlug}`}>
             <StyledImage
               $fourpictures
               alt="image number 3"
-              src={shirt.picSRC3}
+              src={shirt.pic3.picSRC}
               width="400"
               height="400"
             />
           </StyledA>
-          <StyledA href={`/PreviewPage/${shirt.picSRC4}`}>
+          <StyledA href={`/PreviewPage/${shirt.pic4.picSRCSlug}`}>
             <StyledImage
               $fourpictures
               alt="image number 4"
-              src={shirt.picSRC4}
+              src={shirt.pic4.picSRC}
               width="400"
               height="400"
             />

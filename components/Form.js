@@ -4,8 +4,22 @@ import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
 
-const previewPicture =
+const previewPicture1 =
   "https://png.pngtree.com/png-clipart/20191120/original/pngtree-load-the-png-image_5054175.jpg";
+const previewPictureSlug1 = "pngtree-load-the-png-image_5054175";
+
+const previewPicture2 =
+  "https://png.pngtree.com/png-clipart/20200226/original/pngtree-colorful-loading-icon-png-image_5326551.jpg";
+const previewPictureSlug2 = "pngtree-colorful-loading-icon-png-image_5326551";
+const previewPicture3 =
+  "https://png.pngtree.com/png-clipart/20190925/original/pngtree-simple-hand-painted-snail-loading-progress-bar-png-image_4871324.jpg";
+const previewPictureSlug3 =
+  "pngtree-simple-hand-painted-snail-loading-progress-bar-png-image_4871324";
+const previewPicture4 =
+  "https://png.pngtree.com/png-clipart/20191122/original/pngtree-collection-of-circle-loader-wait-load-spining-circle-buffering-waiting-upload-png-image_5170090.jpg";
+const previewPictureSlug4 =
+  "pngtree-collection-of-circle-loader-wait-load-spining-circle-buffering-waiting-upload-png-image_5170090";
+const previewPictureSlugJPG = "pngtree-load-the-png-image_5054175.jpg";
 
 async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
@@ -29,10 +43,27 @@ export default function Form() {
     const formData = new FormData(event.target);
     const shirtData = Object.fromEntries(formData);
     shirtData.searchID = searchID;
-    shirtData.picSRC1 = previewPicture;
-    shirtData.picSRC2 = previewPicture;
-    shirtData.picSRC3 = previewPicture;
-    shirtData.picSRC4 = previewPicture;
+    shirtData.pic1 = {
+      picSRC: previewPicture1,
+      picSRCSlug: previewPictureSlug1,
+      picSRCSlugJPG: previewPictureSlugJPG,
+    };
+    shirtData.pic2 = {
+      picSRC: previewPicture2,
+      picSRCSlug: previewPictureSlug2,
+      picSRCSlugJPG: previewPictureSlugJPG,
+    };
+    shirtData.pic3 = {
+      picSRC: previewPicture3,
+      picSRCSlug: previewPictureSlug3,
+      picSRCSlugJPG: previewPictureSlugJPG,
+    };
+    shirtData.pic4 = {
+      picSRC: previewPicture4,
+      picSRCSlug: previewPictureSlug4,
+      picSRCSlugJPG: previewPictureSlugJPG,
+    };
+
     trigger(shirtData);
     router.push(`/ChooseFour/${searchID}`);
   }

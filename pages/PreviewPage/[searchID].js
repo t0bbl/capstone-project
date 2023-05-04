@@ -5,37 +5,56 @@ import Header from "../../components/Header";
 import PreviewPicture from "../../components/PreviewPicture";
 import { saveAs } from "file-saver";
 import { css } from "styled-components";
+import useSWR from "swr";
 
-const imageSrc = "https://i.imgur.com/8nUXl6s.jpeg/";
-const imageName = "8nUXl6s.jpeg";
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function PreviewPage() {
   const router = useRouter();
-  const imageID = "8nUXl6s";
+  const { searchID } = router.query;
+  const {
+    data: shirts,
 
-  function handleVariations() {
-    router.push(`/Variations/${imageID}`);
+    error,
+  } = useSWR(`/api/ChooseVariation/${searchID}`, fetcher);
+  const isLoading = !shirts && !error;
+  if (isLoading) {
+    return <div>loading...</div>;
+  }
+  if (error) {
+    return <div>error...</div>;
   }
 
-  const downloadImage = () => {
-    saveAs(imageSrc, imageName);
-  };
+  // const downloadImage = () => {
+  //   shirts.map((shirt) => saveAs(shirt.picSRC1, shirt.picSRC1SlugJPG));
+  // };
 
   function handlePrint() {
     alert("you printed your Shirt!");
   }
-
+  console.log(shirts.picSRC);
   return (
     <>
       <Header />
       <Container>
-        <PreviewPicture imageSrc={imageSrc} imageName={imageName} />
-        <StyledButton type="button" onClick={handleVariations} center>
+        <PreviewPicture
+          key={shirts.picSRCSlug}
+          imageSrc={shirts.picSRC}
+          imageName={shirts.picSRCSlug}
+        />
+        <StyledButton
+          type="button"
+          //onClick={handleVariations}
+          center
+        >
           Give me Variations!
         </StyledButton>
       </Container>
       <Container bottomButtons>
-        <StyledButton type="button" onClick={downloadImage}>
+        <StyledButton
+          type="button"
+          // onClick={downloadImage}
+        >
           SAVE
         </StyledButton>
         <StyledButton type="button" onClick={handlePrint}>
