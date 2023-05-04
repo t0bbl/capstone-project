@@ -26,7 +26,7 @@ export default function PreviewPage() {
   }
 
   const downloadImage = () => {
-    saveAs(shirts.picSRC, shirts.picSRCSlugJPG);
+    saveAs(shirts.picSRC, shirts.picSRCSlug);
   };
 
   function handlePrint() {
