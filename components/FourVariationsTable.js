@@ -21,7 +21,6 @@ export default function FourPicsTable() {
   if (error) {
     return <div>error...</div>;
   }
-  console.log(shirts.picSRC, "FROM FOURPICSTABLE");
   return (
     <>
       <FourPicsContainer key={shirts.picSRC}>

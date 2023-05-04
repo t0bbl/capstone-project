@@ -12,6 +12,7 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 export default function PreviewPage() {
   const router = useRouter();
   const { searchID } = router.query;
+
   const {
     data: shirts,
     isLoading,
