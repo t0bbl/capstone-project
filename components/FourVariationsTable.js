@@ -13,9 +13,9 @@ export default function FourPicsTable() {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(`/api/ChooseVariation/${searchID}`, fetcher);
+  } = useSWR(searchID ? `/api/ChooseVariation/${searchID}` : null, fetcher);
 
-  if (isLoading) {
+  if (isLoading || !shirts) {
     return <div>loading...</div>;
   }
   if (error) {

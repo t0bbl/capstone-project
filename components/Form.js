@@ -30,7 +30,6 @@ async function sendRequest(url, { arg: shirtData }) {
     body: JSON.stringify(shirtData),
   });
   const { status } = await response.json();
-  console.log(status + " from POST request");
 }
 
 export default function Form() {
@@ -101,9 +100,27 @@ export default function Form() {
   }
   return (
     <FormContainer onSubmit={handleSubmit}>
-      <Input name="keywordOne" type="text" placeholder="FIRST" required />
-      <Input name="keywordTwo" type="text" placeholder="SECOND" required />
-      <Input name="keywordThree" type="text" placeholder="THIRD" required />
+      <Input
+        name="keywordOne"
+        type="text"
+        placeholder="FIRST"
+        aria-label="input for the first keyword"
+        required
+      />
+      <Input
+        name="keywordTwo"
+        type="text"
+        placeholder="SECOND"
+        aria-label="input for the second keyword"
+        required
+      />
+      <Input
+        name="keywordThree"
+        type="text"
+        placeholder="THIRD"
+        aria-label="input for the third keyword"
+        required
+      />
       <StyledButton type="submit" generate>
         Generate
       </StyledButton>

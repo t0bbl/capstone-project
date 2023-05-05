@@ -18,8 +18,8 @@ export default function PreviewPage() {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(`/api/ChooseVariation/${searchID}`, fetcher);
-  if (isLoading) {
+  } = useSWR(searchID ? `/api/ChooseVariation/${searchID}` : null, fetcher);
+  if (isLoading || !shirts) {
     return <div>loading...</div>;
   }
   if (error) {

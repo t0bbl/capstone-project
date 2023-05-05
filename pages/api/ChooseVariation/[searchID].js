@@ -2,12 +2,7 @@ import dbConnect from "../../../db/connect";
 import Shirt from "../../../db/models/Shirt";
 
 export default async function handler(req, res) {
-  try {
-    await dbConnect();
-  } catch (error) {
-    console.error("Error connecting to the database:", error);
-    return res.status(500).json({ error: "Error connecting to the database" });
-  }
+  await dbConnect();
 
   if (req.method === "GET") {
     try {
@@ -21,19 +16,9 @@ export default async function handler(req, res) {
         ],
       });
 
-      if (!matchedShirt) {
-        console.error("No matched picture found");
-        return res.status(404).json({ error: "No matched picture found" });
-      }
-
       const matchedPic = ["pic1", "pic2", "pic3", "pic4"].find((picKey) => {
         return matchedShirt[picKey].picSRCSlug === searchID;
       });
-
-      if (!matchedPic) {
-        console.error("No matched picture found");
-        return res.status(404).json({ error: "No matched picture found" });
-      }
 
       return res.status(200).json(matchedShirt[matchedPic]);
     } catch (error) {

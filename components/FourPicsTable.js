@@ -14,9 +14,9 @@ export default function FourPicsTable() {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(`/api/${searchID}`, fetcher);
+  } = useSWR(searchID ? `/api/${searchID}` : null, fetcher);
 
-  if (isLoading) {
+  if (isLoading || !shirts) {
     return <div>loading...</div>;
   }
   if (error) {
@@ -37,29 +37,29 @@ export default function FourPicsTable() {
           </StyledA>
           <StyledA href={`/PreviewPage/${shirt.pic2.picSRCSlug}`}>
             <StyledImage
-              $fourpictures
               alt="image number 2"
               src={shirt.pic2.picSRC}
               width="400"
               height="400"
+              $fourpictures
             />
           </StyledA>
           <StyledA href={`/PreviewPage/${shirt.pic3.picSRCSlug}`}>
             <StyledImage
-              $fourpictures
               alt="image number 3"
               src={shirt.pic3.picSRC}
               width="400"
               height="400"
+              $fourpictures
             />
           </StyledA>
           <StyledA href={`/PreviewPage/${shirt.pic4.picSRCSlug}`}>
             <StyledImage
-              $fourpictures
               alt="image number 4"
               src={shirt.pic4.picSRC}
               width="400"
               height="400"
+              $fourpictures
             />
           </StyledA>
         </FourPicsContainer>
