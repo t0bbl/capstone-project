@@ -100,22 +100,28 @@ export default function Form() {
   }
   return (
     <FormContainer onSubmit={handleSubmit}>
+      <label htmlFor="keywordOne">First keyword</label>
       <Input
         name="keywordOne"
+        id="keywordOne"
         type="text"
         placeholder="FIRST"
         aria-label="input for the first keyword"
         required
       />
+      <label htmlFor="keywordTwo">Second keyword</label>
       <Input
         name="keywordTwo"
+        id="keywordTwo"
         type="text"
         placeholder="SECOND"
         aria-label="input for the second keyword"
         required
       />
+      <label htmlFor="keywordThree">Third keyword</label>
       <Input
         name="keywordThree"
+        id="keywordThree"
         type="text"
         placeholder="THIRD"
         aria-label="input for the third keyword"
@@ -135,6 +141,9 @@ const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   margin: 50% 0%;
+  label {
+    display: none;
+  }
 `;
 
 const Input = styled.input`
