@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "*.imgur.com",
       },
+      {
+        protocol: "https",
+        hostname: "*.pngtree.com",
+      },
     ],
   },
   compiler: {
