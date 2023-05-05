@@ -1,5 +1,4 @@
 import { Configuration, OpenAIApi } from "openai";
-import useSWRmutaion from "swr";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -7,20 +6,6 @@ export default async function handler(req, res) {
     await fetchImages(res, { keywordOne, keywordTwo, keywordThree });
   } else {
     res.status(405).send("Method not allowed");
-  }
-}
-
-async function sendRequest(url, { arg }) {
-  const response = await fetch(url, {
-    method: "PUT",
-    body: JSON.stringify(arg),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!response.ok) {
-    console.error(`Error: ${response.status}`);
   }
 }
 
@@ -49,6 +34,4 @@ async function fetchImages(
   const formattedData = imageData.data.map((item, index) => {
     return { [`pic${index + 1}`]: { picSRC: item.url } };
   });
-
-  await sendRequest("/api/Shirts", { formattedData });
 }

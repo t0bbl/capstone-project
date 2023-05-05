@@ -4,7 +4,6 @@ const { Schema } = mongoose;
 const picSchema = new Schema({
   picSRC: String,
   picSRCSlug: { type: String, required: false },
-  picSRCSlugJPG: { type: String, required: false },
   variant1: { type: String, required: false },
   variant1slug: { type: String, required: false },
   variant2: { type: String, required: false },

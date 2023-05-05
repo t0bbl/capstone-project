@@ -3,7 +3,6 @@ import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
-import fetchImages from "../pages/api/openai";
 
 const previewPicture1 =
   "https://png.pngtree.com/png-clipart/20191120/original/pngtree-load-the-png-image_5054175.jpg";
@@ -20,7 +19,6 @@ const previewPicture4 =
   "https://png.pngtree.com/png-clipart/20191122/original/pngtree-collection-of-circle-loader-wait-load-spining-circle-buffering-waiting-upload-png-image_5170090.jpg";
 const previewPictureSlug4 =
   "pngtree-collection-of-circle-loader-wait-load-spining-circle-buffering-waiting-upload-png-image_5170090";
-const previewPictureSlugJPG = "pngtree-load-the-png-image_5054175.jpg";
 
 async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
@@ -46,7 +44,6 @@ export default function Form() {
     shirtData.pic1 = {
       picSRC: previewPicture1,
       picSRCSlug: previewPictureSlug1,
-      picSRCSlugJPG: previewPictureSlugJPG,
       variant1: previewPicture1,
       variant1slug: previewPictureSlug1,
       variant2: previewPicture1,
@@ -59,7 +56,6 @@ export default function Form() {
     shirtData.pic2 = {
       picSRC: previewPicture2,
       picSRCSlug: previewPictureSlug2,
-      picSRCSlugJPG: previewPictureSlugJPG,
       variant1: previewPicture2,
       variant1slug: previewPictureSlug2,
       variant2: previewPicture2,
@@ -72,7 +68,6 @@ export default function Form() {
     shirtData.pic3 = {
       picSRC: previewPicture3,
       picSRCSlug: previewPictureSlug3,
-      picSRCSlugJPG: previewPictureSlugJPG,
       variant1: previewPicture3,
       variant1slug: previewPictureSlug3,
       variant2: previewPicture3,
@@ -85,7 +80,6 @@ export default function Form() {
     shirtData.pic4 = {
       picSRC: previewPicture4,
       picSRCSlug: previewPictureSlug4,
-      picSRCSlugJPG: previewPictureSlugJPG,
       variant1: previewPicture4,
       variant1slug: previewPictureSlug4,
       variant2: previewPicture4,
