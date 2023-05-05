@@ -23,4 +23,17 @@ export default async function handler(req, res) {
       res.status(400).json(console.error(error));
     }
   }
+  if (req.method === "PUT") {
+    try {
+      await Shirt.find(
+        { searchID: searchID },
+        {
+          $set: req.body,
+        }
+      );
+    } catch (error) {
+      res.status(400).json(console.error(error));
+    }
+    response.status(200).json({ status: `Shirt ${searchID} updated!` });
+  }
 }

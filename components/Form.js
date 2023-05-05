@@ -3,6 +3,7 @@ import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
+import fetchImages from "../pages/api/openai";
 
 const previewPicture1 =
   "https://png.pngtree.com/png-clipart/20191120/original/pngtree-load-the-png-image_5054175.jpg";
@@ -94,7 +95,18 @@ export default function Form() {
       variant4: previewPicture4,
       variant4slug: previewPictureSlug4,
     };
-
+    fetch("/api/openai", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        searchID: shirtData.searchID,
+        keywordOne: shirtData.keywordOne,
+        keywordTwo: shirtData.keywordTwo,
+        keywordThree: shirtData.keywordThree,
+      }),
+    });
     trigger(shirtData);
     router.push(`/ChooseFour/${searchID}`);
   }
