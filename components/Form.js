@@ -4,22 +4,6 @@ import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
 
-const previewPicture1 =
-  "https://png.pngtree.com/png-clipart/20191120/original/pngtree-load-the-png-image_5054175.jpg";
-const previewPictureSlug1 = "pngtree-load-the-png-image_5054175";
-
-const previewPicture2 =
-  "https://png.pngtree.com/png-clipart/20200226/original/pngtree-colorful-loading-icon-png-image_5326551.jpg";
-const previewPictureSlug2 = "pngtree-colorful-loading-icon-png-image_5326551";
-const previewPicture3 =
-  "https://png.pngtree.com/png-clipart/20190925/original/pngtree-simple-hand-painted-snail-loading-progress-bar-png-image_4871324.jpg";
-const previewPictureSlug3 =
-  "pngtree-simple-hand-painted-snail-loading-progress-bar-png-image_4871324";
-const previewPicture4 =
-  "https://png.pngtree.com/png-clipart/20191122/original/pngtree-collection-of-circle-loader-wait-load-spining-circle-buffering-waiting-upload-png-image_5170090.jpg";
-const previewPictureSlug4 =
-  "pngtree-collection-of-circle-loader-wait-load-spining-circle-buffering-waiting-upload-png-image_5170090";
-
 async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
     method: "POST",

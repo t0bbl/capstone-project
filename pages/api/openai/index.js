@@ -18,40 +18,45 @@ async function fetchImages(
     apiKey: process.env.OPENAI_API_KEY,
   });
   const openai = new OpenAIApi(configuration);
-  const response = await openai.createImage({
-    prompt:
-      "give me a design with a " +
-      keywordOne +
-      " and a " +
-      keywordTwo +
-      " and a " +
-      keywordThree,
-    n: 4,
-    size: "1024x1024",
-  });
-  const imageData = response.data;
-  res.status(200).json({ image: imageData.data });
-
-  const formattedData = imageData.data.reduce((acc, item, index) => {
-    const slugPattern = /\/([\w-]+)$/;
-    const match = item.url.match(slugPattern);
-    const slug = match ? match[1] : "";
-    console.log(slug);
-    acc[`pic${index + 1}`] = { picSRC: item.url, picSRCslug: slug };
-    return acc;
-  }, {});
-
   try {
-    await Shirt.findOneAndUpdate(
-      { searchID: searchID },
-      {
-        $set: {
-          ...formattedData,
+    const response = await openai.createImage({
+      prompt:
+        "give me a design with a " +
+        keywordOne +
+        " and a " +
+        keywordTwo +
+        " and a " +
+        keywordThree,
+      n: 4,
+      size: "1024x1024",
+    });
+    const imageData = response.data;
+    res.status(200).json({ image: imageData.data });
+    console.log(imageData);
+    const formattedData = imageData.data.reduce((acc, item, index) => {
+      const slugPattern = /\/([\w-]+)$/;
+      const match = item.url.match(slugPattern);
+      const slug = match ? match[1] : "";
+      console.log(slug);
+      acc[`pic${index + 1}`] = { picSRC: item.url, picSRCslug: slug };
+      return acc;
+    }, {});
+
+    try {
+      await Shirt.find(
+        { searchID: searchID },
+        {
+          $set: {
+            ...formattedData,
+          },
         },
-      },
-      { upsert: true, new: true }
-    );
+        { upsert: true, new: true }
+      );
+    } catch (error) {
+      console.error("Error updating data in MongoDB:", error);
+    }
   } catch (error) {
-    console.error("Error updating data in MongoDB:", error);
+    console.error("Error creating image with OpenAI API:", error);
   }
+  res.status(500).json({ error: "Failed to create image with OpenAI API" });
 }
