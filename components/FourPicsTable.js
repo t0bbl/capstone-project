@@ -26,7 +26,7 @@ export default function FourPicsTable() {
     <>
       {shirts.map((shirt) => (
         <FourPicsContainer key={shirt._id}>
-          <StyledA href={`/PreviewPage/${shirt.pic1._id}`}>
+          <StyledA href={`/PreviewPage/${shirt.pic1.picSRCSlug}`}>
             <StyledImage
               alt="image number 1"
               src={shirt.pic1.picSRC}
@@ -35,7 +35,7 @@ export default function FourPicsTable() {
               $fourpictures
             />
           </StyledA>
-          <StyledA href={`/PreviewPage/${shirt.pic2._id}`}>
+          <StyledA href={`/PreviewPage/${shirt.pic2.picSRCSlug}`}>
             <StyledImage
               alt="image number 2"
               src={shirt.pic2.picSRC}
@@ -44,7 +44,7 @@ export default function FourPicsTable() {
               $fourpictures
             />
           </StyledA>
-          <StyledA href={`/PreviewPage/${shirt.pic3._id}`}>
+          <StyledA href={`/PreviewPage/${shirt.pic3.picSRCSlug}`}>
             <StyledImage
               alt="image number 3"
               src={shirt.pic3.picSRC}
@@ -53,7 +53,7 @@ export default function FourPicsTable() {
               $fourpictures
             />
           </StyledA>
-          <StyledA href={`/PreviewPage/${shirt.pic4._id}`}>
+          <StyledA href={`/PreviewPage/${shirt.pic4.picSRCSlug}`}>
             <StyledImage
               alt="image number 4"
               src={shirt.pic4.picSRC}

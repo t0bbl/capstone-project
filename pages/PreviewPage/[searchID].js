@@ -44,7 +44,7 @@ export default function PreviewPage() {
   }
 
   const downloadImage = () => {
-    saveAs(shirts.picSRC, `${shirts._id}.png`);
+    saveAs(shirts.picSRC, shirts.picSRCSlug);
   };
 
   function handlePrint() {
@@ -60,9 +60,9 @@ export default function PreviewPage() {
       <Header />
       <Container>
         <PreviewPicture
-          key={shirts._id}
+          key={shirts.picSRCSlug}
           imageSrc={shirts.picSRC}
-          imageName={shirts._id}
+          imageName={shirts.picSRCSlug}
         />
         <StyledButton
           type="button"
