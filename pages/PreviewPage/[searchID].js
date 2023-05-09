@@ -6,13 +6,30 @@ import PreviewPicture from "../../components/PreviewPicture";
 import { saveAs } from "file-saver";
 import { css } from "styled-components";
 import useSWR from "swr";
+import useSWRMutation from "swr/mutation";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
+
+async function sendRequest(url, { arg: shirts }) {
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...shirts, searchID }),
+    });
+    const { status } = await response.json();
+  } catch (error) {
+    console.error("Error in sendRequest:", error);
+  }
+}
 
 export default function PreviewPage() {
   const router = useRouter();
   const { searchID } = router.query;
   const option = router.query.option;
+  const { trigger } = useSWRMutation("/api/openai/variation", sendRequest);
 
   const {
     data: shirts,
@@ -27,7 +44,7 @@ export default function PreviewPage() {
   }
 
   const downloadImage = () => {
-    saveAs(shirts.picSRC, `${shirts._id}.png`);
+    saveAs(shirts.picSRC, shirts.picSRCSlug);
   };
 
   function handlePrint() {
@@ -35,6 +52,7 @@ export default function PreviewPage() {
   }
 
   function handleOnClick() {
+    trigger(shirts.picSRC);
     router.push(`/Variations/${searchID}`);
   }
   console.log(shirts);
@@ -43,9 +61,9 @@ export default function PreviewPage() {
       <Header />
       <Container>
         <PreviewPicture
-          key={shirts._id}
+          key={shirts.picSRCSlug}
           imageSrc={shirts.picSRC}
-          imageName={shirts._id}
+          imageName={shirts.picSRCSlug}
         />
         <StyledButton
           type="button"

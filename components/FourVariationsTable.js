@@ -13,7 +13,7 @@ export default function FourPicsTable() {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(searchID ? `/api/ChooseVariation/${searchID}` : null, fetcher);
+  } = useSWR(searchID ? `/api/openai/variations/${searchID}` : null, fetcher);
 
   if (isLoading || !shirts) {
     return <div>loading...</div>;
@@ -24,38 +24,46 @@ export default function FourPicsTable() {
   return (
     <>
       <FourPicsContainer key={shirts.picSRC}>
-        <StyledA href={`/PreviewPage/${shirts.variant1slug}?option=optionB`}>
+        <StyledA
+          href={`/PreviewPage/${shirts.variationSRCslug}?option=optionB`}
+        >
           <StyledImage
             alt="image number 1"
-            src={shirts.variant1}
+            src={shirts.variationSRC}
             width="400"
             height="400"
             $fourpictures
           />
         </StyledA>
-        <StyledA href={`/PreviewPage/${shirts.variant2slug}?option=optionB`}>
+        <StyledA
+          href={`/PreviewPage/${shirts.variationSRCslug}?option=optionB`}
+        >
           <StyledImage
             $fourpictures
             alt="image number 2"
-            src={shirts.variant2}
+            src={shirts.variationSRC}
             width="400"
             height="400"
           />
         </StyledA>
-        <StyledA href={`/PreviewPage/${shirts.variant3slug}?option=optionB`}>
+        <StyledA
+          href={`/PreviewPage/${shirts.variationSRCslug}?option=optionB`}
+        >
           <StyledImage
             $fourpictures
             alt="image number 3"
-            src={shirts.variant3}
+            src={shirts.variationSRC}
             width="400"
             height="400"
           />
         </StyledA>
-        <StyledA href={`/PreviewPage/${shirts.variant4slug}?option=optionB`}>
+        <StyledA
+          href={`/PreviewPage/${shirts.variationSRCslug}?option=optionB`}
+        >
           <StyledImage
             $fourpictures
             alt="image number 4"
-            src={shirts.variant4}
+            src={shirts.variationSRC}
             width="400"
             height="400"
           />
