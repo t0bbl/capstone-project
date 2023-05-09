@@ -10,14 +10,14 @@ import useSWRMutation from "swr/mutation";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-async function sendRequest(url, { arg: shirts }) {
+async function sendRequest(url, { arg, searchID }) {
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ...shirts, searchID }),
+      body: JSON.stringify({ arg, searchID }),
     });
     const { status } = await response.json();
   } catch (error) {
@@ -52,7 +52,7 @@ export default function PreviewPage() {
   }
 
   function handleOnClick() {
-    trigger(shirts.picSRC);
+    trigger(searchID);
     router.push(`/Variations/${searchID}`);
   }
   console.log(shirts);

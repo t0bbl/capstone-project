@@ -9,15 +9,15 @@ export default async function handler(req, res) {
       const searchID = req.query.searchID;
       const matchedShirt = await Shirt.findOne({
         $or: [
-          { "pic1._id": searchID },
-          { "pic2._id": searchID },
-          { "pic3._id": searchID },
-          { "pic4._id": searchID },
+          { "pic1.picSRCSlug": searchID },
+          { "pic2.picSRCSlug": searchID },
+          { "pic3.picSRCSlug": searchID },
+          { "pic4.picSRCSlug": searchID },
         ],
       });
 
       const matchedPic = ["pic1", "pic2", "pic3", "pic4"].find((picKey) => {
-        return matchedShirt[picKey]._id.toString() === searchID;
+        return matchedShirt[picKey].picSRCSlug === searchID;
       });
 
       return res.status(200).json(matchedShirt[matchedPic]);

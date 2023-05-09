@@ -33,15 +33,14 @@ async function fetchImages(
     const imageData = response.data.data;
     resp.status(200).json({ image: imageData });
     const formattedData = imageData.reduce((acc, item, index) => {
-      const slugPattern = /\/([\w-]+)$/;
+      const slugPattern = /img-([\w-]+)\.png/;
       const match = item.url.match(slugPattern);
       const slug = match ? match[1] : "";
-      console.log(slug);
-      acc[`pic${index + 1}`] = { picSRC: item.url, picSRCslug: slug };
+      acc[`pic${index + 1}`] = { picSRC: item.url, picSRCSlug: slug };
       return acc;
     }, {});
     try {
-      await Shirt.findOneAndUpdate(
+      const updatedShirt = await Shirt.findOneAndUpdate(
         { searchID: searchID },
         {
           $set: {
@@ -50,6 +49,7 @@ async function fetchImages(
         },
         { upsert: true, new: true }
       );
+      console.log("Updated shirt:", updatedShirt);
     } catch (error) {
       console.error("Error updating data in MongoDB:", error);
     }
