@@ -55,6 +55,7 @@ export default function PreviewPage() {
     trigger(shirts.picSRC);
     router.push(`/Variations/${searchID}`);
   }
+  console.log(shirts);
   return (
     <>
       <Header />
