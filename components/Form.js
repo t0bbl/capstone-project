@@ -4,27 +4,17 @@ import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
 
-async function sendRequest(url, { arg: shirtData }) {
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(shirtData),
-  });
-  const { status } = await response.json();
-}
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export default function Form() {
   const router = useRouter();
-  const { trigger } = useSWRMutation("/api/Shirts", sendRequest);
+  const { trigger } = useSWRMutation("/api/Shirts", fetcher);
   const searchID = crypto.randomBytes(16).toString("hex");
 
   function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const shirtData = Object.fromEntries(formData);
-    shirtData.searchID = searchID;
 
     fetch("/api/openai", {
       method: "POST",

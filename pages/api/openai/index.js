@@ -4,15 +4,18 @@ import Shirt from "@/db/models/Shirt";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { keywordOne, keywordTwo, keywordThree, searchID } = req.body;
-    await fetchImages(res, { keywordOne, keywordTwo, keywordThree, searchID });
+    await fetchImages(keywordOne, keywordTwo, keywordThree, searchID, res);
   } else {
     res.status(405).send("Method not allowed");
   }
 }
 
 async function fetchImages(
-  res,
-  { keywordOne, keywordTwo, keywordThree, searchID }
+  keywordOne,
+  keywordTwo,
+  keywordThree,
+  searchID,
+  res
 ) {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
@@ -21,29 +24,28 @@ async function fetchImages(
   try {
     const response = await openai.createImage({
       prompt:
-        "give me a design with a " +
+        "give me a design with " +
         keywordOne +
-        " and a " +
+        " and " +
         keywordTwo +
-        " and a " +
+        " and " +
         keywordThree,
       n: 4,
       size: "1024x1024",
     });
-    const imageData = response.data;
+    const imageData = response.data.data;
     res.status(200).json({ image: imageData.data });
-    console.log(imageData);
-    const formattedData = imageData.data.reduce((acc, item, index) => {
+
+    const formattedData = imageData.reduce((acc, item, index) => {
       const slugPattern = /\/([\w-]+)$/;
       const match = item.url.match(slugPattern);
       const slug = match ? match[1] : "";
-      console.log(slug);
       acc[`pic${index + 1}`] = { picSRC: item.url, picSRCslug: slug };
       return acc;
     }, {});
 
     try {
-      await Shirt.find(
+      await Shirt.findOneAndUpdate(
         { searchID: searchID },
         {
           $set: {
@@ -58,5 +60,4 @@ async function fetchImages(
   } catch (error) {
     console.error("Error creating image with OpenAI API:", error);
   }
-  res.status(500).json({ error: "Failed to create image with OpenAI API" });
 }
