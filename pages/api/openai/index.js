@@ -39,6 +39,8 @@ async function fetchImages(
       acc[`pic${index + 1}`] = { picSRC: item.url, picSRCSlug: slug };
       return acc;
     }, {});
+    console.log(JSON.stringify(formattedData) + "isformattedData working!!!!!");
+
     try {
       const updatedShirt = await Shirt.findOneAndUpdate(
         { searchID: searchID },
@@ -49,7 +51,6 @@ async function fetchImages(
         },
         { upsert: true, new: true }
       );
-      console.log("Updated shirt:", updatedShirt);
     } catch (error) {
       console.error("Error updating data in MongoDB:", error);
     }

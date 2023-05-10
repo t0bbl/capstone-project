@@ -10,14 +10,14 @@ import useSWRMutation from "swr/mutation";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-async function sendRequest(url, { arg, searchID }) {
+async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ arg, searchID }),
+      body: JSON.stringify({ arg, searchID, picSRC, picSRCSlug }),
     });
     const { status } = await response.json();
   } catch (error) {
@@ -29,13 +29,13 @@ export default function PreviewPage() {
   const router = useRouter();
   const { searchID } = router.query;
   const option = router.query.option;
-  const { trigger } = useSWRMutation("/api/openai/variation", sendRequest);
+  const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
 
   const {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(searchID ? `/api/ChooseVariation/${searchID}` : null, fetcher);
+  } = useSWR(searchID ? `/api/ChooseVariation/${searchID[1]}` : null, fetcher);
   if (isLoading || !shirts) {
     return <div>loading...</div>;
   }
@@ -44,26 +44,28 @@ export default function PreviewPage() {
   }
 
   const downloadImage = () => {
-    saveAs(shirts.picSRC, shirts.picSRCSlug);
+    saveAs(picSRC, picSRCSlug);
   };
+
+  const picSRC = shirts.picSRC;
+  const picSRCSlug = shirts.picSRCSlug;
 
   function handlePrint() {
     alert("you printed your Shirt!");
   }
 
   function handleOnClick() {
-    trigger(searchID);
-    router.push(`/Variations/${searchID}`);
+    trigger({ searchID, picSRC, picSRCSlug });
+    router.push(`/Variations/${searchID[0]}`);
   }
-  console.log(shirts);
   return (
     <>
       <Header />
       <Container>
         <PreviewPicture
-          key={shirts.picSRCSlug}
-          imageSrc={shirts.picSRC}
-          imageName={shirts.picSRCSlug}
+          key={picSRCSlug}
+          imageSrc={picSRC}
+          imageName={picSRCSlug}
         />
         <StyledButton
           type="button"
