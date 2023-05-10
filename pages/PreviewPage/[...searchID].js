@@ -6,19 +6,38 @@ import PreviewPicture from "../../components/PreviewPicture";
 import { saveAs } from "file-saver";
 import { css } from "styled-components";
 import useSWR from "swr";
+import useSWRMutation from "swr/mutation";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
+
+async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ arg, searchID, picSRC, picSRCSlug }),
+    });
+    const { status } = await response.json();
+  } catch (error) {
+    console.error("Error in sendRequest:", error);
+  }
+}
 
 export default function PreviewPage() {
   const router = useRouter();
   const { searchID } = router.query;
   const option = router.query.option;
+  const variant = router.query.variant;
 
+  const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
   const {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(searchID ? `/api/ChooseVariation/${searchID}` : null, fetcher);
+  } = useSWR(searchID ? `/api/ChooseVariation/${searchID[1]}` : null, fetcher);
+
   if (isLoading || !shirts) {
     return <div>loading...</div>;
   }
@@ -27,15 +46,19 @@ export default function PreviewPage() {
   }
 
   const downloadImage = () => {
-    saveAs(shirts.picSRC, shirts.picSRCSlug);
+    saveAs(picSRC, picSRCSlug);
   };
+
+  const picSRC = shirts.picSRC;
+  const picSRCSlug = shirts.picSRCSlug;
 
   function handlePrint() {
     alert("you printed your Shirt!");
   }
 
-  function handleOnClick() {
-    router.push(`/Variations/${searchID}`);
+  async function handleOnClick() {
+    await trigger({ searchID, picSRC, picSRCSlug });
+    router.push(`/Variations/${searchID[0]}`);
   }
 
   return (
@@ -43,9 +66,9 @@ export default function PreviewPage() {
       <Header />
       <Container>
         <PreviewPicture
-          key={shirts.picSRCSlug}
-          imageSrc={shirts.picSRC}
-          imageName={shirts.picSRCSlug}
+          key={picSRCSlug}
+          imageSrc={picSRC}
+          imageName={picSRCSlug}
         />
         <StyledButton
           type="button"

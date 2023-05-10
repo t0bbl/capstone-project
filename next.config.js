@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "*.pngtree.com",
       },
+      {
+        protocol: "https",
+        hostname: "oaidalleapiprodscus.blob.core.windows.net",
+      },
     ],
   },
   compiler: {

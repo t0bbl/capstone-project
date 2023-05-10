@@ -13,7 +13,7 @@ export default function FourPicsTable() {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(searchID ? `/api/ChooseVariation/${searchID}` : null, fetcher);
+  } = useSWR(searchID ? `/api/${searchID}` : null, fetcher);
 
   if (isLoading || !shirts) {
     return <div>loading...</div>;
@@ -23,44 +23,54 @@ export default function FourPicsTable() {
   }
   return (
     <>
-      <FourPicsContainer key={shirts.picSRC}>
-        <StyledA href={`/PreviewPage/${shirts.variant1slug}?option=optionB`}>
-          <StyledImage
-            alt="image number 1"
-            src={shirts.variant1}
-            width="400"
-            height="400"
-            $fourpictures
-          />
-        </StyledA>
-        <StyledA href={`/PreviewPage/${shirts.variant2slug}?option=optionB`}>
-          <StyledImage
-            $fourpictures
-            alt="image number 2"
-            src={shirts.variant2}
-            width="400"
-            height="400"
-          />
-        </StyledA>
-        <StyledA href={`/PreviewPage/${shirts.variant3slug}?option=optionB`}>
-          <StyledImage
-            $fourpictures
-            alt="image number 3"
-            src={shirts.variant3}
-            width="400"
-            height="400"
-          />
-        </StyledA>
-        <StyledA href={`/PreviewPage/${shirts.variant4slug}?option=optionB`}>
-          <StyledImage
-            $fourpictures
-            alt="image number 4"
-            src={shirts.variant4}
-            width="400"
-            height="400"
-          />
-        </StyledA>
-      </FourPicsContainer>
+      {shirts.map((shirt) => (
+        <FourPicsContainer key={shirt.picSRC}>
+          <StyledA
+            href={`/PreviewPage/${searchID}/${shirt.variation1.picSRCSlug}?option=optionB&variant=variant1`}
+          >
+            <StyledImage
+              alt="image number 1"
+              src={shirt.variation1.picSRC}
+              width="400"
+              height="400"
+              $fourpictures
+            />
+          </StyledA>
+          <StyledA
+            href={`/PreviewPage/${searchID}/${shirt.variation2.picSRCSlug}?option=optionB&variant=variant2`}
+          >
+            <StyledImage
+              $fourpictures
+              alt="image number 2"
+              src={shirt.variation2.picSRC}
+              width="400"
+              height="400"
+            />
+          </StyledA>
+          <StyledA
+            href={`/PreviewPage/${searchID}/${shirt.variation3.picSRCSlug}?option=optionB&variant=variant3`}
+          >
+            <StyledImage
+              $fourpictures
+              alt="image number 3"
+              src={shirt.variation3.picSRC}
+              width="400"
+              height="400"
+            />
+          </StyledA>
+          <StyledA
+            href={`/PreviewPage/${searchID}/${shirt.variation4.picSRCSlug}?option=optionB&variant=variant4`}
+          >
+            <StyledImage
+              $fourpictures
+              alt="image number 4"
+              src={shirt.variation4.picSRC}
+              width="400"
+              height="400"
+            />
+          </StyledA>
+        </FourPicsContainer>
+      ))}
     </>
   );
 }

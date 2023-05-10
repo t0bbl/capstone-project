@@ -13,10 +13,23 @@ export default async function handler(req, res) {
           { "pic2.picSRCSlug": searchID },
           { "pic3.picSRCSlug": searchID },
           { "pic4.picSRCSlug": searchID },
+          { "variation1.picSRCSlug": searchID },
+          { "variation2.picSRCSlug": searchID },
+          { "variation3.picSRCSlug": searchID },
+          { "variation4.picSRCSlug": searchID },
         ],
       });
 
-      const matchedPic = ["pic1", "pic2", "pic3", "pic4"].find((picKey) => {
+      const matchedPic = [
+        "pic1",
+        "pic2",
+        "pic3",
+        "pic4",
+        "variation1",
+        "variation2",
+        "variation3",
+        "variation4",
+      ].find((picKey) => {
         return matchedShirt[picKey].picSRCSlug === searchID;
       });
 
