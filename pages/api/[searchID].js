@@ -17,7 +17,6 @@ export default async function handler(req, res) {
     try {
       const shirtData = req.body;
       const shirt = new Shirt(shirtData);
-      console.log(shirt);
       await shirt.save();
       res.status(201).json({ status: "shirt created" });
     } catch (error) {
