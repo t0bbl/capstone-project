@@ -28,20 +28,24 @@ async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
 export default function PreviewPage() {
   const router = useRouter();
   const { searchID } = router.query;
+  console.log(searchID);
   const option = router.query.option;
-  const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
+  const variant = router.query.variant;
 
+  const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
   const {
     data: shirts,
     isLoading,
     error,
   } = useSWR(searchID ? `/api/ChooseVariation/${searchID[1]}` : null, fetcher);
+
   if (isLoading || !shirts) {
     return <div>loading...</div>;
   }
   if (error) {
     return <div>error...</div>;
   }
+  console.log(shirts, "this is shirts");
 
   const downloadImage = () => {
     saveAs(picSRC, picSRCSlug);
@@ -58,6 +62,7 @@ export default function PreviewPage() {
     trigger({ searchID, picSRC, picSRCSlug });
     router.push(`/Variations/${searchID[0]}`);
   }
+
   return (
     <>
       <Header />

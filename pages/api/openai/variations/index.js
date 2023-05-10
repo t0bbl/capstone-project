@@ -4,7 +4,6 @@ import Shirt from "@/db/models/Shirt";
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { picSRC, searchID } = req.body.arg;
-    console.log("Request body:", req.body); // this gives me the right request body with searchID
 
     await fetchImages(res, { picSRC, searchID });
   } else {
@@ -25,27 +24,22 @@ async function fetchImages(resp, { picSRC, searchID }) {
     });
     const imageData = response.data.data;
     resp.status(200).json({ image: imageData });
-    const formattedData = {
-      variation: imageData.reduce((acc, item, index) => {
-        const slugPattern = /img-([\w-]+)\.png/;
-        const match = item.url.match(slugPattern);
-        const slug = match ? match[1] : "";
-        return {
-          ...acc,
-          [`variant${index + 1}`]: item.url,
-          [`variant${index + 1}SRCSlug`]: slug,
-        };
-      }, {}),
-    };
+    const formattedData = imageData.reduce((acc, item, index) => {
+      const slugPattern = /img-([\w-]+)\.png/;
+      const match = item.url.match(slugPattern);
+      const slug = match ? match[1] : "";
+      acc[`variation${index + 1}`] = { picSRC: item.url, picSRCSlug: slug };
+      console.log(acc);
+      return acc;
+    }, {});
     try {
-      console.log(`searchID: ${searchID[0]}`);
       const updatedShirt = await Shirt.findOneAndUpdate(
         {
           searchID: searchID[0],
         },
         {
           $set: {
-            variation: formattedData.variation,
+            ...formattedData,
           },
         },
         { upsert: true, new: true }

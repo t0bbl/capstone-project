@@ -21,51 +21,50 @@ export default function FourPicsTable() {
   if (error) {
     return <div>error...</div>;
   }
-  console.log(shirts, "this is shirts");
   return (
     <>
       {shirts.map((shirt) => (
         <FourPicsContainer key={shirt.picSRC}>
           <StyledA
-            href={`/PreviewPage/${shirt.variation.variant1SRCSlug}?option=optionB`}
+            href={`/PreviewPage/${searchID}/${shirt.pic1.picSRCSlug}?option=optionB&variant=variant1`}
           >
             <StyledImage
               alt="image number 1"
-              src={shirt.variation.variant1}
+              src={shirt.variation1.picSRC}
               width="400"
               height="400"
               $fourpictures
             />
           </StyledA>
           <StyledA
-            href={`/PreviewPage/${searchID}/${shirt.variation.variant2SRCSlug}?option=optionB`}
+            href={`/PreviewPage/${searchID}/${shirt.pic2.picSRCSlug}?option=optionB&variant=variant2`}
           >
             <StyledImage
               $fourpictures
               alt="image number 2"
-              src={shirt.variation.variant2}
+              src={shirt.variation2.picSRC}
               width="400"
               height="400"
             />
           </StyledA>
           <StyledA
-            href={`/PreviewPage/${searchID}/${shirt.variation.variant3SRCSlug}?option=optionB`}
+            href={`/PreviewPage/${searchID}/${shirt.pic3.picSRCSlug}?option=optionB&variant=variant3`}
           >
             <StyledImage
               $fourpictures
               alt="image number 3"
-              src={shirt.variation.variant3}
+              src={shirt.variation3.picSRC}
               width="400"
               height="400"
             />
           </StyledA>
           <StyledA
-            href={`/PreviewPage/${searchID}/${shirt.variation.variant4SRCSlug}?option=optionB`}
+            href={`/PreviewPage/${searchID}/${shirt.pic4.picSRCSlug}?option=optionB&variant=variant4`}
           >
             <StyledImage
               $fourpictures
               alt="image number 4"
-              src={shirt.variation.variant4}
+              src={shirt.variation4.picSRC}
               width="400"
               height="400"
             />

@@ -39,7 +39,6 @@ async function fetchImages(
       acc[`pic${index + 1}`] = { picSRC: item.url, picSRCSlug: slug };
       return acc;
     }, {});
-    console.log(JSON.stringify(formattedData) + "isformattedData working!!!!!");
 
     try {
       const updatedShirt = await Shirt.findOneAndUpdate(
