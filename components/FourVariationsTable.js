@@ -26,7 +26,7 @@ export default function FourPicsTable() {
       {shirts.map((shirt) => (
         <FourPicsContainer key={shirt.picSRC}>
           <StyledA
-            href={`/PreviewPage/${searchID}/${shirt.pic1.picSRCSlug}?option=optionB&variant=variant1`}
+            href={`/PreviewPage/${searchID}/${shirt.variation1.picSRCSlug}?option=optionB&variant=variant1`}
           >
             <StyledImage
               alt="image number 1"
@@ -37,7 +37,7 @@ export default function FourPicsTable() {
             />
           </StyledA>
           <StyledA
-            href={`/PreviewPage/${searchID}/${shirt.pic2.picSRCSlug}?option=optionB&variant=variant2`}
+            href={`/PreviewPage/${searchID}/${shirt.variation2.picSRCSlug}?option=optionB&variant=variant2`}
           >
             <StyledImage
               $fourpictures
@@ -48,7 +48,7 @@ export default function FourPicsTable() {
             />
           </StyledA>
           <StyledA
-            href={`/PreviewPage/${searchID}/${shirt.pic3.picSRCSlug}?option=optionB&variant=variant3`}
+            href={`/PreviewPage/${searchID}/${shirt.variation3.picSRCSlug}?option=optionB&variant=variant3`}
           >
             <StyledImage
               $fourpictures
@@ -59,7 +59,7 @@ export default function FourPicsTable() {
             />
           </StyledA>
           <StyledA
-            href={`/PreviewPage/${searchID}/${shirt.pic4.picSRCSlug}?option=optionB&variant=variant4`}
+            href={`/PreviewPage/${searchID}/${shirt.variation4.picSRCSlug}?option=optionB&variant=variant4`}
           >
             <StyledImage
               $fourpictures

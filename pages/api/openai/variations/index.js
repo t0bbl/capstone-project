@@ -18,7 +18,7 @@ async function fetchImages(resp, { picSRC, searchID }) {
   const openai = new OpenAIApi(configuration);
   try {
     const response = await openai.createImage({
-      prompt: "give me 4 variations of this design: " + picSRC,
+      prompt: "variations of: " + picSRC,
       n: 4,
       size: "1024x1024",
     });
