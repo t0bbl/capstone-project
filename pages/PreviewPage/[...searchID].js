@@ -28,7 +28,6 @@ async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
 export default function PreviewPage() {
   const router = useRouter();
   const { searchID } = router.query;
-  console.log(searchID);
   const option = router.query.option;
   const variant = router.query.variant;
 
@@ -45,7 +44,6 @@ export default function PreviewPage() {
   if (error) {
     return <div>error...</div>;
   }
-  console.log(shirts, "this is shirts");
 
   const downloadImage = () => {
     saveAs(picSRC, picSRCSlug);

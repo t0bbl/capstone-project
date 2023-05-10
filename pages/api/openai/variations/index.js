@@ -23,13 +23,12 @@ async function fetchImages(resp, { picSRC, searchID }) {
       size: "1024x1024",
     });
     const imageData = response.data.data;
-    resp.status(200).json({ image: imageData });
+    await resp.status(200).json({ image: imageData });
     const formattedData = imageData.reduce((acc, item, index) => {
       const slugPattern = /img-([\w-]+)\.png/;
       const match = item.url.match(slugPattern);
       const slug = match ? match[1] : "";
       acc[`variation${index + 1}`] = { picSRC: item.url, picSRCSlug: slug };
-      console.log(acc);
       return acc;
     }, {});
     try {
