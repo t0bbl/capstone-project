@@ -56,8 +56,8 @@ export default function PreviewPage() {
     alert("you printed your Shirt!");
   }
 
-  function handleOnClick() {
-    trigger({ searchID, picSRC, picSRCSlug });
+  async function handleOnClick() {
+    await trigger({ searchID, picSRC, picSRCSlug });
     router.push(`/Variations/${searchID[0]}`);
   }
 

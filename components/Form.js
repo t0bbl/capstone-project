@@ -3,6 +3,7 @@ import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
+import { useState } from "react";
 
 async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
@@ -17,16 +18,21 @@ async function sendRequest(url, { arg: shirtData }) {
 
 export default function Form() {
   const router = useRouter();
-  const { trigger } = useSWRMutation("/api/Shirts", sendRequest);
+  const { trigger, isMutating } = useSWRMutation("/api/Shirts", sendRequest);
+  const [isLoading, setIsLoading] = useState(false);
   const searchID = crypto.randomBytes(16).toString("hex");
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
     const shirtData = Object.fromEntries(formData);
     shirtData.searchID = searchID;
 
-    fetch("/api/openai", {
+    await trigger(shirtData);
+
+    setIsLoading(true);
+
+    await fetch("/api/openai", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,9 +44,16 @@ export default function Form() {
         keywordThree: shirtData.keywordThree,
       }),
     });
-    trigger(shirtData);
+
+    setIsLoading(false);
+
     router.push(`/ChooseFour/${searchID}`);
   }
+
+  if (isLoading || isMutating) {
+    return <div>loading...</div>;
+  }
+
   return (
     <FormContainer onSubmit={handleSubmit}>
       <label htmlFor="keywordOne">First keyword</label>
