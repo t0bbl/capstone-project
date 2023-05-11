@@ -1,6 +1,10 @@
 import { Configuration, OpenAIApi } from "openai";
 import Shirt from "@/db/models/Shirt";
 
+export const config = {
+  runtime: "edge",
+};
+
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { keywordOne, keywordTwo, keywordThree, searchID } = req.body;
