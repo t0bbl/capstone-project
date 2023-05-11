@@ -4,6 +4,10 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 
+export const config = {
+  runtime: "edge",
+};
+
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function FourPicsTable() {

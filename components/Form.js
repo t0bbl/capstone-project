@@ -5,6 +5,10 @@ import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
 import { useState } from "react";
 
+export const config = {
+  runtime: "edge",
+};
+
 async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
     method: "POST",

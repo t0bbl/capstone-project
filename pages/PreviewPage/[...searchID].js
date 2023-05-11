@@ -8,6 +8,10 @@ import { css } from "styled-components";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
+export const config = {
+  runtime: "edge",
+};
+
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
