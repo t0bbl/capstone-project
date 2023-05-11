@@ -6,10 +6,13 @@ export default createGlobalStyle`
   *::after {
     box-sizing: border-box;
   }
-
-  body {
-    margin: 0;
-    font-family: system-ui;
-    background-color: yellow;
+   body {
+    width: 100%;  
+    height: 100%;
+    margin: 0;    
+    padding: 0;
+    background: yellow;
+    overflow: hidden;
   }
+
 `;

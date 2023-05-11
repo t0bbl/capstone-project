@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { StyledA } from "./StyledLink";
 
 const Headline = styled.header`
+  width: 120%;
+  height: 120%;
   display: flex;
   align-items: center;
   justify-content: center;

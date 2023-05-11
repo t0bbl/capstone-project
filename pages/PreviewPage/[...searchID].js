@@ -93,6 +93,8 @@ export default function PreviewPage() {
 }
 
 const Container = styled.div`
+  width: 120%;
+  height: 120%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

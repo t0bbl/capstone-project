@@ -91,6 +91,8 @@ export default function Form() {
 }
 
 const FormContainer = styled.form`
+  width: 120%;
+  height: 120%;
   gap: 0.5rem;
   background-color: yellow;
   color: teal;

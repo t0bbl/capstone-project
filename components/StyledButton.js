@@ -16,8 +16,8 @@ export const StyledButton = styled.button`
     props.generate &&
     css`
       position: absolute;
-      bottom: 0.5rem;
-      right: 0.5rem;
+      bottom: 1vw;
+      right: 1vw;
     `}
   ${(props) =>
     props.center &&
