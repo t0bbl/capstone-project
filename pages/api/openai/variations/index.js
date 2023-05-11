@@ -1,5 +1,8 @@
 import { Configuration, OpenAIApi } from "openai";
 import Shirt from "@/db/models/Shirt";
+import { promisify } from "util";
+const fs = require("fs");
+const stream = require("stream");
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -15,13 +18,20 @@ async function fetchImages(resp, { picSRC, searchID }) {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   });
+
+  const pipeline = promisify(stream.pipeline);
+  async function fetchImageForAi() {
+    const response = await fetch(picSRC);
+    await pipeline(response.body, fs.createWriteStream("variations.png"));
+  }
+  await fetchImageForAi();
   const openai = new OpenAIApi(configuration);
   try {
-    const response = await openai.createImage({
-      prompt: "variations of: " + picSRC,
-      n: 4,
-      size: "1024x1024",
-    });
+    const response = await openai.createImageVariation(
+      fs.createReadStream("variations.png"),
+      4,
+      "1024x1024"
+    );
     const imageData = response.data.data;
     await resp.status(200).json({ image: imageData });
     const formattedData = imageData.reduce((acc, item, index) => {
