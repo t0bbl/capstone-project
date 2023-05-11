@@ -7,13 +7,13 @@ const Headline = styled.h1`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 2px solid lightgray;
   font-weight: 300;
   font-size: 1.5rem;
+  font-size: 5vh;
   margin: 0;
   padding: 1rem 0rem;
   color: cyan;
-  background-image: linear-gradient(135deg, gray 40%, black);
+  background-image: linear-gradient(135deg, black 40%, rgba(255, 99, 71, 0));
 `;
 
 export default function Header() {

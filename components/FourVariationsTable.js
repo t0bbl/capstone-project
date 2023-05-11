@@ -78,7 +78,7 @@ export default function FourPicsTable() {
 const FourPicsContainer = styled.div`
   width: 120%;
   height: 120%;
-  background-color: yellow;
+  background-color: none;
   display: grid;
   grid-template-columns: auto auto;
   grid-row: auto auto;

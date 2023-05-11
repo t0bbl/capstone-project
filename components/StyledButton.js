@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 export const StyledButton = styled.button`
-  background-image: linear-gradient(135deg, gray 40%, black);
+  background-color: transparent;
   padding: 0.8rem;
   color: cyan;
   text-decoration: none;
@@ -9,16 +9,16 @@ export const StyledButton = styled.button`
   border: none;
   font-size: inherit;
   transform: skew(10deg);
-  box-shadow: 2px 2px 5px gray;
+  box-shadow: 2px 2px 10px cyan;
   &:active {
-    box-shadow: 2px 2px 5px cyan;
+    box-shadow: 2px 2px 20px cyan;
   }
   ${(props) =>
     props.generate &&
     css`
       position: absolute;
-      bottom: 1vw;
-      right: 1vw;
+      bottom: 30px;
+      right: 10px;
     `}
   ${(props) =>
     props.center &&

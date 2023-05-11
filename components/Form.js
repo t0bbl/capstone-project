@@ -94,7 +94,6 @@ const FormContainer = styled.form`
   width: 120%;
   height: 120%;
   gap: 0.5rem;
-  background-color: none;
   color: teal;
   display: flex;
   flex-direction: column;
@@ -106,9 +105,8 @@ const FormContainer = styled.form`
 
 const Input = styled.input`
   padding: 0.5rem;
-  border: 3px solid black;
-  border-radius: 0.1rem;
-  background-image: linear-gradient(135deg, gray 40%, black);
+  box-shadow: 2px 2px 5px cyan;
+  background-color: transparent;
   color: cyan;
   width: 90%;
   margin: 0 5%;
@@ -123,7 +121,6 @@ const Input = styled.input`
   &:focus {
     outline: none;
     color: lightcyan;
-
-    box-shadow: 2px 2px 5px cyan;
+    box-shadow: 2px 2px 10px cyan;
   }
 `;
