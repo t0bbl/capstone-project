@@ -9,7 +9,7 @@ import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 
 export const config = {
-  runtime: "edge",
+  runtime: "experimental-edge",
 };
 
 const fetcher = (url) => fetch(url).then((res) => res.json());

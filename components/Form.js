@@ -6,7 +6,7 @@ import useSWRMutation from "swr/mutation";
 import { useState } from "react";
 
 export const config = {
-  runtime: "edge",
+  runtime: "experimental-edge",
 };
 
 async function sendRequest(url, { arg: shirtData }) {

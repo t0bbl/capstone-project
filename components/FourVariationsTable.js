@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 
 export const config = {
-  runtime: "edge",
+  runtime: "experimental-edge",
 };
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
