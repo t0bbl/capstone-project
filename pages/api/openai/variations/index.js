@@ -1,20 +1,18 @@
 import { Configuration, OpenAIApi } from "openai";
 import Shirt from "@/db/models/Shirt";
-import { promisify } from "util";
 const fs = require("fs");
-const stream = require("stream");
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { picSRC, searchID } = req.body.arg;
-
-    await fetchImages(res, { picSRC, searchID });
+    const newPicSRC = await handlePicture(picSRC);
+    await fetchImages(res, { newPicSRC, searchID });
   } else {
     res.status(405).send("Method not allowed");
   }
 }
 
-async function handlePicture() {
+async function handlePicture(picSRC) {
   const formData = new FormData();
   formData.append("file", picSRC);
   formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
@@ -27,14 +25,13 @@ async function handlePicture() {
   );
   const json = await response.json();
   const newPicSRC = json.url;
+  return newPicSRC;
 }
 
-async function fetchImages(resp, { newPicSRC, searchID }) {
+async function fetchImages(resp, { searchID, newPicSRC }) {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   });
-
-  await handlePicture();
 
   const openai = new OpenAIApi(configuration);
   try {
