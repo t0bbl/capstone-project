@@ -10,13 +10,10 @@ export default function App({ Component, pageProps }) {
       pix[i].style.animationDelay = Math.ceil(Math.random() * 5000) + "ms";
     }
   });
-
   return (
     <>
       <Background />
-
       <GlobalStyle />
-
       <Component {...pageProps} />
     </>
   );
