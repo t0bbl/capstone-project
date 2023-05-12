@@ -1,6 +1,5 @@
 import { Configuration, OpenAIApi } from "openai";
 import Shirt from "@/db/models/Shirt";
-const fs = require("fs");
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
