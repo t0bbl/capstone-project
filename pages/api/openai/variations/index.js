@@ -1,24 +1,29 @@
 import { Configuration, OpenAIApi } from "openai";
 import Shirt from "@/db/models/Shirt";
 const fs = require("fs");
-const download = require("image-downloader");
+import got from "got";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { picSRC, searchID, picSRCSlug } = req.body.arg;
     const newPicSRC = await handlePicture(picSRC, picSRCSlug);
-    await fetchImages(res, { newPicSRC, searchID });
+    await fetchImages(res, { picSRC, picSRCSlug, searchID });
   } else {
     res.status(405).send("Method not allowed");
   }
 }
 
-async function handlePicture(picSRC) {
-  return download.image({
-    url: picSRC,
-    dest: `../../tmp/temp.png`,
-  });
-}
+// async function handlePicture(picSRC) {
+//   const response = await got(picSRC);
+//   console.log(response, "response");
+// }
+
+// async function handlePicture(picSRC) {
+//   return download.image({
+//     url: picSRC,
+//     dest: `../../tmp/temp.png`,
+//   });
+// }
 // async function handlePicture(picSRC) {
 //   const formData = new FormData();
 //   formData.append("file", picSRC);
@@ -35,7 +40,7 @@ async function handlePicture(picSRC) {
 //   return newPicSRC;
 // }
 
-async function fetchImages(resp, { searchID, newPicSRC }) {
+async function fetchImages(resp, { searchID, picSRC, picSRCSlug }) {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   });
@@ -43,7 +48,7 @@ async function fetchImages(resp, { searchID, newPicSRC }) {
   const openai = new OpenAIApi(configuration);
   try {
     const response = await openai.createImageVariation(
-      fs.createReadStream(newPicSRC.filename),
+      fs.createReadStream(picSRC),
       4,
       "1024x1024"
     );
