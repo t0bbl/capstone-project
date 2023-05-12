@@ -19,16 +19,31 @@ async function fetchImages(resp, { picSRC, searchID }) {
     apiKey: process.env.OPENAI_API_KEY,
   });
 
-  async function fetchImageForAi() {
-    const pipeline = promisify(stream.pipeline);
-    const response = await fetch(picSRC);
-    await pipeline(
-      response.body,
-      fs.createWriteStream("./public/variations.png", { flags: "w+" })
+  async function handlePicture() {
+    const formData = new FormData();
+    // Append the image file to the FormData object with the key 'file'
+    formData.append("file", picSRC);
+    // Append the upload preset to the FormData object with the key 'upload_preset'
+    // The upload preset is a predefined set of options for uploading images to Cloudinary
+    // You can create one in the Cloudinary dashboard under Settings > Upload > Upload presets
+    formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
+    // Use the fetch API to send a POST request to the Cloudinary upload endpoint
+    // Replace <cloudname> with your own Cloudinary cloud name
+    // https://api.cloudinary.com/v1_1/<cloudname>/upload
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDNAME}/upload`,
+      {
+        method: "POST",
+        body: formData,
+      }
     );
+    // Parse the response as JSON and log it to the console
+    const json = await response.json();
+    console.log(json);
   }
+  handlePicture();
 
-  await fetchImageForAi();
+  await handlePicture();
   const openai = new OpenAIApi(configuration);
   try {
     const response = await openai.createImageVariation(
