@@ -31,7 +31,7 @@ async function fetchImages(resp, { picSRC, searchID }) {
   const openai = new OpenAIApi(configuration);
   try {
     const response = await openai.createImageVariation(
-      fs.createReadStream("variations.png"),
+      fs.createReadStream("./public/variations.png"),
       4,
       "1024x1024"
     );
