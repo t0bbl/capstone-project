@@ -3,25 +3,40 @@ import Shirt from "@/db/models/Shirt";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { picSRC, searchID } = req.body.arg;
-
-    await fetchImages(res, { picSRC, searchID });
+    const { picSRC, searchID, picSRCSlug } = req.body.arg;
+    const bufferToUseWithOpenAI = await handlePicture(picSRC);
+    bufferToUseWithOpenAI.name = "temp.png";
+    await fetchImages(res, {
+      picSRC,
+      picSRCSlug,
+      searchID,
+      bufferToUseWithOpenAI,
+    });
   } else {
     res.status(405).send("Method not allowed");
   }
 }
 
-async function fetchImages(resp, { picSRC, searchID }) {
+const handlePicture = async (url) => {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const arrayBuffer = await blob.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+  return buffer;
+};
+
+async function fetchImages(resp, { searchID, bufferToUseWithOpenAI }) {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   });
+
   const openai = new OpenAIApi(configuration);
   try {
-    const response = await openai.createImage({
-      prompt: "variations of: " + picSRC,
-      n: 4,
-      size: "1024x1024",
-    });
+    const response = await openai.createImageVariation(
+      bufferToUseWithOpenAI,
+      4,
+      "1024x1024"
+    );
     const imageData = response.data.data;
     await resp.status(200).json({ image: imageData });
     const formattedData = imageData.reduce((acc, item, index) => {

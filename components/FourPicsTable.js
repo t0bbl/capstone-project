@@ -26,7 +26,10 @@ export default function FourPicsTable() {
     <>
       {shirts.map((shirt) => (
         <FourPicsContainer key={shirt._id}>
-          <StyledA href={`/PreviewPage/${searchID}/${shirt.pic1.picSRCSlug}`}>
+          <StyledA
+            key={shirt.pic1.picSRCSlug}
+            href={`/PreviewPage/${searchID}/${shirt.pic1.picSRCSlug}`}
+          >
             <StyledImage
               alt="image number 1"
               src={shirt.pic1.picSRC}
@@ -35,7 +38,10 @@ export default function FourPicsTable() {
               $fourpictures
             />
           </StyledA>
-          <StyledA href={`/PreviewPage/${searchID}/${shirt.pic2.picSRCSlug}`}>
+          <StyledA
+            key={shirt.pic2.picSRCSlug}
+            href={`/PreviewPage/${searchID}/${shirt.pic2.picSRCSlug}`}
+          >
             <StyledImage
               alt="image number 2"
               src={shirt.pic2.picSRC}
@@ -44,7 +50,10 @@ export default function FourPicsTable() {
               $fourpictures
             />
           </StyledA>
-          <StyledA href={`/PreviewPage/${searchID}/${shirt.pic3.picSRCSlug}`}>
+          <StyledA
+            key={shirt.pic3.picSRCSlug}
+            href={`/PreviewPage/${searchID}/${shirt.pic3.picSRCSlug}`}
+          >
             <StyledImage
               alt="image number 3"
               src={shirt.pic3.picSRC}
@@ -53,7 +62,10 @@ export default function FourPicsTable() {
               $fourpictures
             />
           </StyledA>
-          <StyledA href={`/PreviewPage/${searchID}/${shirt.pic4.picSRCSlug}`}>
+          <StyledA
+            key={shirt.pic4.picSRCSlug}
+            href={`/PreviewPage/${searchID}/${shirt.pic4.picSRCSlug}`}
+          >
             <StyledImage
               alt="image number 4"
               src={shirt.pic4.picSRC}
