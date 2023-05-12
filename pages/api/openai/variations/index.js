@@ -6,7 +6,6 @@ export default async function handler(req, res) {
     const { picSRC, searchID, picSRCSlug } = req.body.arg;
     const bufferToUseWithOpenAI = await handlePicture(picSRC);
     bufferToUseWithOpenAI.name = "temp.png";
-    console.log(bufferToUseWithOpenAI);
     await fetchImages(res, {
       picSRC,
       picSRCSlug,
