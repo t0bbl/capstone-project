@@ -22,7 +22,10 @@ async function fetchImages(resp, { picSRC, searchID }) {
   const pipeline = promisify(stream.pipeline);
   async function fetchImageForAi() {
     const response = await fetch(picSRC);
-    await pipeline(response.body, fs.createWriteStream("variations.png"));
+    await pipeline(
+      response.body,
+      fs.createWriteStream("./public/variations.png")
+    );
   }
   await fetchImageForAi();
   const openai = new OpenAIApi(configuration);
