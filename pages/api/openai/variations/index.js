@@ -24,7 +24,7 @@ async function fetchImages(resp, { picSRC, searchID }) {
     const response = await fetch(picSRC);
     await pipeline(
       response.body,
-      fs.createWriteStream("./public/variations.png")
+      fs.createWriteStream("./public/variations.png", { flags: "w+" })
     );
   }
 
