@@ -31,7 +31,6 @@ export default function PreviewPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { searchID } = router.query;
   const option = router.query.option;
-  const variant = router.query.variant;
 
   const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
 

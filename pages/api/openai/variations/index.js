@@ -1,11 +1,12 @@
 import { Configuration, OpenAIApi } from "openai";
 import Shirt from "@/db/models/Shirt";
 const fs = require("fs");
+const download = require("image-downloader");
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { picSRC, searchID } = req.body.arg;
-    const newPicSRC = await handlePicture(picSRC);
+    const { picSRC, searchID, picSRCSlug } = req.body.arg;
+    const newPicSRC = await handlePicture(picSRC, picSRCSlug);
     await fetchImages(res, { newPicSRC, searchID });
   } else {
     res.status(405).send("Method not allowed");
@@ -13,20 +14,26 @@ export default async function handler(req, res) {
 }
 
 async function handlePicture(picSRC) {
-  const formData = new FormData();
-  formData.append("file", picSRC);
-  formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
-  const response = await fetch(
-    `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDNAME}/upload`,
-    {
-      method: "POST",
-      body: formData,
-    }
-  );
-  const json = await response.json();
-  const newPicSRC = json.url;
-  return newPicSRC;
+  return download.image({
+    url: picSRC,
+    dest: `../../tmp/temp.png`,
+  });
 }
+// async function handlePicture(picSRC) {
+//   const formData = new FormData();
+//   formData.append("file", picSRC);
+//   formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
+//   const response = await fetch(
+//     `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDNAME}/upload`,
+//     {
+//       method: "POST",
+//       body: formData,
+//     }
+//   );
+//   const json = await response.json();
+//   const newPicSRC = json.url;
+//   return newPicSRC;
+// }
 
 async function fetchImages(resp, { searchID, newPicSRC }) {
   const configuration = new Configuration({
@@ -36,7 +43,7 @@ async function fetchImages(resp, { searchID, newPicSRC }) {
   const openai = new OpenAIApi(configuration);
   try {
     const response = await openai.createImageVariation(
-      fs.createReadStream(newPicSRC),
+      fs.createReadStream(newPicSRC.filename),
       4,
       "1024x1024"
     );
