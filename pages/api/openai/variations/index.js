@@ -1,46 +1,33 @@
 import { Configuration, OpenAIApi } from "openai";
 import Shirt from "@/db/models/Shirt";
 const fs = require("fs");
-import got from "got";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
     const { picSRC, searchID, picSRCSlug } = req.body.arg;
-    const newPicSRC = await handlePicture(picSRC, picSRCSlug);
-    await fetchImages(res, { picSRC, picSRCSlug, searchID });
+    const bufferToUseWithOpenAI = await handlePicture(picSRC);
+    bufferToUseWithOpenAI.name = "temp.png";
+    console.log(bufferToUseWithOpenAI);
+    await fetchImages(res, {
+      picSRC,
+      picSRCSlug,
+      searchID,
+      bufferToUseWithOpenAI,
+    });
   } else {
     res.status(405).send("Method not allowed");
   }
 }
 
-// async function handlePicture(picSRC) {
-//   const response = await got(picSRC);
-//   console.log(response, "response");
-// }
+const handlePicture = async (url) => {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  const arrayBuffer = await blob.arrayBuffer();
+  const buffer = Buffer.from(arrayBuffer);
+  return buffer;
+};
 
-// async function handlePicture(picSRC) {
-//   return download.image({
-//     url: picSRC,
-//     dest: `../../tmp/temp.png`,
-//   });
-// }
-// async function handlePicture(picSRC) {
-//   const formData = new FormData();
-//   formData.append("file", picSRC);
-//   formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
-//   const response = await fetch(
-//     `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDNAME}/upload`,
-//     {
-//       method: "POST",
-//       body: formData,
-//     }
-//   );
-//   const json = await response.json();
-//   const newPicSRC = json.url;
-//   return newPicSRC;
-// }
-
-async function fetchImages(resp, { searchID, picSRC, picSRCSlug }) {
+async function fetchImages(resp, { searchID, bufferToUseWithOpenAI }) {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   });
@@ -48,7 +35,7 @@ async function fetchImages(resp, { searchID, picSRC, picSRCSlug }) {
   const openai = new OpenAIApi(configuration);
   try {
     const response = await openai.createImageVariation(
-      fs.createReadStream(picSRC),
+      bufferToUseWithOpenAI,
       4,
       "1024x1024"
     );
