@@ -19,14 +19,15 @@ async function fetchImages(resp, { picSRC, searchID }) {
     apiKey: process.env.OPENAI_API_KEY,
   });
 
-  const pipeline = promisify(stream.pipeline);
   async function fetchImageForAi() {
+    const pipeline = promisify(stream.pipeline);
     const response = await fetch(picSRC);
     await pipeline(
       response.body,
       fs.createWriteStream("./public/variations.png")
     );
   }
+
   await fetchImageForAi();
   const openai = new OpenAIApi(configuration);
   try {
