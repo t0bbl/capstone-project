@@ -4,15 +4,15 @@ const n = 800; // Or something else
 
 export default function Background() {
   return (
-    <PixelCon>
+    <PixelContainer>
       {[...Array(n)].map((e, i) => (
         <Pixel className="pixel" key={i}></Pixel>
       ))}
-    </PixelCon>
+    </PixelContainer>
   );
 }
 
-const PixelCon = styled.div`
+const PixelContainer = styled.div`
   position: absolute;
   z-index: -100;
   width: 140%;
