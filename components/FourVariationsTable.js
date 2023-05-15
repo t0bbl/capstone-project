@@ -3,7 +3,7 @@ import { StyledA } from "./StyledLink";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import IsLoading from "./IsLoading";
+import IsLoading from "/IsLoading";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
