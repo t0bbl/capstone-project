@@ -32,7 +32,6 @@ async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
 export default function PreviewPage() {
   const [isLoadingState, setIsLoadingState] = useAtom(loading);
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const { searchID } = router.query;
   const option = router.query.option;
 
