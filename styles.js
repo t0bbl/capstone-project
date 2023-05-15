@@ -8,8 +8,11 @@ export default createGlobalStyle`
   }
 
   body {
-    margin: 0;
-    font-family: system-ui;
-    background-color: yellow;
+    width: 100%;  
+    height: 100%;
+    margin: 0;    
+    padding: 0;
+    background: black;
+    overflow: hidden;
   }
 `;

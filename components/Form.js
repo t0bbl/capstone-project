@@ -97,8 +97,9 @@ export default function Form() {
 }
 
 const FormContainer = styled.form`
+  width: 120%;
+  height: 120%;
   gap: 0.5rem;
-  background-color: yellow;
   color: teal;
   display: flex;
   flex-direction: column;
@@ -110,10 +111,9 @@ const FormContainer = styled.form`
 
 const Input = styled.input`
   padding: 0.5rem;
-  border: 3px solid black;
-  border-radius: 0.1rem;
-  background-image: linear-gradient(135deg, teal 40%, indigo);
-  color: yellow;
+  box-shadow: 2px 2px 5px cyan;
+  background-color: transparent;
+  color: cyan;
   width: 90%;
   margin: 0 5%;
   text-align: center;
@@ -121,13 +121,12 @@ const Input = styled.input`
   transform: skew(10deg);
 
   ::placeholder {
-    color: yellow;
+    color: cyan;
     opacity: 0.5;
   }
   &:focus {
     outline: none;
-    color: yellow;
-
-    box-shadow: 2px 2px 5px indigo;
+    color: lightcyan;
+    box-shadow: 2px 2px 10px cyan;
   }
 `;

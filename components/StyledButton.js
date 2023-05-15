@@ -1,23 +1,23 @@
 import styled, { css } from "styled-components";
 
 export const StyledButton = styled.button`
-  background-image: linear-gradient(135deg, teal 40%, indigo);
+  background-color: transparent;
   padding: 0.8rem;
-  color: yellow;
+  color: cyan;
   text-decoration: none;
   font-weight: bold;
   border: none;
   font-size: inherit;
-  transform: skew(10deg);
+  box-shadow: 2px 2px 10px cyan;
   &:active {
-    box-shadow: 2px 2px 5px indigo;
+    box-shadow: 2px 2px 20px cyan;
   }
   ${(props) =>
     props.generate &&
     css`
       position: absolute;
-      bottom: 0.5rem;
-      right: 0.5rem;
+      bottom: 30px;
+      right: 10px;
     `}
   ${(props) =>
     props.center &&

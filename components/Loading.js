@@ -15,6 +15,8 @@ const pulse = keyframes`
   `;
 
 export const LoadingText = styled.h1`
+  width: 120%;
+  height: 120%;
   display: flex;
   justify-content: center;
   align-items: center;

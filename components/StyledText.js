@@ -1,8 +1,11 @@
 import styled from "styled-components";
 
 export const StyledText = styled.p`
-  color: indigo;
+  font-weight: 600;
+  width: 110%;
+  height: 110%;
+  color: cyan;
+  font-size: 3vh;
   text-align: center;
-  margin: 10vw 2vw;
-  /* margin: 20% 5%; */
+  margin: 15vw 3vw;
 `;
