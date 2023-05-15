@@ -35,10 +35,20 @@ export default function PreviewPage() {
   const option = router.query.option;
 
   const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
-  const { data: shirts, error } = useSWR(
-    searchID ? `/api/ChooseVariation/${searchID[1]}` : null,
-    fetcher
-  );
+  const {
+    data: shirts,
+    isLoading,
+    error,
+  } = useSWR(searchID ? `/api/ChooseVariation/${searchID[1]}` : null, fetcher);
+
+  if (isLoading || !shirts) {
+    return (
+      <>
+        <Header />
+        <IsLoading />
+      </>
+    );
+  }
 
   if (error) {
     return <div>error...</div>;
