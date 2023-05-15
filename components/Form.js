@@ -26,6 +26,8 @@ export default function Form() {
   const searchID = crypto.randomBytes(16).toString("hex");
 
   async function handleSubmit(event) {
+    setIsLoadingState(true);
+
     event.preventDefault();
     const formData = new FormData(event.target);
     const shirtData = Object.fromEntries(formData);
@@ -33,7 +35,6 @@ export default function Form() {
 
     await trigger(shirtData);
 
-    setIsLoadingState(true);
     await fetch("/api/openai", {
       method: "POST",
       headers: {
