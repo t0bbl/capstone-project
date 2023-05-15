@@ -3,24 +3,21 @@ import Rand from "rand-seed";
 
 const n = 800; // Or something else
 
-
 const seed = "anything";
 
 export default function Background() {
-  const rand = new Rand(seed);
+  const rand = new Rand("thisisAIPOWER");
   return (
     <PixelContainer>
       {[...Array(n)].map((_, index) => (
         <Pixel
           key={index}
           style={{ animationDelay: Math.ceil(rand.next() * 5000) + "ms" }}
-         />
+        />
       ))}
     </PixelContainer>
   );
 }
-
-
 
 const PixelContainer = styled.div`
   position: absolute;
