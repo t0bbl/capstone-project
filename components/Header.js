@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { StyledA } from "./StyledLink";
 
-const Headline = styled.header`
+export const Headline = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;

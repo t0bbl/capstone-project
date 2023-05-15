@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
 import { useState } from "react";
+import IsLoading from "./IsLoading";
 
 async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
@@ -51,7 +52,7 @@ export default function Form() {
   }
 
   if (isLoading || isMutating) {
-    return <div>loading...</div>;
+    return <IsLoading />;
   }
 
   return (
