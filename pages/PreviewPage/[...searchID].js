@@ -42,14 +42,7 @@ export default function PreviewPage() {
     fetcher
   );
 
-  if (isLoading || !shirts) {
-    return (
-      <>
-        <Header />
-        <IsLoading />
-      </>
-    );
-  }
+
 
   if (error) {
     return <div>error...</div>;
