@@ -3,8 +3,8 @@ import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
-import { useState } from "react";
-import IsLoading from "./IsLoading";
+import { useAtom } from "jotai";
+import { loading } from "../store/isLoading";
 
 async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
@@ -19,8 +19,8 @@ async function sendRequest(url, { arg: shirtData }) {
 
 export default function Form() {
   const router = useRouter();
-  const { trigger, isMutating } = useSWRMutation("/api/Shirts", sendRequest);
-  const [isLoading, setIsLoading] = useState(false);
+  const { trigger } = useSWRMutation("/api/Shirts", sendRequest);
+  const [isLoadingState, setIsLoadingState] = useAtom(loading);
   const searchID = crypto.randomBytes(16).toString("hex");
 
   async function handleSubmit(event) {
@@ -31,7 +31,7 @@ export default function Form() {
 
     await trigger(shirtData);
 
-    setIsLoading(true);
+    setIsLoadingState(true);
 
     await fetch("/api/openai", {
       method: "POST",
@@ -46,13 +46,9 @@ export default function Form() {
       }),
     });
 
-    setIsLoading(false);
+    setIsLoadingState(false);
 
     router.push(`/ChooseFour/${searchID}`);
-  }
-
-  if (isLoading || isMutating) {
-    return <IsLoading />;
   }
 
   return (

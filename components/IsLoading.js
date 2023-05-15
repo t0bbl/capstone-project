@@ -15,6 +15,11 @@ const pulse = keyframes`
   `;
 
 export const LoadingText = styled.h1`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
   animation-name: ${pulse};
   animation-duration: 1s;
   animation-iteration-count: infinite;
