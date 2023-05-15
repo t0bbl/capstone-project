@@ -5,7 +5,7 @@ import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
 import { useAtom } from "jotai";
 import { loading } from "../store/isLoading";
-import IsLoading from "./isLoading";
+import IsLoading from "./IsLoading";
 
 async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
