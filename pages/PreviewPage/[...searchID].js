@@ -11,6 +11,7 @@ import { loading } from "../../store/isLoading";
 import { useAtom } from "jotai";
 import IsLoading from "@/components/IsLoading";
 
+
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
@@ -31,15 +32,16 @@ async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
 export default function PreviewPage() {
   const [isLoadingState, setIsLoadingState] = useAtom(loading);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const { searchID } = router.query;
   const option = router.query.option;
 
   const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
-  const {
-    data: shirts,
-    isLoading,
-    error,
-  } = useSWR(searchID ? `/api/ChooseVariation/${searchID[1]}` : null, fetcher);
+
+  const { data: shirts, error } = useSWR(
+    searchID ? `/api/ChooseVariation/${searchID[1]}` : null,
+    fetcher
+  );
 
   if (isLoading || !shirts) {
     return (
@@ -69,6 +71,7 @@ export default function PreviewPage() {
     setIsLoadingState(true);
     await trigger({ searchID, picSRC, picSRCSlug });
     setIsLoadingState(false);
+
     router.push(`/Variations/${searchID[0]}`);
   }
 
