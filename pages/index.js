@@ -3,7 +3,7 @@ import Form from "../components/Form";
 import Text from "../components/Text";
 import { texts } from "../data/text";
 import { useAtom } from "jotai";
-import IsLoading from "../components/IsLoading";
+import IsLoading from "../components/Loading";
 import { loading } from "../store/isLoading";
 
 export default function HomePage() {

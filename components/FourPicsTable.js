@@ -3,7 +3,8 @@ import { StyledA } from "./StyledLink";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import useSWR from "swr";
-import IsLoading from "/IsLoading";
+import Loading from "./Loading";
+import Header from "./Header";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -17,7 +18,12 @@ export default function FourPicsTable() {
   } = useSWR(searchID ? `/api/${searchID}` : null, fetcher);
 
   if (isLoading || !shirts) {
-    return <IsLoading />;
+    return (
+      <>
+        <Header />
+        <Loading />
+      </>
+    );
   }
   if (error) {
     return <div>error...</div>;

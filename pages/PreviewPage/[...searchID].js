@@ -5,11 +5,11 @@ import Header from "../../components/Header";
 import PreviewPicture from "../../components/PreviewPicture";
 import { saveAs } from "file-saver";
 import { css } from "styled-components";
+import Loading from "../../components/Loading";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { loading } from "../../store/isLoading";
 import { useAtom } from "jotai";
-import IsLoading from "@/components/IsLoading";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -46,7 +46,7 @@ export default function PreviewPage() {
     return (
       <>
         <Header />
-        <IsLoading />
+        <Loading />
       </>
     );
   }
@@ -77,7 +77,7 @@ export default function PreviewPage() {
     return (
       <>
         <Header />
-        <IsLoading />
+        <Loading />
       </>
     );
   } else {

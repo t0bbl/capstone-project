@@ -1,7 +1,7 @@
 import { keyframes } from "styled-components";
 import styled from "styled-components";
 
-export default function IsLoading() {
+export default function Loading() {
   return (
     <div>
       <LoadingText>... Is Loading ... </LoadingText>
