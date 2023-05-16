@@ -62,9 +62,11 @@ export default function PreviewPage() {
   const picSRC = shirts.picSRC;
   const picSRCSlug = shirts.picSRCSlug;
 
-  function handlePrint() {
-    alert("you printed your Shirt!");
+  function favoriteImage() {
+    localStorage.setItem("pic", picSRC);
+    localStorage.setItem("isFavorite", true);
   }
+  console.log(localStorage);
 
   async function handleOnClick() {
     setIsLoadingState(true);
@@ -104,8 +106,8 @@ export default function PreviewPage() {
           <StyledButton type="button" onClick={downloadImage}>
             SAVE
           </StyledButton>
-          <StyledButton type="button" onClick={handlePrint}>
-            PRINT
+          <StyledButton type="button" onClick={favoriteImage}>
+            FAVORIT
           </StyledButton>
         </Container>
       </>
