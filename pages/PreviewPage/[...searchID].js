@@ -1,15 +1,15 @@
 import { StyledButton } from "@/components/StyledButton";
-import styled from "styled-components";
 import { useRouter } from "next/router";
 import Header from "../../components/Header";
 import PreviewPicture from "../../components/PreviewPicture";
 import { saveAs } from "file-saver";
-import { css } from "styled-components";
+import { Container } from "../../components/Container";
 import Loading from "../../components/Loading";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { loading } from "../../store/isLoading";
 import { useAtom } from "jotai";
+import { isFavorit } from "../../store/isFavorit";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -30,6 +30,7 @@ async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
 
 export default function PreviewPage() {
   const router = useRouter();
+  const [favPictures, setFavPictures] = useAtom(isFavorit);
   const [isLoadingState, setIsLoadingState] = useAtom(loading);
   const { searchID } = router.query;
   const option = router.query.option;
@@ -62,17 +63,23 @@ export default function PreviewPage() {
   const picSRC = shirts.picSRC;
   const picSRCSlug = shirts.picSRCSlug;
 
-  function favoriteImage() {
-    localStorage.setItem("pic", picSRC);
-    localStorage.setItem("isFavorite", true);
-  }
-  console.log(localStorage);
-
   async function handleOnClick() {
     setIsLoadingState(true);
     await trigger({ searchID, picSRC, picSRCSlug });
     setIsLoadingState(false);
     router.push(`/Variations/${searchID[0]}`);
+  }
+
+  function favoriteImage() {
+    const alreadyExists = favPictures.some(
+      (picture) => picture.picSRCSlug === picSRCSlug
+    );
+    if (!alreadyExists) {
+      setFavPictures([
+        { picSRC: shirts.picSRC, picSRCSlug: shirts.picSRCSlug },
+        ...favPictures,
+      ]);
+    }
   }
 
   if (isLoadingState) {
@@ -109,28 +116,11 @@ export default function PreviewPage() {
           <StyledButton type="button" onClick={favoriteImage}>
             FAVORIT
           </StyledButton>
+          <StyledButton type="button" onClick={() => router.push("/Favorit")}>
+            FAVORITS
+          </StyledButton>
         </Container>
       </>
     );
   }
 }
-
-const Container = styled.div`
-  width: 120%;
-  height: 120%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  margin-top: 10vw;
-  gap: 20vw;
-
-  ${(props) =>
-    props.bottomButtons &&
-    css`
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      align-items: center;
-    `}
-`;
