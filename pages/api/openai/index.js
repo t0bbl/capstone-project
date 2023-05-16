@@ -27,7 +27,7 @@ async function fetchImages(
         keywordTwo +
         " and " +
         keywordThree +
-        ". In digital Art",
+        ". In digital Art style.",
       n: 4,
       size: "1024x1024",
     });
