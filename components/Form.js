@@ -3,7 +3,10 @@ import { StyledButton } from "./StyledButton";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
-import { useState } from "react";
+import { useAtom } from "jotai";
+import { loading } from "../store/isLoading";
+import Loading from "./Loading";
+import Header from "./Header";
 
 async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
@@ -18,19 +21,19 @@ async function sendRequest(url, { arg: shirtData }) {
 
 export default function Form() {
   const router = useRouter();
-  const { trigger, isMutating } = useSWRMutation("/api/Shirts", sendRequest);
-  const [isLoading, setIsLoading] = useState(false);
+  const { trigger } = useSWRMutation("/api/Shirts", sendRequest);
+  const [isLoadingState, setIsLoadingState] = useAtom(loading);
   const searchID = crypto.randomBytes(16).toString("hex");
 
   async function handleSubmit(event) {
+    setIsLoadingState(true);
+
     event.preventDefault();
     const formData = new FormData(event.target);
     const shirtData = Object.fromEntries(formData);
     shirtData.searchID = searchID;
 
     await trigger(shirtData);
-
-    setIsLoading(true);
 
     await fetch("/api/openai", {
       method: "POST",
@@ -45,13 +48,17 @@ export default function Form() {
       }),
     });
 
-    setIsLoading(false);
-
+    setIsLoadingState(false);
     router.push(`/ChooseFour/${searchID}`);
   }
 
-  if (isLoading || isMutating) {
-    return <div>loading...</div>;
+  if (isLoadingState) {
+    return (
+      <>
+        <Header />
+        <Loading />
+      </>
+    );
   }
 
   return (
@@ -91,8 +98,9 @@ export default function Form() {
 }
 
 const FormContainer = styled.form`
+  width: 120%;
+  height: 120%;
   gap: 0.5rem;
-  background-color: yellow;
   color: teal;
   display: flex;
   flex-direction: column;
@@ -104,10 +112,9 @@ const FormContainer = styled.form`
 
 const Input = styled.input`
   padding: 0.5rem;
-  border: 3px solid black;
-  border-radius: 0.1rem;
-  background-image: linear-gradient(135deg, teal 40%, indigo);
-  color: yellow;
+  box-shadow: 2px 2px 5px cyan;
+  background-color: transparent;
+  color: cyan;
   width: 90%;
   margin: 0 5%;
   text-align: center;
@@ -115,13 +122,12 @@ const Input = styled.input`
   transform: skew(10deg);
 
   ::placeholder {
-    color: yellow;
+    color: cyan;
     opacity: 0.5;
   }
   &:focus {
     outline: none;
-    color: yellow;
-
-    box-shadow: 2px 2px 5px indigo;
+    color: lightcyan;
+    box-shadow: 2px 2px 10px cyan;
   }
 `;

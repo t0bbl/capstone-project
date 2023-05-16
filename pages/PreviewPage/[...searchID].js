@@ -5,9 +5,11 @@ import Header from "../../components/Header";
 import PreviewPicture from "../../components/PreviewPicture";
 import { saveAs } from "file-saver";
 import { css } from "styled-components";
+import Loading from "../../components/Loading";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
-import { useState } from "react";
+import { loading } from "../../store/isLoading";
+import { useAtom } from "jotai";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -28,20 +30,27 @@ async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
 
 export default function PreviewPage() {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingState, setIsLoadingState] = useAtom(loading);
   const { searchID } = router.query;
   const option = router.query.option;
 
   const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
 
-  const { data: shirts, error } = useSWR(
-    searchID ? `/api/ChooseVariation/${searchID[1]}` : null,
-    fetcher
-  );
+  const {
+    data: shirts,
+    isLoading,
+    error,
+  } = useSWR(searchID ? `/api/ChooseVariation/${searchID[1]}` : null, fetcher);
 
   if (isLoading || !shirts) {
-    return <div>loading...</div>;
+    return (
+      <>
+        <Header />
+        <Loading />
+      </>
+    );
   }
+
   if (error) {
     return <div>error...</div>;
   }
@@ -58,46 +67,55 @@ export default function PreviewPage() {
   }
 
   async function handleOnClick() {
-    setIsLoading(true);
-
+    setIsLoadingState(true);
     await trigger({ searchID, picSRC, picSRCSlug });
-    setIsLoading(false);
-
+    setIsLoadingState(false);
     router.push(`/Variations/${searchID[0]}`);
   }
 
-  return (
-    <>
-      <Header />
-      <Container>
-        <PreviewPicture
-          key={picSRCSlug}
-          imageSrc={picSRC}
-          imageName={picSRCSlug}
-        />
-        <StyledButton
-          type="button"
-          onClick={handleOnClick}
-          option={option}
-          style={{ display: option === "optionB" ? "none" : "inline-block" }}
-          center
-        >
-          Give me Variations!
-        </StyledButton>
-      </Container>
-      <Container bottomButtons>
-        <StyledButton type="button" onClick={downloadImage}>
-          SAVE
-        </StyledButton>
-        <StyledButton type="button" onClick={handlePrint}>
-          PRINT
-        </StyledButton>
-      </Container>
-    </>
-  );
+  if (isLoadingState) {
+    return (
+      <>
+        <Header />
+        <Loading />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Header />
+        <Container>
+          <PreviewPicture
+            key={picSRCSlug}
+            imageSrc={picSRC}
+            imageName={picSRCSlug}
+          />
+          <StyledButton
+            type="button"
+            onClick={handleOnClick}
+            option={option}
+            style={{ display: option === "optionB" ? "none" : "inline-block" }}
+            center
+          >
+            Give me Variations!
+          </StyledButton>
+        </Container>
+        <Container bottomButtons>
+          <StyledButton type="button" onClick={downloadImage}>
+            SAVE
+          </StyledButton>
+          <StyledButton type="button" onClick={handlePrint}>
+            PRINT
+          </StyledButton>
+        </Container>
+      </>
+    );
+  }
 }
 
 const Container = styled.div`
+  width: 120%;
+  height: 120%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

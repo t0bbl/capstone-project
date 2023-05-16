@@ -3,6 +3,8 @@ import { StyledA } from "./StyledLink";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import useSWR from "swr";
+import Loading from "./Loading";
+import Header from "./Header";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -16,7 +18,12 @@ export default function FourPicsTable() {
   } = useSWR(searchID ? `/api/${searchID}` : null, fetcher);
 
   if (isLoading || !shirts) {
-    return <div>loading...</div>;
+    return (
+      <>
+        <Header />
+        <Loading />
+      </>
+    );
   }
   if (error) {
     return <div>error...</div>;
@@ -81,7 +88,9 @@ export default function FourPicsTable() {
 }
 
 const FourPicsContainer = styled.div`
-  background-color: yellow;
+  width: 120%;
+  height: 120%;
+  background-color: none;
   display: grid;
   grid-template-columns: auto auto;
   grid-row: auto auto;

@@ -1,17 +1,19 @@
 import styled from "styled-components";
 import { StyledA } from "./StyledLink";
 
-const Headline = styled.header`
+const Headline = styled.h1`
+  width: 120%;
+  height: 120%;
   display: flex;
+  font-weight: 800;
   align-items: center;
   justify-content: center;
-  border-bottom: 2px solid teal;
-  font-weight: 300;
-  font-size: 1.5rem;
+  font-size: 3rem;
+  font-size: 5vh;
   margin: 0;
   padding: 1rem 0rem;
-  color: yellow;
-  background-image: linear-gradient(135deg, teal 40%, indigo);
+  color: cyan;
+  background-image: linear-gradient(135deg, black 40%, rgba(255, 99, 71, 0));
 `;
 
 export default function Header() {
