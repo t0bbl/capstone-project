@@ -13,9 +13,6 @@ export const Container = styled.div`
   ${(props) =>
     props.bottomButtons &&
     css`
-      display: flex;
       flex-direction: row;
-      justify-content: space-evenly;
-      align-items: center;
     `}
 `;

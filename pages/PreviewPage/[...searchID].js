@@ -79,6 +79,10 @@ export default function PreviewPage() {
         { picSRC: shirts.picSRC, picSRCSlug: shirts.picSRCSlug },
         ...favPictures,
       ]);
+    } else {
+      setFavPictures(
+        favPictures.filter((picture) => picture.picSRCSlug !== picSRCSlug)
+      );
     }
   }
 
