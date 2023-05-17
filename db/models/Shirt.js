@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const picSchema = new Schema({
   picSRC: String,
   picSRCSlug: { type: String, required: false },
-  isFavorit: Number,
+  isFavorite: Number,
 });
 
 const shirtSchema = new Schema({
