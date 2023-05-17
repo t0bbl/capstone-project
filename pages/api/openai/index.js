@@ -21,12 +21,13 @@ async function fetchImages(
   try {
     const response = await openai.createImage({
       prompt:
-        "give me a design with a " +
+        "illustrate a design that combines" +
         keywordOne +
-        " and a " +
+        " and " +
         keywordTwo +
-        " and a " +
-        keywordThree,
+        " and " +
+        keywordThree +
+        ". In digital Art style.",
       n: 4,
       size: "1024x1024",
     });
