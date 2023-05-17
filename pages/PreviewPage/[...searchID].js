@@ -10,6 +10,45 @@ import useSWRMutation from "swr/mutation";
 import { loading } from "../../store/isLoading";
 import { useAtom } from "jotai";
 import { isFavorit } from "../../store/isFavorit";
+import { useState } from "react";
+
+async function safeFavToCloud(picSRC) {
+  const formData = new FormData();
+  formData.append("file", picSRC);
+  formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDNAME}/upload`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+  const cloudinaryData = await response.json();
+  return cloudinaryData;
+}
+
+async function safeFavToMongoDB(cloudinaryData, searchID) {
+  await fetch("/api/Favorites/safeFavorite", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      picID: searchID,
+      picSRCCloudinary: cloudinaryData.url,
+      picSRCCloudinarySlug: cloudinaryData.etag,
+    }),
+  });
+
+  return;
+}
+
+async function deleteFavFromMongoDB(picID) {
+  await fetch(`/api/Favorites/deleteFavorite/${picID}`, {
+    method: "DELETE",
+  });
+  return;
+}
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -30,10 +69,19 @@ async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
 
 export default function PreviewPage() {
   const router = useRouter();
+  const [isClicked, setIsClicked] = useState(false);
+  const [isSafed, setIsSafed] = useState(false);
   const [favPictures, setFavPictures] = useAtom(isFavorit);
   const [isLoadingState, setIsLoadingState] = useAtom(loading);
   const { searchID } = router.query;
   const option = router.query.option;
+
+  const updateIsCLicked = () => {
+    setIsClicked(!isClicked);
+  };
+  const updateIsSafed = () => {
+    setIsSafed(!isSafed);
+  };
 
   const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
 
@@ -70,20 +118,31 @@ export default function PreviewPage() {
     router.push(`/Variations/${searchID[0]}`);
   }
 
-  function favoriteImage() {
-    const alreadyExists = favPictures.some(
-      (picture) => picture.picSRCSlug === picSRCSlug
+  async function favoriteImage() {
+    const cloudinaryData = await safeFavToCloud(shirts.picSRC);
+    safeFavToMongoDB(cloudinaryData, `${searchID[1]}`);
+    setFavPictures([
+      {
+        picID: `${searchID[1]}`,
+        picSRC: cloudinaryData.url,
+        picSRCSlug: cloudinaryData.etag,
+      },
+      ...favPictures,
+    ]);
+    updateIsCLicked();
+    updateIsSafed();
+  }
+
+  async function unFavoriteImage() {
+    const imageToDelete = favPictures.filter(
+      (picture) => picture.picID === `${searchID[1]}`
     );
-    if (!alreadyExists) {
-      setFavPictures([
-        { picSRC: shirts.picSRC, picSRCSlug: shirts.picSRCSlug },
-        ...favPictures,
-      ]);
-    } else {
-      setFavPictures(
-        favPictures.filter((picture) => picture.picSRCSlug !== picSRCSlug)
-      );
-    }
+    setFavPictures(
+      favPictures.filter((picture) => picture.picSRCSlug !== shirts.picSRCSlug)
+    );
+    deleteFavFromMongoDB(imageToDelete[0].picID);
+    updateIsSafed();
+    updateIsCLicked();
   }
 
   if (isLoadingState) {
@@ -117,10 +176,19 @@ export default function PreviewPage() {
           <StyledButton type="button" onClick={downloadImage}>
             SAVE
           </StyledButton>
-          <StyledButton type="button" onClick={favoriteImage}>
-            FAVORIT
-          </StyledButton>
-          <StyledButton type="button" onClick={() => router.push("/Favorit")}>
+          {!isSafed ? (
+            <StyledButton type="button" onClick={favoriteImage}>
+              FAVORIT
+            </StyledButton>
+          ) : (
+            <StyledButton type="button" onClick={unFavoriteImage} clicked>
+              FAVORIT
+            </StyledButton>
+          )}
+          <StyledButton
+            type="button"
+            onClick={() => router.push("../Favorites/")}
+          >
             FAVORITS
           </StyledButton>
         </Container>

@@ -4,7 +4,13 @@ import { Container } from "../../components/Container";
 import { useAtom } from "jotai";
 import { isFavorit } from "../../store/isFavorit";
 import { StyledButton } from "@/components/StyledButton";
-import { useRouter } from "next/router";
+
+async function deleteFavFromMongoDB(picID) {
+  await fetch(`/api/Favorites/deleteFavorite/${picID}`, {
+    method: "DELETE",
+  });
+  return;
+}
 
 export default function Favorit() {
   const [favPictures, setFavPictures] = useAtom(isFavorit);
@@ -13,6 +19,7 @@ export default function Favorit() {
     setFavPictures(
       favPictures.filter((pic) => pic.picSRCSlug !== picSRCSlugtoDelete)
     );
+    deleteFavFromMongoDB(picSRCSlugtoDelete);
   }
 
   return (

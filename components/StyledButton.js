@@ -26,4 +26,9 @@ export const StyledButton = styled.button`
       justify-content: center;
       align-items: center;
     `}
+    ${(props) =>
+    props.clicked &&
+    css`
+      background-color: lightcyan;
+    `}
 `;
