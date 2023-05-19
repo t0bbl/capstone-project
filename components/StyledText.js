@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledText = styled.p`
   font-weight: 600;
@@ -7,5 +7,5 @@ export const StyledText = styled.p`
   color: cyan;
   font-size: 3vh;
   text-align: center;
-  margin: 15vw 3vw;
+  margin: 10vw 1vw;
 `;

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Loading from "./Loading";
-import Header from "./Header";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -20,7 +19,6 @@ export default function FourPicsTable() {
   if (isLoading || !shirts) {
     return (
       <>
-        <Header />
         <Loading />
       </>
     );

@@ -1,13 +1,15 @@
 import GlobalStyle from "../styles";
 import Background from "@/components/Background";
-import { useEffect } from "react";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 export default function App({ Component, pageProps }) {
-
   return (
     <>
-      <Background />
       <GlobalStyle />
+      <Background />
+      <Header />
       <Component {...pageProps} />
+      <Footer />
     </>
   );
 }

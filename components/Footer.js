@@ -1,5 +1,4 @@
 import { StyledA } from "./StyledLink";
-import { StyledText } from "./StyledText";
 import styled from "styled-components";
 
 export default function Footer() {
@@ -7,13 +6,16 @@ export default function Footer() {
     window.location = "/";
   }
   function goToFavorites() {
-    window.location = "/Favorit";
+    window.location = "/Favorites";
+  }
+  function goBack() {
+    window.history.back();
   }
 
   return (
     <FooterDiv>
       <StyledA>
-        <FooterLinks onclick="history.back()">BACK</FooterLinks>
+        <FooterLinks onclick={goBack}>BACK</FooterLinks>
       </StyledA>
       <StyledA>
         <FooterLinks onClick={goToHomePage}>HOME</FooterLinks>
@@ -30,7 +32,7 @@ const FooterDiv = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   width: 100%;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   background-image: linear-gradient(0deg, black 40%, rgba(255, 99, 71, 0));
 `;

@@ -2,17 +2,19 @@ import styled, { css } from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 15vh);
+  position: absolute;
+  top: 15vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 10vh;
-  gap: 8vh;
+  gap: 2vh 3vw;
 
   ${(props) =>
     props.bottomButtons &&
     css`
       flex-direction: row;
+      margin-top: 5vh;
     `}
 `;

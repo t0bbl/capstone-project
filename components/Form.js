@@ -6,7 +6,6 @@ import useSWRMutation from "swr/mutation";
 import { useAtom } from "jotai";
 import { loading } from "../store/isLoading";
 import Loading from "./Loading";
-import Header from "./Header";
 
 async function sendRequest(url, { arg: shirtData }) {
   const response = await fetch(url, {
@@ -55,7 +54,6 @@ export default function Form() {
   if (isLoadingState) {
     return (
       <>
-        <Header />
         <Loading />
       </>
     );

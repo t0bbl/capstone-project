@@ -1,6 +1,5 @@
 import { StyledButton } from "@/components/StyledButton";
 import { useRouter } from "next/router";
-import Header from "../../components/Header";
 import PreviewPicture from "../../components/PreviewPicture";
 import { saveAs } from "file-saver";
 import { Container } from "../../components/Container";
@@ -77,7 +76,6 @@ export default function PreviewPage() {
   if (isLoading || !shirts) {
     return (
       <>
-        <Header />
         <Loading />
       </>
     );
@@ -142,14 +140,12 @@ export default function PreviewPage() {
   if (isLoadingState) {
     return (
       <>
-        <Header />
         <Loading />
       </>
     );
   } else {
     return (
       <>
-        <Header />
         <Container>
           <PreviewPicture
             key={picSRCSlug}
