@@ -4,19 +4,10 @@ import { Container } from "../../components/Container";
 import { useAtom } from "jotai";
 import { isFavorit } from "../../store/isFavorit";
 import { StyledButton } from "@/components/StyledButton";
-import { Clicked } from "../../store/Clicked";
 import React from "react";
-import { useRouter } from "next/router";
 
 export default function Favorit() {
-  const router = useRouter();
-  const { searchID } = router.query;
   const [favPictures, setFavPictures] = useAtom(isFavorit);
-  const [isClicked, setIsClicked] = useAtom(Clicked);
-
-  const updateIsCLicked = () => {
-    setIsClicked(!isClicked);
-  };
 
   function unFavorit(picSRC) {
     setFavPictures(
@@ -26,7 +17,6 @@ export default function Favorit() {
           : picture
       )
     );
-    updateIsCLicked();
   }
 
   return (
