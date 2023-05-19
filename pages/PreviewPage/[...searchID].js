@@ -152,19 +152,8 @@ export default function PreviewPage() {
             imageSrc={picSRC}
             imageName={picSRCSlug}
           />
-          <StyledButton
-            type="button"
-            onClick={handleOnClick}
-            option={option}
-            style={{
-              display: option === "optionB" ? "none" : "inline-block",
-            }}
-            center
-          >
-            Give me Variations!
-          </StyledButton>
         </Container>
-        <Container bottomButtons>
+        <Container preview>
           <StyledButton type="button" onClick={downloadImage}>
             SAVE
           </StyledButton>
@@ -179,9 +168,13 @@ export default function PreviewPage() {
           )}
           <StyledButton
             type="button"
-            onClick={() => router.push("../Favorites/")}
+            onClick={handleOnClick}
+            option={option}
+            style={{
+              display: option === "optionB" ? "none" : "inline-block",
+            }}
           >
-            FAVORITES
+            Give me Variations!
           </StyledButton>
         </Container>
       </>

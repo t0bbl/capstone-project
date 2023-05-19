@@ -19,13 +19,13 @@ export const StyledButton = styled.button`
       display: flex;
       align-self: flex-end;
       margin-top: 40px;
+      margin-right: 20px;
+      transform: skew(10deg);
     `}
   ${(props) =>
     props.center &&
     css`
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      margin: 0 auto;
     `}
     ${(props) =>
     props.clicked &&

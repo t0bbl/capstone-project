@@ -102,7 +102,7 @@ const FormContainer = styled.form`
   color: teal;
   display: flex;
   flex-direction: column;
-  margin: 50% 0%;
+  margin: 30% 0%;
   label {
     display: none;
   }

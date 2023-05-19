@@ -1,27 +1,27 @@
 import { StyledA } from "./StyledLink";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 export default function Footer() {
+  const router = useRouter();
+
   function goToHomePage() {
     window.location = "/";
   }
   function goToFavorites() {
     window.location = "/Favorites";
   }
-  function goBack() {
-    window.history.back();
-  }
 
   return (
     <FooterDiv>
-      <StyledA>
-        <FooterLinks onclick={goBack}>BACK</FooterLinks>
+      <StyledA onClick={() => router.back()}>
+        <FooterLinks>BACK</FooterLinks>
       </StyledA>
-      <StyledA>
-        <FooterLinks onClick={goToHomePage}>HOME</FooterLinks>
+      <StyledA onClick={goToHomePage}>
+        <FooterLinks>HOME</FooterLinks>
       </StyledA>
-      <StyledA>
-        <FooterLinks onClick={goToFavorites}>FAVORITES</FooterLinks>
+      <StyledA onClick={goToFavorites}>
+        <FooterLinks>FAVORITES</FooterLinks>
       </StyledA>
     </FooterDiv>
   );

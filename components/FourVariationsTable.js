@@ -24,8 +24,9 @@ export default function FourPicsTable() {
     );
   }
   if (error) {
-    return <Loading />;
+    return <div>error...</div>;
   }
+
   return (
     <>
       {shirts.map((shirt) => (
@@ -81,13 +82,11 @@ export default function FourPicsTable() {
 }
 
 const FourPicsContainer = styled.div`
-  width: 100%;
-  height: 100%;
   background-color: none;
   display: grid;
   grid-template-columns: auto auto;
   grid-row: auto auto;
   grid-column-gap: 1vw;
   grid-row-gap: 1vw;
-  justify-content: center;
+  justify-content: space-evenly;
 `;
