@@ -10,7 +10,6 @@ import useSWRMutation from "swr/mutation";
 import { loading } from "../../store/isLoading";
 import { useAtom } from "jotai";
 import { isFavorit } from "../../store/isFavorit";
-import { useState } from "react";
 
 async function safeFavToCloud(picSRC) {
   const formData = new FormData();
@@ -43,13 +42,6 @@ async function safeFavToMongoDB(cloudinaryData, searchID) {
   return;
 }
 
-async function deleteFavFromMongoDB(picID) {
-  await fetch(`/api/Favorites/deleteFavorite/${picID}`, {
-    method: "DELETE",
-  });
-  return;
-}
-
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
@@ -69,19 +61,10 @@ async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
 
 export default function PreviewPage() {
   const router = useRouter();
-  const [isClicked, setIsClicked] = useState(false);
-  const [isSafed, setIsSafed] = useState(false);
   const [favPictures, setFavPictures] = useAtom(isFavorit);
   const [isLoadingState, setIsLoadingState] = useAtom(loading);
   const { searchID } = router.query;
   const option = router.query.option;
-
-  const updateIsCLicked = () => {
-    setIsClicked(!isClicked);
-  };
-  const updateIsSafed = () => {
-    setIsSafed(!isSafed);
-  };
 
   const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
 
@@ -119,32 +102,43 @@ export default function PreviewPage() {
   }
 
   async function favoriteImage() {
-    const cloudinaryData = await safeFavToCloud(shirts.picSRC);
-    safeFavToMongoDB(cloudinaryData, `${searchID[1]}`);
-    setFavPictures([
-      {
-        picID: `${searchID[1]}`,
-        picSRC: cloudinaryData.url,
-        picSRCSlug: cloudinaryData.etag,
-      },
-      ...favPictures,
-    ]);
-    updateIsCLicked();
-    updateIsSafed();
+    const check = favPictures.some((picture) => picture.picID === searchID[1]);
+    if (check === false) {
+      const cloudinaryData = await safeFavToCloud(shirts.picSRC);
+      safeFavToMongoDB(cloudinaryData, `${searchID[1]}`);
+      setFavPictures([
+        {
+          picID: `${searchID[1]}`,
+          picSRC: cloudinaryData.url,
+          picSRCSlug: cloudinaryData.etag,
+          isFavorite: true,
+        },
+        ...favPictures,
+      ]);
+    } else {
+      setFavPictures(
+        favPictures.map((picture) =>
+          picture.picID === `${searchID[1]}`
+            ? { ...picture, isFavorite: !picture.isFavorite }
+            : picture
+        )
+      );
+    }
   }
 
   async function unFavoriteImage() {
-    const imageToDelete = favPictures.filter(
-      (picture) => picture.picID === `${searchID[1]}`
-    );
     setFavPictures(
-      favPictures.filter((picture) => picture.picSRCSlug !== shirts.picSRCSlug)
+      favPictures.map((picture) =>
+        picture.picID === `${searchID[1]}`
+          ? { ...picture, isFavorite: false }
+          : picture
+      )
     );
-    deleteFavFromMongoDB(imageToDelete[0].picID);
-    updateIsSafed();
-    updateIsCLicked();
   }
-
+  const currentPicture = favPictures.find(
+    (pic) => pic.picID === `${searchID[1]}`
+  );
+  console.log(currentPicture);
   if (isLoadingState) {
     return (
       <>
@@ -166,7 +160,9 @@ export default function PreviewPage() {
             type="button"
             onClick={handleOnClick}
             option={option}
-            style={{ display: option === "optionB" ? "none" : "inline-block" }}
+            style={{
+              display: option === "optionB" ? "none" : "inline-block",
+            }}
             center
           >
             Give me Variations!
@@ -176,20 +172,20 @@ export default function PreviewPage() {
           <StyledButton type="button" onClick={downloadImage}>
             SAVE
           </StyledButton>
-          {!isSafed ? (
+          {!currentPicture?.isFavorite ? (
             <StyledButton type="button" onClick={favoriteImage}>
-              FAVORIT
+              FAVORITE
             </StyledButton>
           ) : (
             <StyledButton type="button" onClick={unFavoriteImage} clicked>
-              FAVORIT
+              FAVORITE
             </StyledButton>
           )}
           <StyledButton
             type="button"
             onClick={() => router.push("../Favorites/")}
           >
-            FAVORITS
+            FAVORITES
           </StyledButton>
         </Container>
       </>
