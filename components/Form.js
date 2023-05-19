@@ -98,8 +98,8 @@ export default function Form() {
 }
 
 const FormContainer = styled.form`
-  width: 120%;
-  height: 120%;
+  width: 100%;
+  height: 100%;
   gap: 0.5rem;
   color: teal;
   display: flex;

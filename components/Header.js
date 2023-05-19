@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { StyledA } from "./StyledLink";
 
 const Headline = styled.h1`
-  width: 120%;
-  height: 120%;
+  width: 100%;
+  height: 100%;
   display: flex;
   font-weight: 800;
   align-items: center;
