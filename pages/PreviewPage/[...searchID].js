@@ -1,6 +1,5 @@
 import { StyledButton } from "@/components/StyledButton";
 import { useRouter } from "next/router";
-import Header from "../../components/Header";
 import PreviewPicture from "../../components/PreviewPicture";
 import { saveAs } from "file-saver";
 import { Container } from "../../components/Container";
@@ -77,7 +76,6 @@ export default function PreviewPage() {
   if (isLoading || !shirts) {
     return (
       <>
-        <Header />
         <Loading />
       </>
     );
@@ -142,33 +140,20 @@ export default function PreviewPage() {
   if (isLoadingState) {
     return (
       <>
-        <Header />
         <Loading />
       </>
     );
   } else {
     return (
       <>
-        <Header />
         <Container>
           <PreviewPicture
             key={picSRCSlug}
             imageSrc={picSRC}
             imageName={picSRCSlug}
           />
-          <StyledButton
-            type="button"
-            onClick={handleOnClick}
-            option={option}
-            style={{
-              display: option === "optionB" ? "none" : "inline-block",
-            }}
-            center
-          >
-            Give me Variations!
-          </StyledButton>
         </Container>
-        <Container bottomButtons>
+        <Container preview>
           <StyledButton type="button" onClick={downloadImage}>
             SAVE
           </StyledButton>
@@ -183,9 +168,13 @@ export default function PreviewPage() {
           )}
           <StyledButton
             type="button"
-            onClick={() => router.push("../Favorites/")}
+            onClick={handleOnClick}
+            option={option}
+            style={{
+              display: option === "optionB" ? "none" : "inline-block",
+            }}
           >
-            FAVORITES
+            Give me Variations!
           </StyledButton>
         </Container>
       </>

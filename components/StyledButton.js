@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 
 export const StyledButton = styled.button`
   background-color: transparent;
+  width: fit-content;
   padding: 0.8rem;
   color: cyan;
   text-decoration: none;
@@ -15,16 +16,16 @@ export const StyledButton = styled.button`
   ${(props) =>
     props.generate &&
     css`
-      position: absolute;
-      bottom: 30px;
-      right: 10px;
+      display: flex;
+      align-self: flex-end;
+      margin-top: 40px;
+      margin-right: 20px;
+      transform: skew(10deg);
     `}
   ${(props) =>
     props.center &&
     css`
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      margin: 0 auto;
     `}
     ${(props) =>
     props.clicked &&

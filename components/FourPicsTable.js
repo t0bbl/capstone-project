@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Loading from "./Loading";
-import Header from "./Header";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -20,7 +19,6 @@ export default function FourPicsTable() {
   if (isLoading || !shirts) {
     return (
       <>
-        <Header />
         <Loading />
       </>
     );
@@ -33,10 +31,7 @@ export default function FourPicsTable() {
     <>
       {shirts.map((shirt) => (
         <FourPicsContainer key={shirt._id}>
-          <StyledA
-            key={shirt.pic1.picSRCSlug}
-            href={`/PreviewPage/${searchID}/${shirt.pic1.picSRCSlug}`}
-          >
+          <StyledA href={`/PreviewPage/${searchID}/${shirt.pic1.picSRCSlug}`}>
             <StyledImage
               alt="image number 1"
               src={shirt.pic1.picSRC}
@@ -45,10 +40,7 @@ export default function FourPicsTable() {
               $fourpictures
             />
           </StyledA>
-          <StyledA
-            key={shirt.pic2.picSRCSlug}
-            href={`/PreviewPage/${searchID}/${shirt.pic2.picSRCSlug}`}
-          >
+          <StyledA href={`/PreviewPage/${searchID}/${shirt.pic2.picSRCSlug}`}>
             <StyledImage
               alt="image number 2"
               src={shirt.pic2.picSRC}
@@ -57,10 +49,7 @@ export default function FourPicsTable() {
               $fourpictures
             />
           </StyledA>
-          <StyledA
-            key={shirt.pic3.picSRCSlug}
-            href={`/PreviewPage/${searchID}/${shirt.pic3.picSRCSlug}`}
-          >
+          <StyledA href={`/PreviewPage/${searchID}/${shirt.pic3.picSRCSlug}`}>
             <StyledImage
               alt="image number 3"
               src={shirt.pic3.picSRC}
@@ -69,10 +58,7 @@ export default function FourPicsTable() {
               $fourpictures
             />
           </StyledA>
-          <StyledA
-            key={shirt.pic4.picSRCSlug}
-            href={`/PreviewPage/${searchID}/${shirt.pic4.picSRCSlug}`}
-          >
+          <StyledA href={`/PreviewPage/${searchID}/${shirt.pic4.picSRCSlug}`}>
             <StyledImage
               alt="image number 4"
               src={shirt.pic4.picSRC}
@@ -88,13 +74,11 @@ export default function FourPicsTable() {
 }
 
 const FourPicsContainer = styled.div`
-  width: 120%;
-  height: 120%;
   background-color: none;
   display: grid;
   grid-template-columns: auto auto;
   grid-row: auto auto;
   grid-column-gap: 1vw;
   grid-row-gap: 1vw;
-  justify-content: center;
+  justify-content: space-evenly;
 `;

@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import useSWR from "swr";
 import Loading from "./Loading";
-import Header from "./Header";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -20,14 +19,14 @@ export default function FourPicsTable() {
   if (isLoading || !shirts) {
     return (
       <>
-        <Header />
         <Loading />
       </>
     );
   }
   if (error) {
-    return <Loading />;
+    return <div>error...</div>;
   }
+
   return (
     <>
       {shirts.map((shirt) => (
@@ -83,13 +82,11 @@ export default function FourPicsTable() {
 }
 
 const FourPicsContainer = styled.div`
-  width: 120%;
-  height: 120%;
   background-color: none;
   display: grid;
   grid-template-columns: auto auto;
   grid-row: auto auto;
   grid-column-gap: 1vw;
   grid-row-gap: 1vw;
-  justify-content: center;
+  justify-content: space-evenly;
 `;

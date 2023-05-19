@@ -1,4 +1,3 @@
-import Header from "../../components/Header";
 import PreviewPicture from "../../components/PreviewPicture";
 import { Container } from "../../components/Container";
 import { useAtom } from "jotai";
@@ -20,23 +19,17 @@ export default function Favorit() {
   }
 
   return (
-    <>
-      <Header />
-      <Container>
-        {favPictures
-          .filter((pic) => pic.isFavorite)
-          .map((pic) => (
-            <React.Fragment key={pic.picSRCSlug}>
-              <PreviewPicture
-                imageSrc={pic.picSRC}
-                imageName={pic.picSRCSlug}
-              />
-              <StyledButton onClick={() => unFavorit(pic.picSRC)}>
-                UnFavorite
-              </StyledButton>
-            </React.Fragment>
-          ))}
-      </Container>
-    </>
+    <Container>
+      {favPictures
+        .filter((pic) => pic.isFavorite)
+        .map((pic) => (
+          <React.Fragment key={pic.picSRCSlug}>
+            <PreviewPicture imageSrc={pic.picSRC} imageName={pic.picSRCSlug} />
+            <StyledButton onClick={() => unFavorit(pic.picSRC)}>
+              UnFavorite
+            </StyledButton>
+          </React.Fragment>
+        ))}
+    </Container>
   );
 }
