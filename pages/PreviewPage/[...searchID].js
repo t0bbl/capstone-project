@@ -11,6 +11,37 @@ import { loading } from "../../store/isLoading";
 import { useAtom } from "jotai";
 import { isFavorit } from "../../store/isFavorit";
 
+async function safeFavToCloud(picSRC) {
+  const formData = new FormData();
+  formData.append("file", picSRC);
+  formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDNAME}/upload`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+  const cloudinaryData = await response.json();
+  return cloudinaryData;
+}
+
+async function safeFavToMongoDB(cloudinaryData, searchID) {
+  await fetch("/api/Favorites/safeFavorite", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      picID: searchID,
+      picSRCCloudinary: cloudinaryData.url,
+      picSRCCloudinarySlug: cloudinaryData.etag,
+    }),
+  });
+
+  return;
+}
+
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
@@ -70,22 +101,44 @@ export default function PreviewPage() {
     router.push(`/Variations/${searchID[0]}`);
   }
 
-  function favoriteImage() {
-    const alreadyExists = favPictures.some(
-      (picture) => picture.picSRCSlug === picSRCSlug
-    );
-    if (!alreadyExists) {
+  async function favoriteImage() {
+    const check = favPictures.some((picture) => picture.picID === searchID[1]);
+    if (check === false) {
+      const cloudinaryData = await safeFavToCloud(shirts.picSRC);
+      safeFavToMongoDB(cloudinaryData, `${searchID[1]}`);
       setFavPictures([
-        { picSRC: shirts.picSRC, picSRCSlug: shirts.picSRCSlug },
+        {
+          picID: `${searchID[1]}`,
+          picSRC: cloudinaryData.url,
+          picSRCSlug: cloudinaryData.etag,
+          isFavorite: true,
+        },
         ...favPictures,
       ]);
     } else {
       setFavPictures(
-        favPictures.filter((picture) => picture.picSRCSlug !== picSRCSlug)
+        favPictures.map((picture) =>
+          picture.picID === `${searchID[1]}`
+            ? { ...picture, isFavorite: !picture.isFavorite }
+            : picture
+        )
       );
     }
   }
 
+  async function unFavoriteImage() {
+    setFavPictures(
+      favPictures.map((picture) =>
+        picture.picID === `${searchID[1]}`
+          ? { ...picture, isFavorite: false }
+          : picture
+      )
+    );
+  }
+  const currentPicture = favPictures.find(
+    (pic) => pic.picID === `${searchID[1]}`
+  );
+  console.log(currentPicture);
   if (isLoadingState) {
     return (
       <>
@@ -107,7 +160,9 @@ export default function PreviewPage() {
             type="button"
             onClick={handleOnClick}
             option={option}
-            style={{ display: option === "optionB" ? "none" : "inline-block" }}
+            style={{
+              display: option === "optionB" ? "none" : "inline-block",
+            }}
             center
           >
             Give me Variations!
@@ -117,11 +172,20 @@ export default function PreviewPage() {
           <StyledButton type="button" onClick={downloadImage}>
             SAVE
           </StyledButton>
-          <StyledButton type="button" onClick={favoriteImage}>
-            FAVORIT
-          </StyledButton>
-          <StyledButton type="button" onClick={() => router.push("/Favorit")}>
-            FAVORITS
+          {!currentPicture?.isFavorite ? (
+            <StyledButton type="button" onClick={favoriteImage}>
+              FAVORITE
+            </StyledButton>
+          ) : (
+            <StyledButton type="button" onClick={unFavoriteImage} clicked>
+              FAVORITE
+            </StyledButton>
+          )}
+          <StyledButton
+            type="button"
+            onClick={() => router.push("../Favorites/")}
+          >
+            FAVORITES
           </StyledButton>
         </Container>
       </>
