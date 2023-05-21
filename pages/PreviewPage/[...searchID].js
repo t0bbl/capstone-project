@@ -25,14 +25,14 @@ async function safeFavToCloud(picSRC) {
   return cloudinaryData;
 }
 
-async function safeFavToMongoDB(cloudinaryData, searchID) {
+async function safeFavToMongoDB(cloudinaryData) {
   await fetch("/api/Favorites/safeFavorite", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      picID: searchID,
+      picID: cloudinaryData.public_id,
       picSRCCloudinary: cloudinaryData.url,
       picSRCCloudinarySlug: cloudinaryData.etag,
     }),
