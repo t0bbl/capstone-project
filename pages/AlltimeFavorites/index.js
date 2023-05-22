@@ -53,26 +53,34 @@ export default function AlltimeFavorites() {
     return <div>error...</div>;
   }
 
-  async function FavoriteImage(picSRCCloudinarySlug, picSRCCloudinary, picID) {
-    await increaseFavtoMongoDB(picSRCCloudinary, picID);
-    setFavPictures(
-      favPictures.map((picture) =>
-        picture.picSRCCloudinarySlug === picSRCCloudinarySlug
-          ? { ...picture, isFavorite: true }
-          : picture
-      )
-    );
+  async function favoriteImage(picSRCCloudinary, picID) {
+    const check = favPictures.some((picture) => picture.picID === picID);
+    if (check === false) {
+      await increaseFavtoMongoDB(picSRCCloudinary, picID);
+      setFavPictures([
+        {
+          picID: picID,
+          picSRCCloudinary: picSRCCloudinary,
+          isFavorite: true,
+          favorites: 1,
+        },
+        ...favPictures,
+      ]);
+    } else {
+      await increaseFavtoMongoDB(picSRCCloudinary, picID);
+      setFavPictures(
+        favPictures.map((picture) =>
+          picture.picID === picID ? { ...picture, isFavorite: true } : picture
+        )
+      );
+    }
   }
 
-  async function unFavoriteImage(
-    picSRCCloudinarySlug,
-    picSRCCloudinary,
-    picID
-  ) {
+  async function unFavoriteImage(picSRCCloudinary, picID) {
     await decreaseFavtoMongoDB(picSRCCloudinary, picID);
     setFavPictures(
       favPictures.map((picture) =>
-        picture.picSRCCloudinarySlug === picSRCCloudinarySlug
+        picture.picSRCCloudinary === picSRCCloudinary
           ? { ...picture, isFavorite: false }
           : picture
       )
@@ -81,48 +89,40 @@ export default function AlltimeFavorites() {
 
   return (
     <Container alltimeFavorites>
-      {fetchedFavorites.map((pic) => {
-        const shownPic = favPictures.find(
-          (favPic) => favPic.picSRCCloudinary === pic.picSRCCloudinary
-        );
+      {fetchedFavorites
+        .filter((pic) => pic.favorites >= 1)
+        .map((pic) => {
+          const shownPic = favPictures.find(
+            (favPic) => favPic.picSRCCloudinary === pic.picSRCCloudinary
+          );
 
-        return (
-          <React.Fragment key={pic.picID}>
-            <PreviewPicture
-              imageSrc={pic.picSRCCloudinary}
-              imageName={pic.picSRCCloudinarySlug}
-            />
-            {!shownPic?.isFavorite ? (
-              <StyledButton
-                type="button"
-                onClick={() =>
-                  FavoriteImage(
-                    pic.picSRCCloudinarySlug,
-                    pic.picSRCCloudinary,
-                    pic.picID
-                  )
-                }
-              >
-                FAVORITE
-              </StyledButton>
-            ) : (
-              <StyledButton
-                type="button"
-                onClick={() =>
-                  unFavoriteImage(
-                    pic.picSRCCloudinarySlug,
-                    pic.picSRCCloudinary,
-                    pic.picID
-                  )
-                }
-                clicked
-              >
-                unFAVORITE
-              </StyledButton>
-            )}
-          </React.Fragment>
-        );
-      })}
+          return (
+            <React.Fragment key={pic.picID}>
+              <PreviewPicture
+                imageSrc={pic.picSRCCloudinary}
+                imageName={pic.picSRCCloudinarySlug}
+              />
+              {!shownPic?.isFavorite ? (
+                <StyledButton
+                  type="button"
+                  onClick={() => favoriteImage(pic.picSRCCloudinary, pic.picID)}
+                >
+                  FAVORITE
+                </StyledButton>
+              ) : (
+                <StyledButton
+                  type="button"
+                  onClick={() =>
+                    unFavoriteImage(pic.picSRCCloudinary, pic.picID)
+                  }
+                  clicked
+                >
+                  unFAVORITE
+                </StyledButton>
+              )}
+            </React.Fragment>
+          );
+        })}
     </Container>
   );
 }
