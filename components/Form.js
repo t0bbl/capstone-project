@@ -94,7 +94,9 @@ export default function Form() {
         required
       />
       <Container formButtons>
-        <StyledButton onClick={alltimeFavorites}>alltimeFavorites</StyledButton>
+        <StyledButton type="button" onClick={alltimeFavorites}>
+          alltimeFavorites
+        </StyledButton>
         <StyledButton type="submit">Generate</StyledButton>
       </Container>
     </FormContainer>

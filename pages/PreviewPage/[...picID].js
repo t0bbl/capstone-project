@@ -43,6 +43,30 @@ async function safeFavToMongoDB(cloudinaryData) {
   return;
 }
 
+async function increaseFavtoMongoDB(picSRCCloudinary, picID) {
+  await fetch(`/api/Favorites/alltimeFavorites/increaseFavorites/${picID}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ picSRCCloudinary }),
+  });
+
+  return;
+}
+
+async function decreaseFavtoMongoDB(picSRCCloudinary, picID) {
+  await fetch(`/api/Favorites/alltimeFavorites/decreaseFavorites/${picID}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ picSRCCloudinary }),
+  });
+
+  return;
+}
+
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 async function sendRequest(url, { arg, picID, picSRC, picSRCSlug }) {
@@ -113,10 +137,15 @@ export default function PreviewPage() {
           picSRCCloudinary: cloudinaryData.url,
           picSRCCloudinarySlug: cloudinaryData.etag,
           isFavorite: true,
+          favorites: 1,
         },
         ...favPictures,
       ]);
     } else {
+      const picSRCCloudinary = favPictures.find(
+        (picture) => picture.picID === `${picID[1]}`
+      ).picSRCCloudinary;
+      await increaseFavtoMongoDB(picSRCCloudinary, `${picID[1]}`);
       setFavPictures(
         favPictures.map((picture) =>
           picture.picID === `${picID[1]}`
@@ -128,6 +157,10 @@ export default function PreviewPage() {
   }
 
   async function unFavoriteImage() {
+    const picSRCCloudinary = favPictures.find(
+      (picture) => picture.picID === `${picID[1]}`
+    ).picSRCCloudinary;
+    await decreaseFavtoMongoDB(picSRCCloudinary, `${picID[1]}`);
     setFavPictures(
       favPictures.map((picture) =>
         picture.picID === `${picID[1]}`

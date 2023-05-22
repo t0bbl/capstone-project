@@ -8,6 +8,7 @@ export default async function handler(req, res) {
     try {
       const favoriteData = req.body;
       const favorite = new Favorite(favoriteData);
+      favorite.favorites += 1;
       await favorite.save();
       res.status(201).json({ status: "shirt created" });
     } catch (error) {
