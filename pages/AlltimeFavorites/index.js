@@ -9,28 +9,28 @@ import { isFavorit } from "../../store/isFavorit";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-async function updateFavorite(picID, updatedData) {
-  try {
-    const response = await fetch(
-      `/api/Favorites/alltimeFavorites/updateFavorites/${picID}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedData),
-      }
-    );
+async function increaseFavtoMongoDB(picSRCCloudinary, picID) {
+  await fetch(`/api/Favorites/alltimeFavorites/increaseFavorites/${picID}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ picSRCCloudinary }),
+  });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+  return;
+}
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
+async function decreaseFavtoMongoDB(picSRCCloudinary, picID) {
+  await fetch(`/api/Favorites/alltimeFavorites/decreaseFavorites/${picID}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ picSRCCloudinary }),
+  });
+
+  return;
 }
 
 export default function AlltimeFavorites() {
@@ -53,7 +53,8 @@ export default function AlltimeFavorites() {
     return <div>error...</div>;
   }
 
-  async function FavoriteImage(picSRCCloudinarySlug) {
+  async function FavoriteImage(picSRCCloudinarySlug, picSRCCloudinary, picID) {
+    await increaseFavtoMongoDB(picSRCCloudinary, picID);
     setFavPictures(
       favPictures.map((picture) =>
         picture.picSRCCloudinarySlug === picSRCCloudinarySlug
@@ -63,7 +64,12 @@ export default function AlltimeFavorites() {
     );
   }
 
-  async function unFavoriteImage(picSRCCloudinarySlug) {
+  async function unFavoriteImage(
+    picSRCCloudinarySlug,
+    picSRCCloudinary,
+    picID
+  ) {
+    await decreaseFavtoMongoDB(picSRCCloudinary, picID);
     setFavPictures(
       favPictures.map((picture) =>
         picture.picSRCCloudinarySlug === picSRCCloudinarySlug
@@ -89,14 +95,26 @@ export default function AlltimeFavorites() {
             {!shownPic?.isFavorite ? (
               <StyledButton
                 type="button"
-                onClick={() => FavoriteImage(pic.picSRCCloudinarySlug)}
+                onClick={() =>
+                  FavoriteImage(
+                    pic.picSRCCloudinarySlug,
+                    pic.picSRCCloudinary,
+                    pic.picID
+                  )
+                }
               >
                 FAVORITE
               </StyledButton>
             ) : (
               <StyledButton
                 type="button"
-                onClick={() => unFavoriteImage(pic.picSRCCloudinarySlug)}
+                onClick={() =>
+                  unFavoriteImage(
+                    pic.picSRCCloudinarySlug,
+                    pic.picSRCCloudinary,
+                    pic.picID
+                  )
+                }
                 clicked
               >
                 unFAVORITE
