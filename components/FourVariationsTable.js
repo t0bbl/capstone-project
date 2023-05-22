@@ -1,5 +1,5 @@
-import { StyledImage } from "./StyledImage";
-import { StyledA } from "./StyledLink";
+import { StyledImage } from "./styledComponents/StyledImage";
+import { StyledA } from "./styledComponents/StyledLink";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import useSWR from "swr";

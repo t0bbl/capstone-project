@@ -1,6 +1,6 @@
 import PreviewPicture from "../../components/PreviewPicture";
-import { Container } from "../../components/Container";
-import { StyledButton } from "@/components/StyledButton";
+import { Container } from "../../components/styledComponents/Container";
+import { StyledButton } from "@/components/styledComponents/StyledButton";
 import React from "react";
 import useSWR from "swr";
 import Loading from "../../components/Loading";
@@ -21,21 +21,6 @@ async function updateFavorite(picID, updatedData) {
         body: JSON.stringify(updatedData),
       }
     );
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-async function getFavorite(picID) {
-  try {
-    const response = await fetch(`/api/Favorites/alltimeFavorites`);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -74,8 +59,7 @@ export default function AlltimeFavorites() {
         picture.picSRCCloudinarySlug === picSRCCloudinarySlug
           ? { ...picture, isFavorite: true }
           : picture
-      ),
-      console.log(favPictures, "unfavPictures")
+      )
     );
   }
 
@@ -85,8 +69,7 @@ export default function AlltimeFavorites() {
         picture.picSRCCloudinarySlug === picSRCCloudinarySlug
           ? { ...picture, isFavorite: false }
           : picture
-      ),
-      console.log(favPictures, "unfavPictures")
+      )
     );
   }
 
@@ -96,8 +79,6 @@ export default function AlltimeFavorites() {
         const shownPic = favPictures.find(
           (favPic) => favPic.picSRCCloudinary === pic.picSRCCloudinary
         );
-        console.log(shownPic, "THIS IS SHOWN PIC");
-        console.log(fetchedFavorites, "THIS IS FETCHED FAVS");
 
         return (
           <React.Fragment key={pic.picID}>

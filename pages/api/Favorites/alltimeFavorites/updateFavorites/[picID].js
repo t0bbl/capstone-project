@@ -5,7 +5,6 @@ export default async function handler(req, res) {
   await dbConnect();
 
   const { picID } = req.query;
-  console.log(req.query);
 
   if (req.method === "PUT") {
     try {
@@ -16,7 +15,6 @@ export default async function handler(req, res) {
         },
         { new: true }
       );
-      console.log(updatedDocument); // log the updated document to see if updates are applied
 
       res
         .status(201)

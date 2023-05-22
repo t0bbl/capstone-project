@@ -1,8 +1,8 @@
-import { StyledButton } from "@/components/StyledButton";
+import { StyledButton } from "@/components/styledComponents/StyledButton";
 import { useRouter } from "next/router";
 import PreviewPicture from "../../components/PreviewPicture";
 import { saveAs } from "file-saver";
-import { Container } from "../../components/Container";
+import { Container } from "../../components/styledComponents/Container";
 import Loading from "../../components/Loading";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
@@ -22,12 +22,10 @@ async function safeFavToCloud(picSRC) {
     }
   );
   const cloudinaryData = await response.json();
-  console.log(cloudinaryData, "cloudinaryData!!!!!!!!!!!");
   return cloudinaryData;
 }
 
 async function safeFavToMongoDB(cloudinaryData) {
-  console.log(cloudinaryData);
   await fetch("/api/Favorites/safeFavorite", {
     method: "POST",
     headers: {
@@ -41,7 +39,6 @@ async function safeFavToMongoDB(cloudinaryData) {
       favorites: 1,
     }),
   });
-  console.log(cloudinaryData, "SAFETOMONGO!!!!!!!!!!!");
 
   return;
 }
@@ -106,10 +103,7 @@ export default function PreviewPage() {
 
   async function favoriteImage() {
     const check = favPictures.some((picture) => picture.picID === picID[1]);
-    console.log(favPictures.picID, "picture.picID");
-    console.log(shirts?.picID, "shirts?.picID");
-    console.log(check, "check");
-    console.log(favPictures, "favPictures");
+
     if (check === false) {
       const cloudinaryData = await safeFavToCloud(picSRC);
       await safeFavToMongoDB(cloudinaryData, `${picID[1]}`);
@@ -128,8 +122,7 @@ export default function PreviewPage() {
           picture.picID === `${picID[1]}`
             ? { ...picture, isFavorite: true }
             : picture
-        ),
-        console.log(favPictures, "favPictures")
+        )
       );
     }
   }
@@ -140,8 +133,7 @@ export default function PreviewPage() {
         picture.picID === `${picID[1]}`
           ? { ...picture, isFavorite: false }
           : picture
-      ),
-      console.log(favPictures, "unfavPictures")
+      )
     );
   }
   const shownPic = favPictures.find((favPic) => favPic.picID === `${picID[1]}`);

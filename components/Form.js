@@ -1,5 +1,6 @@
+import { Container } from "./styledComponents/Container";
 import styled from "styled-components";
-import { StyledButton } from "./StyledButton";
+import { StyledButton } from "./styledComponents/StyledButton";
 import { useRouter } from "next/router";
 import crypto from "crypto";
 import useSWRMutation from "swr/mutation";
@@ -23,6 +24,10 @@ export default function Form() {
   const { trigger } = useSWRMutation("/api/Shirts", sendRequest);
   const [isLoadingState, setIsLoadingState] = useAtom(loading);
   const picID = crypto.randomBytes(16).toString("hex");
+
+  function alltimeFavorites() {
+    router.push(`/AlltimeFavorites`);
+  }
 
   async function handleSubmit(event) {
     setIsLoadingState(true);
@@ -88,9 +93,10 @@ export default function Form() {
         aria-label="input for the third keyword"
         required
       />
-      <StyledButton type="submit" generate>
-        Generate
-      </StyledButton>
+      <Container formButtons>
+        <StyledButton onClick={alltimeFavorites}>alltimeFavorites</StyledButton>
+        <StyledButton type="submit">Generate</StyledButton>
+      </Container>
     </FormContainer>
   );
 }

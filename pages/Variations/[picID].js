@@ -1,7 +1,7 @@
 import Text from "@/components/Text";
 import { texts } from "../../data/text";
 import FourVariationsTable from "@/components/FourVariationsTable";
-import { Container } from "@/components/Container";
+import { Container } from "@/components/styledComponents/Container";
 
 export default function ChooseFourVariations() {
   return (

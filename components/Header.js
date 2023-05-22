@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { StyledA } from "./StyledLink";
+import { StyledA } from "./styledComponents/StyledLink";
 
 const Headline = styled.h1`
   position: fixed;

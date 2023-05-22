@@ -1,8 +1,8 @@
 import PreviewPicture from "../../components/PreviewPicture";
-import { Container } from "../../components/Container";
+import { Container } from "../../components/styledComponents/Container";
 import { useAtom } from "jotai";
 import { isFavorit } from "../../store/isFavorit";
-import { StyledButton } from "@/components/StyledButton";
+import { StyledButton } from "@/components/styledComponents/StyledButton";
 import React from "react";
 
 export default function Favorit() {
@@ -12,8 +12,7 @@ export default function Favorit() {
     setFavPictures(
       favPictures.map((picture) =>
         picture.picID === picID ? { ...picture, isFavorite: false } : picture
-      ),
-      console.log(favPictures, "unfavPictures")
+      )
     );
   }
 
