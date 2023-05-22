@@ -8,7 +8,7 @@ const picSchema = new Schema({
 });
 
 const shirtSchema = new Schema({
-  searchID: { type: String, required: false },
+  picID: { type: String, required: false },
   pic1: picSchema,
   pic2: picSchema,
   pic3: picSchema,

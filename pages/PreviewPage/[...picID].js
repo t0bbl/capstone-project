@@ -22,35 +22,40 @@ async function safeFavToCloud(picSRC) {
     }
   );
   const cloudinaryData = await response.json();
+  console.log(cloudinaryData, "cloudinaryData!!!!!!!!!!!");
   return cloudinaryData;
 }
 
 async function safeFavToMongoDB(cloudinaryData) {
+  console.log(cloudinaryData);
   await fetch("/api/Favorites/safeFavorite", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      picID: cloudinaryData.public_id,
+      picID: cloudinaryData.signature,
       picSRCCloudinary: cloudinaryData.url,
       picSRCCloudinarySlug: cloudinaryData.etag,
+      isFavorite: true,
+      favorites: 1,
     }),
   });
+  console.log(cloudinaryData, "SAFETOMONGO!!!!!!!!!!!");
 
   return;
 }
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
+async function sendRequest(url, { arg, picID, picSRC, picSRCSlug }) {
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ arg, searchID, picSRC, picSRCSlug }),
+      body: JSON.stringify({ arg, picID, picSRC, picSRCSlug }),
     });
     const { status } = await response.json();
   } catch (error) {
@@ -62,7 +67,7 @@ export default function PreviewPage() {
   const router = useRouter();
   const [favPictures, setFavPictures] = useAtom(isFavorit);
   const [isLoadingState, setIsLoadingState] = useAtom(loading);
-  const { searchID } = router.query;
+  const { picID } = router.query;
   const option = router.query.option;
 
   const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
@@ -71,7 +76,7 @@ export default function PreviewPage() {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(searchID ? `/api/ChooseVariation/${searchID[1]}` : null, fetcher);
+  } = useSWR(picID ? `/api/ChooseVariation/${picID[1]}` : null, fetcher);
 
   if (isLoading || !shirts) {
     return (
@@ -94,21 +99,25 @@ export default function PreviewPage() {
 
   async function handleOnClick() {
     setIsLoadingState(true);
-    await trigger({ searchID, picSRC, picSRCSlug });
+    await trigger({ picID, picSRC, picSRCSlug });
     setIsLoadingState(false);
-    router.push(`/Variations/${searchID[0]}`);
+    router.push(`/Variations/${picID[0]}`);
   }
 
   async function favoriteImage() {
-    const check = favPictures.some((picture) => picture.picID === searchID[1]);
+    const check = favPictures.some((picture) => picture.picID === picID[1]);
+    console.log(favPictures.picID, "picture.picID");
+    console.log(shirts?.picID, "shirts?.picID");
+    console.log(check, "check");
+    console.log(favPictures, "favPictures");
     if (check === false) {
-      const cloudinaryData = await safeFavToCloud(shirts.picSRC);
-      safeFavToMongoDB(cloudinaryData, `${searchID[1]}`);
+      const cloudinaryData = await safeFavToCloud(picSRC);
+      await safeFavToMongoDB(cloudinaryData, `${picID[1]}`);
       setFavPictures([
         {
-          picID: `${searchID[1]}`,
-          picSRC: cloudinaryData.url,
-          picSRCSlug: cloudinaryData.etag,
+          picID: `${picID[1]}`,
+          picSRCCloudinary: cloudinaryData.url,
+          picSRCCloudinarySlug: cloudinaryData.etag,
           isFavorite: true,
         },
         ...favPictures,
@@ -116,10 +125,11 @@ export default function PreviewPage() {
     } else {
       setFavPictures(
         favPictures.map((picture) =>
-          picture.picID === `${searchID[1]}`
-            ? { ...picture, isFavorite: !picture.isFavorite }
+          picture.picID === `${picID[1]}`
+            ? { ...picture, isFavorite: true }
             : picture
-        )
+        ),
+        console.log(favPictures, "favPictures")
       );
     }
   }
@@ -127,16 +137,15 @@ export default function PreviewPage() {
   async function unFavoriteImage() {
     setFavPictures(
       favPictures.map((picture) =>
-        picture.picID === `${searchID[1]}`
+        picture.picID === `${picID[1]}`
           ? { ...picture, isFavorite: false }
           : picture
-      )
+      ),
+      console.log(favPictures, "unfavPictures")
     );
   }
-  const currentPicture = favPictures.find(
-    (pic) => pic.picID === `${searchID[1]}`
-  );
-  console.log(currentPicture);
+  const shownPic = favPictures.find((favPic) => favPic.picID === `${picID[1]}`);
+
   if (isLoadingState) {
     return (
       <>
@@ -157,13 +166,13 @@ export default function PreviewPage() {
           <StyledButton type="button" onClick={downloadImage}>
             SAVE
           </StyledButton>
-          {!currentPicture?.isFavorite ? (
+          {!shownPic || !shownPic.isFavorite ? (
             <StyledButton type="button" onClick={favoriteImage}>
               FAVORITE
             </StyledButton>
           ) : (
             <StyledButton type="button" onClick={unFavoriteImage} clicked>
-              FAVORITE
+              unFAVORITE
             </StyledButton>
           )}
           <StyledButton

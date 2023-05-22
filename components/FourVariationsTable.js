@@ -9,12 +9,12 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function FourPicsTable() {
   const router = useRouter();
-  const { searchID } = router.query;
+  const { picID } = router.query;
   const {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(searchID ? `/api/${searchID}` : null, fetcher);
+  } = useSWR(picID ? `/api/${picID}` : null, fetcher);
 
   if (isLoading || !shirts) {
     return (
@@ -32,7 +32,7 @@ export default function FourPicsTable() {
       {shirts.map((shirt) => (
         <FourPicsContainer key={shirt.picSRC}>
           <StyledA
-            href={`/PreviewPage/${searchID}/${shirt.variation1.picSRCSlug}?option=optionB&variant=variant1`}
+            href={`/PreviewPage/${picID}/${shirt.variation1.picSRCSlug}?option=optionB&variant=variant1`}
           >
             <StyledImage
               alt="image number 1"
@@ -43,7 +43,7 @@ export default function FourPicsTable() {
             />
           </StyledA>
           <StyledA
-            href={`/PreviewPage/${searchID}/${shirt.variation2.picSRCSlug}?option=optionB&variant=variant2`}
+            href={`/PreviewPage/${picID}/${shirt.variation2.picSRCSlug}?option=optionB&variant=variant2`}
           >
             <StyledImage
               $fourpictures
@@ -54,7 +54,7 @@ export default function FourPicsTable() {
             />
           </StyledA>
           <StyledA
-            href={`/PreviewPage/${searchID}/${shirt.variation3.picSRCSlug}?option=optionB&variant=variant3`}
+            href={`/PreviewPage/${picID}/${shirt.variation3.picSRCSlug}?option=optionB&variant=variant3`}
           >
             <StyledImage
               $fourpictures
@@ -65,7 +65,7 @@ export default function FourPicsTable() {
             />
           </StyledA>
           <StyledA
-            href={`/PreviewPage/${searchID}/${shirt.variation4.picSRCSlug}?option=optionB&variant=variant4`}
+            href={`/PreviewPage/${picID}/${shirt.variation4.picSRCSlug}?option=optionB&variant=variant4`}
           >
             <StyledImage
               $fourpictures

@@ -6,8 +6,8 @@ export default async function handler(req, res) {
 
   if (req.method === "GET") {
     try {
-      const searchID = req.query.searchID;
-      const matchedShirts = await Shirt.find({ searchID: searchID });
+      const picID = req.query.picID;
+      const matchedShirts = await Shirt.find({ picID: picID });
       return res.status(200).json(matchedShirts);
     } catch (error) {
       res.status(400).json({ error: error.message });

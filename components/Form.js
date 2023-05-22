@@ -22,7 +22,7 @@ export default function Form() {
   const router = useRouter();
   const { trigger } = useSWRMutation("/api/Shirts", sendRequest);
   const [isLoadingState, setIsLoadingState] = useAtom(loading);
-  const searchID = crypto.randomBytes(16).toString("hex");
+  const picID = crypto.randomBytes(16).toString("hex");
 
   async function handleSubmit(event) {
     setIsLoadingState(true);
@@ -30,7 +30,7 @@ export default function Form() {
     event.preventDefault();
     const formData = new FormData(event.target);
     const shirtData = Object.fromEntries(formData);
-    shirtData.searchID = searchID;
+    shirtData.picID = picID;
 
     await trigger(shirtData);
 
@@ -40,7 +40,7 @@ export default function Form() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        searchID: shirtData.searchID,
+        picID: shirtData.picID,
         keywordOne: shirtData.keywordOne,
         keywordTwo: shirtData.keywordTwo,
         keywordThree: shirtData.keywordThree,
@@ -48,7 +48,7 @@ export default function Form() {
     });
 
     setIsLoadingState(false);
-    router.push(`/ChooseFour/${searchID}`);
+    router.push(`/ChooseFour/${picID}`);
   }
 
   if (isLoadingState) {

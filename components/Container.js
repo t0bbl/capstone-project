@@ -41,4 +41,9 @@ export const Container = styled.div`
         min-width: 30%;
       }
     `}
+    ${(props) =>
+    props.alltimeFavorites &&
+    css`
+      padding-bottom: 100px;
+    `}
 `;

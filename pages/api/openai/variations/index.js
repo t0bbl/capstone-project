@@ -3,13 +3,13 @@ import Shirt from "@/db/models/Shirt";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { picSRC, searchID, picSRCSlug } = req.body.arg;
+    const { picSRC, picID, picSRCSlug } = req.body.arg;
     const bufferToUseWithOpenAI = await handlePicture(picSRC);
     bufferToUseWithOpenAI.name = "temp.png";
     await fetchImages(res, {
       picSRC,
       picSRCSlug,
-      searchID,
+      picID,
       bufferToUseWithOpenAI,
     });
   } else {
@@ -25,7 +25,7 @@ const handlePicture = async (url) => {
   return buffer;
 };
 
-async function fetchImages(resp, { searchID, bufferToUseWithOpenAI }) {
+async function fetchImages(resp, { picID, bufferToUseWithOpenAI }) {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
   });
@@ -49,7 +49,7 @@ async function fetchImages(resp, { searchID, bufferToUseWithOpenAI }) {
     try {
       const updatedShirt = await Shirt.findOneAndUpdate(
         {
-          searchID: searchID[0],
+          picID: picID[0],
         },
         {
           $set: {
