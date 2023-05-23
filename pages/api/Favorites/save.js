@@ -7,6 +7,7 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     try {
       const favoriteData = req.body;
+      console.log("favoriteData:", favoriteData);
       const favorite = new Favorite(favoriteData);
       await favorite.save();
       res.status(201).json({ status: "shirt created" });

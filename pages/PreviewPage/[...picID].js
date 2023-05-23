@@ -37,7 +37,7 @@ async function putFavorite(cloudinaryData, picID) {
       picSRCCloudinary: cloudinaryData.url,
       picSRCCloudinarySlug: cloudinaryData.etag,
 
-      favorites: 1,
+      favorites: "1",
     }),
   });
 
