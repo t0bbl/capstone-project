@@ -9,8 +9,8 @@ import updateFavorites from "../../components/updateFavorites";
 export default function Favorit() {
   const [favPictures, setFavPictures] = useAtom(isFavorit);
 
-  async function unFavoriteImage(picSRCCloudinary, picID) {
-    await updateFavorites(picSRCCloudinary, picID);
+  async function unFavoriteImage(picSRCCloudinary, picID, decreaseFavorites) {
+    await updateFavorites(picSRCCloudinary, picID, decreaseFavorites);
     setFavPictures(
       favPictures.map((picture) =>
         picture.picID === picID ? { ...picture, isFavorite: false } : picture
@@ -29,7 +29,13 @@ export default function Favorit() {
               imageName={pic.picSRCCloudinarySlug}
             />
             <StyledButton
-              onClick={() => unFavoriteImage(pic.picSRCCloudinary, pic.picID)}
+              onClick={() =>
+                unFavoriteImage(
+                  pic.picSRCCloudinary,
+                  pic.picID,
+                  "decreaseFavorites"
+                )
+              }
             >
               unFavorite
             </StyledButton>

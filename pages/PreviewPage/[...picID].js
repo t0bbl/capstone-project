@@ -11,7 +11,7 @@ import { useAtom } from "jotai";
 import { isFavorit } from "../../store/isFavorit";
 import updateFavorites from "../../components/updateFavorites";
 
-async function putFavorite(picSRC) {
+async function safeFavToCloud(picSRC) {
   const formData = new FormData();
   formData.append("file", picSRC);
   formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
@@ -24,6 +24,23 @@ async function putFavorite(picSRC) {
   );
   const cloudinaryData = await response.json();
   return cloudinaryData;
+}
+
+async function putFavorite(cloudinaryData, searchID) {
+  await fetch("/api/Favorites/save", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      picID: searchID,
+      picSRCCloudinary: cloudinaryData.url,
+      picSRCCloudinarySlug: cloudinaryData.etag,
+      favorites: 1,
+    }),
+  });
+
+  return;
 }
 
 const fetcher = (url) => fetch(url).then((res) => res.json());

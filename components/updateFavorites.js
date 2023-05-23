@@ -1,4 +1,4 @@
-async function updateFavorites(picSRCCloudinary, picID, action) {
+export default async function updateFavorites(picSRCCloudinary, picID, action) {
   const url = `/api/Favorites/alltimeFavorites/${action}/${picID}`;
   const response = await fetch(url, {
     method: "PUT",
