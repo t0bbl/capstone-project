@@ -27,7 +27,7 @@ async function saveFavToCloud(picSRC) {
 }
 
 async function putFavorite(cloudinaryData, picID) {
-  await fetch("/api/favorites/save", {
+  await fetch("../../api/favorites/save", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -68,13 +68,16 @@ export default function PreviewPage() {
   const { picID } = router.query;
   const option = router.query.option;
   const variant = router.query.variant;
-  const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
+  const { trigger } = useSWRMutation(
+    "../../api/openai/variations",
+    sendRequest
+  );
 
   function chooseApiEndpoint(picID, variant) {
     if (variant === "variant2") {
-      return `/api/favorites/alltimefavorites/${picID[1]}`;
+      return `../../api/favorites/alltimefavorites/${picID[1]}`;
     } else {
-      return `/api/choosevariation/${picID[1]}`;
+      return `../../api/choosevariation/${picID[1]}`;
     }
   }
 
