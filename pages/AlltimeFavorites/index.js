@@ -7,6 +7,7 @@ import Loading from "../../components/Loading";
 import { useAtom } from "jotai";
 import { isFavoriteState } from "../../store/isFavoriteState";
 import updateFavorites from "../../lib/updateFavorites";
+import { StyledA } from "../../components/styledComponents/StyledLink";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -26,13 +27,19 @@ export default function AlltimeFavorites() {
     return <div>error...</div>;
   }
 
-  async function favoriteImage(picSRCCloudinary, picID, increaseFavorites) {
+  async function favoriteImage(
+    picSRCCloudinary,
+    picSRCCloudinarySlug,
+    picID,
+    increaseFavorites
+  ) {
     await updateFavorites(picSRCCloudinary, picID, increaseFavorites);
     if (!favPictures.some((picture) => picture.picID === picID)) {
       setFavPictures([
         {
           picID: picID,
           picSRCCloudinary: picSRCCloudinary,
+          picSRCCloudinarySlug: picSRCCloudinarySlug,
           isFavorite: true,
           favorites: 1,
         },
@@ -69,16 +76,21 @@ export default function AlltimeFavorites() {
 
           return (
             <React.Fragment key={pic.picID}>
-              <PreviewPicture
-                imageSrc={pic.picSRCCloudinary}
-                imageName={pic.picSRCCloudinarySlug}
-              />
+              <StyledA
+                href={`/PreviewPage/${pic.picID}/${pic.picSRCCloudinarySlug}?option=optionB&variant=variant2`}
+              >
+                <PreviewPicture
+                  imageSrc={pic.picSRCCloudinary}
+                  imageName={pic.picSRCCloudinarySlug}
+                />
+              </StyledA>
               {!shownPic?.isFavorite ? (
                 <StyledButton
                   type="button"
                   onClick={() =>
                     favoriteImage(
                       pic.picSRCCloudinary,
+                      pic.picSRCCloudinarySlug,
                       pic.picID,
                       "increaseFavorites"
                     )

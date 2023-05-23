@@ -10,11 +10,19 @@ import updateFavorites from "../../lib/updateFavorites";
 export default function Favorit() {
   const [favPictures, setFavPictures] = useAtom(isFavoriteState);
 
-  async function unFavoriteImage(picSRCCloudinary, picID, decreaseFavorites) {
+  async function unFavoriteImage(
+    picSRCCloudinary,
+    picSRCCloudinarySlug,
+    picID,
+    decreaseFavorites
+  ) {
     await updateFavorites(picSRCCloudinary, picID, decreaseFavorites);
+
     setFavPictures(
       favPictures.map((picture) =>
-        picture.picID === picID ? { ...picture, isFavorite: false } : picture
+        picture.picSRCCloudinarySlug === picSRCCloudinarySlug
+          ? { ...picture, isFavorite: false }
+          : picture
       )
     );
   }
@@ -26,7 +34,7 @@ export default function Favorit() {
         .map((pic) => (
           <React.Fragment key={pic.picSRCCloudinarySlug}>
             <StyledA
-              href={`/PreviewPage/${pic.picSRCCloudinarySlug}?option=optionB&variant=variant1`}
+              href={`/PreviewPage/${pic.picID}/${pic.picSRCCloudinarySlug}?option=optionB&variant=variant2`}
             >
               <PreviewPicture
                 imageSrc={pic.picSRCCloudinary}
@@ -37,6 +45,7 @@ export default function Favorit() {
               onClick={() =>
                 unFavoriteImage(
                   pic.picSRCCloudinary,
+                  pic.picSRCCloudinarySlug,
                   pic.picID,
                   "decreaseFavorites"
                 )
