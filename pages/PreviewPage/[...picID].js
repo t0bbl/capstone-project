@@ -9,8 +9,9 @@ import useSWRMutation from "swr/mutation";
 import { loading } from "../../store/isLoading";
 import { useAtom } from "jotai";
 import { isFavorit } from "../../store/isFavorit";
+import updateFavorites from "../../components/updateFavorites";
 
-async function safeFavToCloud(picSRC) {
+async function putFavorite(picSRC) {
   const formData = new FormData();
   formData.append("file", picSRC);
   formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
@@ -23,48 +24,6 @@ async function safeFavToCloud(picSRC) {
   );
   const cloudinaryData = await response.json();
   return cloudinaryData;
-}
-
-async function safeFavToMongoDB(cloudinaryData) {
-  await fetch("/api/Favorites/safeFavorite", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      picID: cloudinaryData.signature,
-      picSRCCloudinary: cloudinaryData.url,
-      picSRCCloudinarySlug: cloudinaryData.etag,
-      isFavorite: true,
-      favorites: 1,
-    }),
-  });
-
-  return;
-}
-
-async function increaseFavtoMongoDB(picSRCCloudinary, picID) {
-  await fetch(`/api/Favorites/alltimeFavorites/increaseFavorites/${picID}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ picSRCCloudinary }),
-  });
-
-  return;
-}
-
-async function decreaseFavtoMongoDB(picSRCCloudinary, picID) {
-  await fetch(`/api/Favorites/alltimeFavorites/decreaseFavorites/${picID}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ picSRCCloudinary }),
-  });
-
-  return;
 }
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -97,7 +56,7 @@ export default function PreviewPage() {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(picID ? `/api/ChooseVariation/${picID[1]}` : null, fetcher);
+  } = useSWR(picID ? `/api/chooseVariation/${picID[1]}` : null, fetcher);
 
   if (isLoading || !shirts) {
     return (
@@ -130,7 +89,7 @@ export default function PreviewPage() {
 
     if (check === false) {
       const cloudinaryData = await safeFavToCloud(picSRC);
-      await safeFavToMongoDB(cloudinaryData, `${picID[1]}`);
+      await putFavorite(cloudinaryData, `${picID[1]}`);
       setFavPictures([
         {
           picID: `${picID[1]}`,
@@ -145,7 +104,7 @@ export default function PreviewPage() {
       const picSRCCloudinary = favPictures.find(
         (picture) => picture.picID === `${picID[1]}`
       ).picSRCCloudinary;
-      await increaseFavtoMongoDB(picSRCCloudinary, `${picID[1]}`);
+      await updateFavorites(picSRCCloudinary, `${picID[1]}`);
       setFavPictures(
         favPictures.map((picture) =>
           picture.picID === `${picID[1]}`
@@ -160,7 +119,7 @@ export default function PreviewPage() {
     const picSRCCloudinary = favPictures.find(
       (picture) => picture.picID === `${picID[1]}`
     ).picSRCCloudinary;
-    await decreaseFavtoMongoDB(picSRCCloudinary, `${picID[1]}`);
+    await updateFavorites(picSRCCloudinary, `${picID[1]}`);
     setFavPictures(
       favPictures.map((picture) =>
         picture.picID === `${picID[1]}`

@@ -5,13 +5,10 @@ export default async function handler(req, res) {
   await dbConnect();
 
   const { picSRCCloudinary } = req.body;
-  console.log("req.body:", req.body);
-  console.log("picID:", picSRCCloudinary);
 
   if (req.method === "PUT") {
     try {
       const favorite = await Favorite.findOne({ picSRCCloudinary });
-      console.log("favorite:", favorite);
       favorite.favorites += 1;
 
       await favorite.save();

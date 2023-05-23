@@ -6,32 +6,9 @@ import useSWR from "swr";
 import Loading from "../../components/Loading";
 import { useAtom } from "jotai";
 import { isFavorite } from "../../store/isFavorite";
+import updateFavorites from "../../components/updateFavorites";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
-
-async function increaseFavtoMongoDB(picSRCCloudinary, picID) {
-  await fetch(`/api/Favorites/alltimeFavorites/increaseFavorites/${picID}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ picSRCCloudinary }),
-  });
-
-  return;
-}
-
-async function decreaseFavtoMongoDB(picSRCCloudinary, picID) {
-  await fetch(`/api/Favorites/alltimeFavorites/decreaseFavorites/${picID}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ picSRCCloudinary }),
-  });
-
-  return;
-}
 
 export default function AlltimeFavorites() {
   const [favPictures, setFavPictures] = useAtom(isFavorit);
@@ -50,7 +27,7 @@ export default function AlltimeFavorites() {
   }
 
   async function favoriteImage(picSRCCloudinary, picID) {
-    await increaseFavtoMongoDB(picSRCCloudinary, picID);
+    await updateFavorites(picSRCCloudinary, picID);
     if (!favPictures.some((picture) => picture.picID === picID)) {
       setFavPictures([
         {
@@ -71,7 +48,7 @@ export default function AlltimeFavorites() {
   }
 
   async function unFavoriteImage(picSRCCloudinary, picID) {
-    await decreaseFavtoMongoDB(picSRCCloudinary, picID);
+    await updateFavorites(picSRCCloudinary, picID);
     setFavPictures(
       favPictures.map((picture) =>
         picture.picSRCCloudinary === picSRCCloudinary
