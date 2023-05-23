@@ -26,7 +26,7 @@ export default function Form() {
   const picID = crypto.randomBytes(16).toString("hex");
 
   function alltimeFavorites() {
-    router.push(`/AlltimeFavorites`);
+    router.push(`/alltimefavorites`);
   }
 
   async function handleSubmit(event) {

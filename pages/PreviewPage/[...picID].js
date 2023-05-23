@@ -27,7 +27,7 @@ async function saveFavToCloud(picSRC) {
 }
 
 async function putFavorite(cloudinaryData, picID) {
-  await fetch("/api/Favorites/save", {
+  await fetch("/api/favorites/save", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function PreviewPage() {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(picID ? `/api/chooseVariation/${picID[1]}` : null, fetcher);
+  } = useSWR(picID ? `/api/choosevariation/${picID[1]}` : null, fetcher);
 
   if (isLoading || !shirts) {
     return (
