@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   if (req.method === "PUT") {
     try {
       const favorite = await Favorite.findOne({ picSRCCloudinary });
-      favorite.favorites -= 1;
+      favorite.favorites -= "1";
 
       await favorite.save();
 
