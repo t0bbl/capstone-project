@@ -18,7 +18,7 @@ export default function AlltimeFavorites() {
     data: fetchedFavorites,
     isLoading,
     error,
-  } = useSWR(`/api/favorites/alltimefavorites`, fetcher);
+  } = useSWR(`/api/favorites/alltimefavorites/allFavorites`, fetcher);
 
   if (isLoading || !fetchedFavorites) {
     return <Loading />;
