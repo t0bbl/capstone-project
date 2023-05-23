@@ -9,7 +9,7 @@ import useSWRMutation from "swr/mutation";
 import { loading } from "../../store/isLoading";
 import { useAtom } from "jotai";
 import { isFavoriteState } from "../../store/isFavoriteState";
-import updateFavorites from "../../components/updateFavorites";
+import updateFavorites from "../../lib/updateFavorites";
 
 async function saveFavToCloud(picSRC) {
   const formData = new FormData();

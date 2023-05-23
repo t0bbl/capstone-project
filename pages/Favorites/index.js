@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 import { isFavoriteState } from "../../store/isFavoriteState";
 import { StyledButton } from "@/components/styledComponents/StyledButton";
 import React from "react";
-import updateFavorites from "../../components/updateFavorites";
+import updateFavorites from "../../lib/updateFavorites";
 
 export default function Favorit() {
   const [favPictures, setFavPictures] = useAtom(isFavoriteState);

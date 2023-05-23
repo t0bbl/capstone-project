@@ -6,7 +6,7 @@ import useSWR from "swr";
 import Loading from "../../components/Loading";
 import { useAtom } from "jotai";
 import { isFavoriteState } from "../../store/isFavoriteState";
-import updateFavorites from "../../components/updateFavorites";
+import updateFavorites from "../../lib/updateFavorites";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
