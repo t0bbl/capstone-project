@@ -15,7 +15,6 @@ export default async function handler(req, res) {
       res.status(400).json(console.error(error));
     }
   } else {
-    // If it's not a POST method, return a 405 Method Not Allowed
     console.log(`Method ${req.method} not allowed`);
     res.status(405).json({ status: "Error", error: "Method not allowed" });
   }

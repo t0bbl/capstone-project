@@ -6,7 +6,7 @@ export default async function handler(req, res) {
 
   if (req.method === "GET") {
     try {
-      const favorites = await Favorite.find({});
+      const favorites = await Favorite.find();
       res.status(200).json(favorites);
     } catch (error) {
       res.status(400).json(console.error(error));
