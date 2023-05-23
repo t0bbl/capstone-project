@@ -1,4 +1,5 @@
 import PreviewPicture from "../../components/PreviewPicture";
+import { StyledA } from "../../components/styledComponents/StyledLink";
 import { Container } from "../../components/styledComponents/Container";
 import { useAtom } from "jotai";
 import { isFavoriteState } from "../../store/isFavoriteState";
@@ -24,10 +25,12 @@ export default function Favorit() {
         .filter((pic) => pic.isFavorite)
         .map((pic) => (
           <React.Fragment key={pic.picSRCCloudinarySlug}>
-            <PreviewPicture
-              imageSrc={pic.picSRCCloudinary}
-              imageName={pic.picSRCCloudinarySlug}
-            />
+            <StyledA href={`/previewPage/${pic.picID}`}>
+              <PreviewPicture
+                imageSrc={pic.picSRCCloudinary}
+                imageName={pic.picSRCCloudinarySlug}
+              />
+            </StyledA>
             <StyledButton
               onClick={() =>
                 unFavoriteImage(
