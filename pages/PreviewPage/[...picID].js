@@ -8,10 +8,10 @@ import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { loading } from "../../store/isLoading";
 import { useAtom } from "jotai";
-import { isFavorit } from "../../store/isFavorit";
+import { isFavoriteState } from "../../store/isFavoriteState";
 import updateFavorites from "../../components/updateFavorites";
 
-async function safeFavToCloud(picSRC) {
+async function saveFavToCloud(picSRC) {
   const formData = new FormData();
   formData.append("file", picSRC);
   formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
@@ -26,14 +26,14 @@ async function safeFavToCloud(picSRC) {
   return cloudinaryData;
 }
 
-async function putFavorite(cloudinaryData, searchID) {
+async function putFavorite(cloudinaryData, picID) {
   await fetch("/api/Favorites/save", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      picID: searchID,
+      picID: picID,
       picSRCCloudinary: cloudinaryData.url,
       picSRCCloudinarySlug: cloudinaryData.etag,
       favorites: 1,
@@ -62,7 +62,7 @@ async function sendRequest(url, { arg, picID, picSRC, picSRCSlug }) {
 
 export default function PreviewPage() {
   const router = useRouter();
-  const [favPictures, setFavPictures] = useAtom(isFavorit);
+  const [favPictures, setFavPictures] = useAtom(isFavoriteState);
   const [isLoadingState, setIsLoadingState] = useAtom(loading);
   const { picID } = router.query;
   const option = router.query.option;
@@ -105,7 +105,7 @@ export default function PreviewPage() {
     const check = favPictures.some((picture) => picture.picID === picID[1]);
 
     if (check === false) {
-      const cloudinaryData = await safeFavToCloud(picSRC);
+      const cloudinaryData = await saveFavToCloud(picSRC);
       await putFavorite(cloudinaryData, `${picID[1]}`);
       setFavPictures([
         {

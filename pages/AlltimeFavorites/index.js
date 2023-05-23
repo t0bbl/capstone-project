@@ -5,13 +5,13 @@ import React from "react";
 import useSWR from "swr";
 import Loading from "../../components/Loading";
 import { useAtom } from "jotai";
-import { isFavorit } from "../../store/isFavorit";
+import { isFavoriteState } from "../../store/isFavoriteState";
 import updateFavorites from "../../components/updateFavorites";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function AlltimeFavorites() {
-  const [favPictures, setFavPictures] = useAtom(isFavorit);
+  const [favPictures, setFavPictures] = useAtom(isFavoriteState);
 
   const {
     data: fetchedFavorites,
