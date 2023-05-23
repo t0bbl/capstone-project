@@ -1,5 +1,5 @@
-import dbConnect from "../../../../../db/connect";
-import Favorite from "../../../../../db/models/Favorite";
+import dbConnect from "/db/connect";
+import Favorite from "/db/models/Favorite";
 
 export default async function handler(req, res) {
   await dbConnect();
