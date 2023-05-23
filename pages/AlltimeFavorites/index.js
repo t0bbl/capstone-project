@@ -54,9 +54,8 @@ export default function AlltimeFavorites() {
   }
 
   async function favoriteImage(picSRCCloudinary, picID) {
-    const check = favPictures.some((picture) => picture.picID === picID);
-    if (check === false) {
-      await increaseFavtoMongoDB(picSRCCloudinary, picID);
+    await increaseFavtoMongoDB(picSRCCloudinary, picID);
+    if (!favPictures.some((picture) => picture.picID === picID)) {
       setFavPictures([
         {
           picID: picID,
@@ -67,7 +66,6 @@ export default function AlltimeFavorites() {
         ...favPictures,
       ]);
     } else {
-      await increaseFavtoMongoDB(picSRCCloudinary, picID);
       setFavPictures(
         favPictures.map((picture) =>
           picture.picID === picID ? { ...picture, isFavorite: true } : picture
