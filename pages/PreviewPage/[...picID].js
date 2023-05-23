@@ -27,7 +27,7 @@ async function saveFavToCloud(picSRC) {
 }
 
 async function putFavorite(cloudinaryData, picID) {
-  await fetch("/api/favorites/save", {
+  await fetch("/api/favorites/save/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -36,6 +36,7 @@ async function putFavorite(cloudinaryData, picID) {
       picID: picID,
       picSRCCloudinary: cloudinaryData.url,
       picSRCCloudinarySlug: cloudinaryData.etag,
+
       favorites: 1,
     }),
   });
@@ -111,7 +112,6 @@ export default function PreviewPage() {
 
   async function favoriteImage() {
     const check = favPictures.some((picture) => picture.picID === picID[1]);
-
     if (check === false) {
       const cloudinaryData = await saveFavToCloud(picSRC);
       await putFavorite(cloudinaryData, `${picID[1]}`);
