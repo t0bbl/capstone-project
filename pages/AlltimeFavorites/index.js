@@ -5,7 +5,7 @@ import React from "react";
 import useSWR from "swr";
 import Loading from "../../components/Loading";
 import { useAtom } from "jotai";
-import { isFavorit } from "../../store/isFavorit";
+import { isFavorite } from "../../store/isFavorite";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
