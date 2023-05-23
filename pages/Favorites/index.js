@@ -25,7 +25,9 @@ export default function Favorit() {
         .filter((pic) => pic.isFavorite)
         .map((pic) => (
           <React.Fragment key={pic.picSRCCloudinarySlug}>
-            <StyledA href={`/previewPage/${pic.picID}`}>
+            <StyledA
+              href={`/PreviewPage/${pic.picSRCCloudinarySlug}?option=optionB&variant=variant1`}
+            >
               <PreviewPicture
                 imageSrc={pic.picSRCCloudinary}
                 imageName={pic.picSRCCloudinarySlug}
