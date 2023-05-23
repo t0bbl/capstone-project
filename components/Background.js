@@ -3,8 +3,6 @@ import Rand from "rand-seed";
 
 const n = 1000; // Or something else
 
-const seed = "anything";
-
 export default function Background() {
   const rand = new Rand("thisisAIPOWER");
   return (

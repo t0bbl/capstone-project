@@ -35,10 +35,21 @@ export const Container = styled.div`
       flex-direction: row;
       justify-content: space-evenly;
       align-content: center;
-      flex-wrap: wrap;
       margin-top: 10vh;
       button {
         min-width: 30%;
       }
+    `}
+    ${(props) =>
+    props.alltimeFavorites &&
+    css`
+      padding-bottom: 100px;
+    `}
+    ${(props) =>
+    props.formButtons &&
+    css`
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: space-evenly;
     `}
 `;

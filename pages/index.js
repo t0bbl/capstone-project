@@ -4,7 +4,7 @@ import { texts } from "../data/text";
 import { useAtom } from "jotai";
 import IsLoading from "../components/Loading";
 import { loading } from "../store/isLoading";
-import { Container } from "../components/Container";
+import { Container } from "../components/styledComponents/Container";
 
 export default function HomePage() {
   const [isLoadingState] = useAtom(loading);

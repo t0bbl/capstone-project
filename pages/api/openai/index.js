@@ -3,8 +3,8 @@ import Shirt from "@/db/models/Shirt";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { keywordOne, keywordTwo, keywordThree, searchID } = req.body;
-    await fetchImages(res, { keywordOne, keywordTwo, keywordThree, searchID });
+    const { keywordOne, keywordTwo, keywordThree, picID } = req.body;
+    await fetchImages(res, { keywordOne, keywordTwo, keywordThree, picID });
   } else {
     res.status(405).send("Method not allowed");
   }
@@ -12,7 +12,7 @@ export default async function handler(req, res) {
 
 async function fetchImages(
   resp,
-  { keywordOne, keywordTwo, keywordThree, searchID }
+  { keywordOne, keywordTwo, keywordThree, picID }
 ) {
   const configuration = new Configuration({
     apiKey: process.env.OPENAI_API_KEY,
@@ -43,7 +43,7 @@ async function fetchImages(
 
     try {
       const updatedShirt = await Shirt.findOneAndUpdate(
-        { searchID: searchID },
+        { picID: picID },
         {
           $set: {
             ...formattedData,

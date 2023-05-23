@@ -1,32 +1,43 @@
 import PreviewPicture from "../../components/PreviewPicture";
-import { Container } from "../../components/Container";
+import { Container } from "../../components/styledComponents/Container";
 import { useAtom } from "jotai";
-import { isFavorit } from "../../store/isFavorit";
-import { StyledButton } from "@/components/StyledButton";
+import { isFavoriteState } from "../../store/isFavoriteState";
+import { StyledButton } from "@/components/styledComponents/StyledButton";
 import React from "react";
+import updateFavorites from "../../lib/updateFavorites";
 
 export default function Favorit() {
-  const [favPictures, setFavPictures] = useAtom(isFavorit);
+  const [favPictures, setFavPictures] = useAtom(isFavoriteState);
 
-  function unFavorit(picSRC) {
+  async function unFavoriteImage(picSRCCloudinary, picID, decreaseFavorites) {
+    await updateFavorites(picSRCCloudinary, picID, decreaseFavorites);
     setFavPictures(
       favPictures.map((picture) =>
-        picture.picSRC === picSRC
-          ? { ...picture, isFavorite: !picture.isFavorite }
-          : picture
+        picture.picID === picID ? { ...picture, isFavorite: false } : picture
       )
     );
   }
 
   return (
-    <Container>
+    <Container alltimeFavorites>
       {favPictures
         .filter((pic) => pic.isFavorite)
         .map((pic) => (
-          <React.Fragment key={pic.picSRCSlug}>
-            <PreviewPicture imageSrc={pic.picSRC} imageName={pic.picSRCSlug} />
-            <StyledButton onClick={() => unFavorit(pic.picSRC)}>
-              UnFavorite
+          <React.Fragment key={pic.picSRCCloudinarySlug}>
+            <PreviewPicture
+              imageSrc={pic.picSRCCloudinary}
+              imageName={pic.picSRCCloudinarySlug}
+            />
+            <StyledButton
+              onClick={() =>
+                unFavoriteImage(
+                  pic.picSRCCloudinary,
+                  pic.picID,
+                  "decreaseFavorites"
+                )
+              }
+            >
+              unFavorite
             </StyledButton>
           </React.Fragment>
         ))}

@@ -1,16 +1,17 @@
-import { StyledButton } from "@/components/StyledButton";
+import { StyledButton } from "@/components/styledComponents/StyledButton";
 import { useRouter } from "next/router";
 import PreviewPicture from "../../components/PreviewPicture";
 import { saveAs } from "file-saver";
-import { Container } from "../../components/Container";
+import { Container } from "../../components/styledComponents/Container";
 import Loading from "../../components/Loading";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
 import { loading } from "../../store/isLoading";
 import { useAtom } from "jotai";
-import { isFavorit } from "../../store/isFavorit";
+import { isFavoriteState } from "../../store/isFavoriteState";
+import updateFavorites from "../../lib/updateFavorites";
 
-async function safeFavToCloud(picSRC) {
+async function saveFavToCloud(picSRC) {
   const formData = new FormData();
   formData.append("file", picSRC);
   formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET);
@@ -25,16 +26,17 @@ async function safeFavToCloud(picSRC) {
   return cloudinaryData;
 }
 
-async function safeFavToMongoDB(cloudinaryData, searchID) {
-  await fetch("/api/Favorites/safeFavorite", {
+async function putFavorite(cloudinaryData, picID) {
+  await fetch("/api/Favorites/save", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      picID: searchID,
+      picID: picID,
       picSRCCloudinary: cloudinaryData.url,
       picSRCCloudinarySlug: cloudinaryData.etag,
+      favorites: 1,
     }),
   });
 
@@ -43,14 +45,14 @@ async function safeFavToMongoDB(cloudinaryData, searchID) {
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
+async function sendRequest(url, { arg, picID, picSRC, picSRCSlug }) {
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ arg, searchID, picSRC, picSRCSlug }),
+      body: JSON.stringify({ arg, picID, picSRC, picSRCSlug }),
     });
     const { status } = await response.json();
   } catch (error) {
@@ -60,9 +62,9 @@ async function sendRequest(url, { arg, searchID, picSRC, picSRCSlug }) {
 
 export default function PreviewPage() {
   const router = useRouter();
-  const [favPictures, setFavPictures] = useAtom(isFavorit);
+  const [favPictures, setFavPictures] = useAtom(isFavoriteState);
   const [isLoadingState, setIsLoadingState] = useAtom(loading);
-  const { searchID } = router.query;
+  const { picID } = router.query;
   const option = router.query.option;
 
   const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
@@ -71,7 +73,7 @@ export default function PreviewPage() {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(searchID ? `/api/ChooseVariation/${searchID[1]}` : null, fetcher);
+  } = useSWR(picID ? `/api/chooseVariation/${picID[1]}` : null, fetcher);
 
   if (isLoading || !shirts) {
     return (
@@ -94,30 +96,36 @@ export default function PreviewPage() {
 
   async function handleOnClick() {
     setIsLoadingState(true);
-    await trigger({ searchID, picSRC, picSRCSlug });
+    await trigger({ picID, picSRC, picSRCSlug });
     setIsLoadingState(false);
-    router.push(`/Variations/${searchID[0]}`);
+    router.push(`/Variations/${picID[0]}`);
   }
 
   async function favoriteImage() {
-    const check = favPictures.some((picture) => picture.picID === searchID[1]);
+    const check = favPictures.some((picture) => picture.picID === picID[1]);
+
     if (check === false) {
-      const cloudinaryData = await safeFavToCloud(shirts.picSRC);
-      safeFavToMongoDB(cloudinaryData, `${searchID[1]}`);
+      const cloudinaryData = await saveFavToCloud(picSRC);
+      await putFavorite(cloudinaryData, `${picID[1]}`);
       setFavPictures([
         {
-          picID: `${searchID[1]}`,
-          picSRC: cloudinaryData.url,
-          picSRCSlug: cloudinaryData.etag,
+          picID: `${picID[1]}`,
+          picSRCCloudinary: cloudinaryData.url,
+          picSRCCloudinarySlug: cloudinaryData.etag,
           isFavorite: true,
+          favorites: 1,
         },
         ...favPictures,
       ]);
     } else {
+      const picSRCCloudinary = favPictures.find(
+        (picture) => picture.picID === `${picID[1]}`
+      ).picSRCCloudinary;
+      await updateFavorites(picSRCCloudinary, `${picID[1]}`);
       setFavPictures(
         favPictures.map((picture) =>
-          picture.picID === `${searchID[1]}`
-            ? { ...picture, isFavorite: !picture.isFavorite }
+          picture.picID === `${picID[1]}`
+            ? { ...picture, isFavorite: true }
             : picture
         )
       );
@@ -125,18 +133,20 @@ export default function PreviewPage() {
   }
 
   async function unFavoriteImage() {
+    const picSRCCloudinary = favPictures.find(
+      (picture) => picture.picID === `${picID[1]}`
+    ).picSRCCloudinary;
+    await updateFavorites(picSRCCloudinary, `${picID[1]}`);
     setFavPictures(
       favPictures.map((picture) =>
-        picture.picID === `${searchID[1]}`
+        picture.picID === `${picID[1]}`
           ? { ...picture, isFavorite: false }
           : picture
       )
     );
   }
-  const currentPicture = favPictures.find(
-    (pic) => pic.picID === `${searchID[1]}`
-  );
-  console.log(currentPicture);
+  const shownPic = favPictures.find((favPic) => favPic.picID === `${picID[1]}`);
+
   if (isLoadingState) {
     return (
       <>
@@ -157,13 +167,13 @@ export default function PreviewPage() {
           <StyledButton type="button" onClick={downloadImage}>
             SAVE
           </StyledButton>
-          {!currentPicture?.isFavorite ? (
+          {!shownPic || !shownPic.isFavorite ? (
             <StyledButton type="button" onClick={favoriteImage}>
               FAVORITE
             </StyledButton>
           ) : (
             <StyledButton type="button" onClick={unFavoriteImage} clicked>
-              FAVORITE
+              unFAVORITE
             </StyledButton>
           )}
           <StyledButton

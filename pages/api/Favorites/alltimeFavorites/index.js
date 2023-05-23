@@ -3,12 +3,11 @@ import Favorite from "../../../../db/models/Favorite";
 
 export default async function handler(req, res) {
   await dbConnect();
-  const picID = req.query.picID;
 
-  if (req.method === "DELETE") {
+  if (req.method === "GET") {
     try {
-      await Favorite.findOneAndDelete(picID);
-      res.status(200).json({ status: `Joke ${picID} successfully deleted.` });
+      const favorites = await Favorite.find({});
+      res.status(200).json(favorites);
     } catch (error) {
       res.status(400).json(console.error(error));
     }

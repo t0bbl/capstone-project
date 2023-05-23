@@ -5,6 +5,8 @@ const favoriteSchema = new Schema({
   picID: String,
   picSRCCloudinary: String,
   picSRCCloudinarySlug: String,
+  isFavorite: Boolean,
+  favorites: Number,
 });
 const Favorite =
   mongoose.models.Favorite || mongoose.model("Favorite", favoriteSchema);

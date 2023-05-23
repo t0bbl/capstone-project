@@ -1,6 +1,5 @@
 export const texts = {
-  intro:
-    "Give us three Keywords for our AI to SH!T YOUR AI UP. or sth, idunnu, whoami",
+  intro: "Give us three Keywords for our AI to AIyourSh!rtUP!",
 
   chooseFourIntro: "Choose your Style!",
 

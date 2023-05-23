@@ -10,6 +10,8 @@ export const StyledButton = styled.button`
   border: none;
   font-size: inherit;
   box-shadow: 2px 2px 10px cyan;
+  transform: skew(10deg);
+
   &:active {
     box-shadow: 2px 2px 20px cyan;
   }
@@ -20,7 +22,6 @@ export const StyledButton = styled.button`
       align-self: flex-end;
       margin-top: 40px;
       margin-right: 20px;
-      transform: skew(10deg);
     `}
   ${(props) =>
     props.center &&

@@ -1,4 +1,4 @@
-import { StyledA } from "./StyledLink";
+import { StyledA } from "./styledComponents/StyledLink";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 

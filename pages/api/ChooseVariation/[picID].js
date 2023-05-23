@@ -6,17 +6,17 @@ export default async function handler(req, res) {
 
   if (req.method === "GET") {
     try {
-      const searchID = req.query.searchID;
+      const picID = req.query.picID;
       const matchedShirt = await Shirt.findOne({
         $or: [
-          { "pic1.picSRCSlug": searchID },
-          { "pic2.picSRCSlug": searchID },
-          { "pic3.picSRCSlug": searchID },
-          { "pic4.picSRCSlug": searchID },
-          { "variation1.picSRCSlug": searchID },
-          { "variation2.picSRCSlug": searchID },
-          { "variation3.picSRCSlug": searchID },
-          { "variation4.picSRCSlug": searchID },
+          { "pic1.picSRCSlug": picID },
+          { "pic2.picSRCSlug": picID },
+          { "pic3.picSRCSlug": picID },
+          { "pic4.picSRCSlug": picID },
+          { "variation1.picSRCSlug": picID },
+          { "variation2.picSRCSlug": picID },
+          { "variation3.picSRCSlug": picID },
+          { "variation4.picSRCSlug": picID },
         ],
       });
 
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
         "variation3",
         "variation4",
       ].find((picKey) => {
-        return matchedShirt[picKey].picSRCSlug === searchID;
+        return matchedShirt[picKey].picSRCSlug === picID;
       });
 
       return res.status(200).json(matchedShirt[matchedPic]);
