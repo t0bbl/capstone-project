@@ -132,7 +132,7 @@ export default function PreviewPage() {
       await updateFavorites(
         picSRCCloudinary,
         `${picID[1]}`,
-        "increaseFavorites"
+        "increasefavorites"
       );
       setFavPictures(
         favPictures.map((picture) =>
@@ -155,7 +155,7 @@ export default function PreviewPage() {
         (picture) => picture.picID === `${picID[1]}`
       ).picSRCCloudinary;
     }
-    await updateFavorites(picSRCCloudinary, `${picID[1]}`, "decreaseFavorites");
+    await updateFavorites(picSRCCloudinary, `${picID[1]}`, "decreasefavorites");
     setFavPictures(
       favPictures.map((picture) =>
         picture.picSRCCloudinary === picSRCCloudinary

@@ -31,9 +31,9 @@ export default function AlltimeFavorites() {
     picSRCCloudinary,
     picSRCCloudinarySlug,
     picID,
-    increaseFavorites
+    increasefavorites
   ) {
-    await updateFavorites(picSRCCloudinary, picID, increaseFavorites);
+    await updateFavorites(picSRCCloudinary, picID, increasefavorites);
     if (!favPictures.some((picture) => picture.picID === picID)) {
       setFavPictures([
         {
@@ -54,8 +54,8 @@ export default function AlltimeFavorites() {
     }
   }
 
-  async function unFavoriteImage(picSRCCloudinary, picID, decreaseFavorites) {
-    await updateFavorites(picSRCCloudinary, picID, decreaseFavorites);
+  async function unFavoriteImage(picSRCCloudinary, picID, decreasefavorites) {
+    await updateFavorites(picSRCCloudinary, picID, decreasefavorites);
     setFavPictures(
       favPictures.map((picture) =>
         picture.picSRCCloudinary === picSRCCloudinary
@@ -92,7 +92,7 @@ export default function AlltimeFavorites() {
                       pic.picSRCCloudinary,
                       pic.picSRCCloudinarySlug,
                       pic.picID,
-                      "increaseFavorites"
+                      "increasefavorites"
                     )
                   }
                 >
@@ -105,7 +105,7 @@ export default function AlltimeFavorites() {
                     unFavoriteImage(
                       pic.picSRCCloudinary,
                       pic.picID,
-                      "decreaseFavorites"
+                      "decreasefavorites"
                     )
                   }
                   clicked
