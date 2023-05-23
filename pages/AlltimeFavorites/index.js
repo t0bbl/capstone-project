@@ -43,11 +43,7 @@ export default function AlltimeFavorites() {
   } = useSWR(`/api/Favorites/alltimeFavorites`, fetcher);
 
   if (isLoading || !fetchedFavorites) {
-    return (
-      <>
-        <Loading />
-      </>
-    );
+    return <Loading />;
   }
   if (error) {
     return <div>error...</div>;
