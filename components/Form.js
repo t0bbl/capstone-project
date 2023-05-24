@@ -25,10 +25,6 @@ export default function Form() {
   const [isLoadingState, setIsLoadingState] = useAtom(loading);
   const picID = crypto.randomBytes(16).toString("hex");
 
-  function alltimeFavorites() {
-    window.location = `/AlltimeFavorites`;
-  }
-
   async function handleSubmit(event) {
     setIsLoadingState(true);
 
