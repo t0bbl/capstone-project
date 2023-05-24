@@ -13,6 +13,14 @@ export default async function handler(request, response) {
     } catch (error) {
       response.status(400).json(console.error(error));
     }
+  }
+  if (request.method === "GET") {
+    try {
+      const favorites = await Favorite.find();
+      response.status(200).json(favorites);
+    } catch (error) {
+      response.status(400).json(console.error(error));
+    }
   } else {
     response.status(405).json({ status: "Error", error: "Method not allowed" });
   }
