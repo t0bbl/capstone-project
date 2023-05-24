@@ -27,7 +27,7 @@ async function saveFavToCloud(picSRC) {
 }
 
 async function putFavorite(cloudinaryData, picID) {
-  await fetch(`/api/favorites/${picID}`, {
+  await fetch(`/api/favorites/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
