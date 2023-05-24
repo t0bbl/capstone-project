@@ -14,8 +14,7 @@ export default async function handler(request, response) {
       console.error(error);
       response.status(400).json({ status: "Error", error: error.message });
     }
-  }
-  if (request.method === "GET") {
+  } else if (request.method === "GET") {
     try {
       const favorites = await Favorite.find();
       response.status(200).json(favorites);
