@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import useSWR from "swr";
 import Loading from "./Loading";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url) => fetch(url).then((response) => response.json());
 
 export default function FourPicsTable() {
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function FourPicsTable() {
   return (
     <>
       {shirts.map((shirt) => (
-        <FourPicsContainer key={shirt.picSRC}>
+        <FourPicsContainer key={shirt._id}>
           <StyledA
             href={`/PreviewPage/${picID}/${shirt.variation1.picSRCSlug}?option=optionB&variant=variant1`}
           >

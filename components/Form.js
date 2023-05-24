@@ -26,7 +26,7 @@ export default function Form() {
   const picID = crypto.randomBytes(16).toString("hex");
 
   function alltimeFavorites() {
-    router.push(`/AlltimeFavorites`);
+    window.location = `/AlltimeFavorites`;
   }
 
   async function handleSubmit(event) {
@@ -104,8 +104,8 @@ export default function Form() {
 }
 
 const FormContainer = styled.form`
-  width: 100%;
-  height: 100%;
+  width: 99%;
+  height: 99%;
   gap: 0.5rem;
   color: teal;
   display: flex;

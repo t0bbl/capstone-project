@@ -7,8 +7,9 @@ import Loading from "../../components/Loading";
 import { useAtom } from "jotai";
 import { isFavoriteState } from "../../store/isFavoriteState";
 import updateFavorites from "../../lib/updateFavorites";
+import { StyledA } from "../../components/styledComponents/StyledLink";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url) => fetch(url).then((response) => response.json());
 
 export default function AlltimeFavorites() {
   const [favPictures, setFavPictures] = useAtom(isFavoriteState);
@@ -17,7 +18,7 @@ export default function AlltimeFavorites() {
     data: fetchedFavorites,
     isLoading,
     error,
-  } = useSWR(`/api/Favorites/alltimeFavorites`, fetcher);
+  } = useSWR(`/api/favorites`, fetcher);
 
   if (isLoading || !fetchedFavorites) {
     return <Loading />;
@@ -26,13 +27,19 @@ export default function AlltimeFavorites() {
     return <div>error...</div>;
   }
 
-  async function favoriteImage(picSRCCloudinary, picID, increaseFavorites) {
-    await updateFavorites(picSRCCloudinary, picID, increaseFavorites);
+  async function favoriteImage(
+    picSRCCloudinary,
+    picSRCCloudinarySlug,
+    picID,
+    increase
+  ) {
+    await updateFavorites(picSRCCloudinary, picID, increase);
     if (!favPictures.some((picture) => picture.picID === picID)) {
       setFavPictures([
         {
           picID: picID,
           picSRCCloudinary: picSRCCloudinary,
+          picSRCCloudinarySlug: picSRCCloudinarySlug,
           isFavorite: true,
           favorites: 1,
         },
@@ -47,8 +54,8 @@ export default function AlltimeFavorites() {
     }
   }
 
-  async function unFavoriteImage(picSRCCloudinary, picID, decreaseFavorites) {
-    await updateFavorites(picSRCCloudinary, picID, decreaseFavorites);
+  async function unFavoriteImage(picSRCCloudinary, picID, decrease) {
+    await updateFavorites(picSRCCloudinary, picID, decrease);
     setFavPictures(
       favPictures.map((picture) =>
         picture.picSRCCloudinary === picSRCCloudinary
@@ -62,25 +69,30 @@ export default function AlltimeFavorites() {
     <Container alltimeFavorites>
       {fetchedFavorites
         .filter((pic) => pic.favorites >= 1)
+        .sort((a, b) => b.favorites - a.favorites)
         .map((pic) => {
           const shownPic = favPictures.find(
             (favPic) => favPic.picSRCCloudinary === pic.picSRCCloudinary
           );
-
           return (
             <React.Fragment key={pic.picID}>
-              <PreviewPicture
-                imageSrc={pic.picSRCCloudinary}
-                imageName={pic.picSRCCloudinarySlug}
-              />
+              <StyledA
+                href={`/PreviewPage/${pic.picID}/${pic.picSRCCloudinarySlug}?option=optionB&variant=variant2`}
+              >
+                <PreviewPicture
+                  imageSrc={pic.picSRCCloudinary}
+                  imageName={pic.picSRCCloudinarySlug}
+                />
+              </StyledA>
               {!shownPic?.isFavorite ? (
                 <StyledButton
                   type="button"
                   onClick={() =>
                     favoriteImage(
                       pic.picSRCCloudinary,
+                      pic.picSRCCloudinarySlug,
                       pic.picID,
-                      "increaseFavorites"
+                      "increase"
                     )
                   }
                 >
@@ -90,11 +102,7 @@ export default function AlltimeFavorites() {
                 <StyledButton
                   type="button"
                   onClick={() =>
-                    unFavoriteImage(
-                      pic.picSRCCloudinary,
-                      pic.picID,
-                      "decreaseFavorites"
-                    )
+                    unFavoriteImage(pic.picSRCCloudinary, pic.picID, "decrease")
                   }
                   clicked
                 >

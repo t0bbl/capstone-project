@@ -1,19 +1,19 @@
 import { Configuration, OpenAIApi } from "openai";
 import Shirt from "@/db/models/Shirt";
 
-export default async function handler(req, res) {
-  if (req.method === "POST") {
-    const { picSRC, picID, picSRCSlug } = req.body.arg;
+export default async function handler(request, response) {
+  if (request.method === "POST") {
+    const { picSRC, picID, picSRCSlug } = request.body.arg;
     const bufferToUseWithOpenAI = await handlePicture(picSRC);
     bufferToUseWithOpenAI.name = "temp.png";
-    await fetchImages(res, {
+    await fetchImages(response, {
       picSRC,
       picSRCSlug,
       picID,
       bufferToUseWithOpenAI,
     });
   } else {
-    res.status(405).send("Method not allowed");
+    response.status(405).send("Method not allowed");
   }
 }
 

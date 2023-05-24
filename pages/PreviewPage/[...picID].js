@@ -27,7 +27,7 @@ async function saveFavToCloud(picSRC) {
 }
 
 async function putFavorite(cloudinaryData, picID) {
-  await fetch("/api/Favorites/save", {
+  await fetch(`/api/favorites`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -36,14 +36,15 @@ async function putFavorite(cloudinaryData, picID) {
       picID: picID,
       picSRCCloudinary: cloudinaryData.url,
       picSRCCloudinarySlug: cloudinaryData.etag,
-      favorites: 1,
+
+      favorites: "1",
     }),
   });
 
   return;
 }
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url) => fetch(url).then((response) => response.json());
 
 async function sendRequest(url, { arg, picID, picSRC, picSRCSlug }) {
   try {
@@ -66,14 +67,25 @@ export default function PreviewPage() {
   const [isLoadingState, setIsLoadingState] = useAtom(loading);
   const { picID } = router.query;
   const option = router.query.option;
+  const variant = router.query.variant;
+  const { trigger } = useSWRMutation(
+    "../../api/openai/variations",
+    sendRequest
+  );
 
-  const { trigger } = useSWRMutation("/api/openai/variations", sendRequest);
+  function chooseApiEndpoint(picID, variant) {
+    if (variant === "variant2") {
+      return `../../api/favorites/alltimefavorites/${picID[1]}`;
+    } else {
+      return `../../api/choosevariation/${picID[1]}`;
+    }
+  }
 
   const {
     data: shirts,
     isLoading,
     error,
-  } = useSWR(picID ? `/api/chooseVariation/${picID[1]}` : null, fetcher);
+  } = useSWR(picID ? chooseApiEndpoint(picID, variant) : null, fetcher);
 
   if (isLoading || !shirts) {
     return (
@@ -87,12 +99,12 @@ export default function PreviewPage() {
     return <div>error...</div>;
   }
 
-  const downloadImage = () => {
-    saveAs(picSRC, picSRCSlug);
-  };
-
   const picSRC = shirts.picSRC;
   const picSRCSlug = shirts.picSRCSlug;
+
+  async function downloadImage(picSRC, picSRCCloudinary) {
+    saveAs(picSRC ? picSRC : picSRCCloudinary, "favorite");
+  }
 
   async function handleOnClick() {
     setIsLoadingState(true);
@@ -103,7 +115,6 @@ export default function PreviewPage() {
 
   async function favoriteImage() {
     const check = favPictures.some((picture) => picture.picID === picID[1]);
-
     if (check === false) {
       const cloudinaryData = await saveFavToCloud(picSRC);
       await putFavorite(cloudinaryData, `${picID[1]}`);
@@ -121,7 +132,7 @@ export default function PreviewPage() {
       const picSRCCloudinary = favPictures.find(
         (picture) => picture.picID === `${picID[1]}`
       ).picSRCCloudinary;
-      await updateFavorites(picSRCCloudinary, `${picID[1]}`);
+      await updateFavorites(picSRCCloudinary, `${picID[1]}`, "increase");
       setFavPictures(
         favPictures.map((picture) =>
           picture.picID === `${picID[1]}`
@@ -133,20 +144,28 @@ export default function PreviewPage() {
   }
 
   async function unFavoriteImage() {
-    const picSRCCloudinary = favPictures.find(
-      (picture) => picture.picID === `${picID[1]}`
-    ).picSRCCloudinary;
-    await updateFavorites(picSRCCloudinary, `${picID[1]}`);
+    let picSRCCloudinary;
+    if (variant === "variant2") {
+      picSRCCloudinary = favPictures.find(
+        (picture) => picture.picID === `${picID[0]}`
+      ).picSRCCloudinary;
+    } else {
+      picSRCCloudinary = favPictures.find(
+        (picture) => picture.picID === `${picID[1]}`
+      ).picSRCCloudinary;
+    }
+    await updateFavorites(picSRCCloudinary, `${picID[1]}`, "decrease");
     setFavPictures(
       favPictures.map((picture) =>
-        picture.picID === `${picID[1]}`
+        picture.picSRCCloudinary === picSRCCloudinary
           ? { ...picture, isFavorite: false }
           : picture
       )
     );
   }
-  const shownPic = favPictures.find((favPic) => favPic.picID === `${picID[1]}`);
-
+  const shownPic = favPictures.find(
+    (favPic) => favPic.picID === `${picID[1]}` || favPic.picID === `${picID[0]}`
+  );
   if (isLoadingState) {
     return (
       <>
@@ -157,14 +176,26 @@ export default function PreviewPage() {
     return (
       <>
         <Container>
-          <PreviewPicture
-            key={picSRCSlug}
-            imageSrc={picSRC}
-            imageName={picSRCSlug}
-          />
+          {variant === "variant2" ? (
+            <PreviewPicture
+              key={shirts.picSRCCloudinarySlug}
+              imageSrc={shirts.picSRCCloudinary}
+              imageName={shirts.picSRCCloudinarySlug}
+            />
+          ) : (
+            <PreviewPicture
+              key={picSRCSlug}
+              imageSrc={picSRC}
+              imageName={picSRCSlug}
+            />
+          )}
         </Container>
         <Container preview>
-          <StyledButton type="button" onClick={downloadImage}>
+          <StyledButton
+            type="button"
+            imageSrc={shirts.picSRCCloudinary}
+            onClick={() => downloadImage(picSRC, shirts.picSRCCloudinary)}
+          >
             SAVE
           </StyledButton>
           {!shownPic || !shownPic.isFavorite ? (

@@ -1,12 +1,12 @@
 import dbConnect from "../../../db/connect";
 import Shirt from "../../../db/models/Shirt";
 
-export default async function handler(req, res) {
+export default async function handler(request, response) {
   await dbConnect();
 
-  if (req.method === "GET") {
+  if (request.method === "GET") {
     try {
-      const picID = req.query.picID;
+      const picID = request.query.picID;
       const matchedShirt = await Shirt.findOne({
         $or: [
           { "pic1.picSRCSlug": picID },
@@ -33,12 +33,12 @@ export default async function handler(req, res) {
         return matchedShirt[picKey].picSRCSlug === picID;
       });
 
-      return res.status(200).json(matchedShirt[matchedPic]);
+      return response.status(200).json(matchedShirt[matchedPic]);
     } catch (error) {
       console.error("Error while fetching matchedPic:", error);
-      res.status(500).json({ error: "Error while fetching matchedPic" });
+      response.status(500).json({ error: "Error while fetching matchedPic" });
     }
   } else {
-    res.status(405).json({ error: "Method not allowed" });
+    response.status(405).json({ error: "Method not allowed" });
   }
 }

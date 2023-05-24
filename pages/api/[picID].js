@@ -1,26 +1,26 @@
 import dbConnect from "../../db/connect";
 import Shirt from "../../db/models/Shirt";
 
-export default async function handler(req, res) {
+export default async function handler(request, response) {
   await dbConnect();
 
-  if (req.method === "GET") {
+  if (request.method === "GET") {
     try {
-      const picID = req.query.picID;
+      const picID = request.query.picID;
       const matchedShirts = await Shirt.find({ picID: picID });
-      return res.status(200).json(matchedShirts);
+      return response.status(200).json(matchedShirts);
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      response.status(400).json({ error: error.message });
     }
   }
-  if (req.method === "POST") {
+  if (request.method === "POST") {
     try {
-      const shirtData = req.body;
+      const shirtData = request.body;
       const shirt = new Shirt(shirtData);
       await shirt.save();
-      res.status(201).json({ status: "shirt created" });
+      response.status(201).json({ status: "shirt created" });
     } catch (error) {
-      res.status(400).json(console.error(error));
+      response.status(400).json(console.error(error));
     }
   }
 }

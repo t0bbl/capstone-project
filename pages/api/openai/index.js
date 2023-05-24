@@ -1,12 +1,17 @@
 import { Configuration, OpenAIApi } from "openai";
 import Shirt from "@/db/models/Shirt";
 
-export default async function handler(req, res) {
-  if (req.method === "POST") {
-    const { keywordOne, keywordTwo, keywordThree, picID } = req.body;
-    await fetchImages(res, { keywordOne, keywordTwo, keywordThree, picID });
+export default async function handler(request, response) {
+  if (request.method === "POST") {
+    const { keywordOne, keywordTwo, keywordThree, picID } = request.body;
+    await fetchImages(response, {
+      keywordOne,
+      keywordTwo,
+      keywordThree,
+      picID,
+    });
   } else {
-    res.status(405).send("Method not allowed");
+    response.status(405).send("Method not allowed");
   }
 }
 

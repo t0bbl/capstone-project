@@ -1,4 +1,5 @@
 import PreviewPicture from "../../components/PreviewPicture";
+import { StyledA } from "../../components/styledComponents/StyledLink";
 import { Container } from "../../components/styledComponents/Container";
 import { useAtom } from "jotai";
 import { isFavoriteState } from "../../store/isFavoriteState";
@@ -9,11 +10,19 @@ import updateFavorites from "../../lib/updateFavorites";
 export default function Favorit() {
   const [favPictures, setFavPictures] = useAtom(isFavoriteState);
 
-  async function unFavoriteImage(picSRCCloudinary, picID, decreaseFavorites) {
-    await updateFavorites(picSRCCloudinary, picID, decreaseFavorites);
+  async function unFavoriteImage(
+    picSRCCloudinary,
+    picSRCCloudinarySlug,
+    picID,
+    decrease
+  ) {
+    await updateFavorites(picSRCCloudinary, picID, decrease);
+
     setFavPictures(
       favPictures.map((picture) =>
-        picture.picID === picID ? { ...picture, isFavorite: false } : picture
+        picture.picSRCCloudinarySlug === picSRCCloudinarySlug
+          ? { ...picture, isFavorite: false }
+          : picture
       )
     );
   }
@@ -24,16 +33,21 @@ export default function Favorit() {
         .filter((pic) => pic.isFavorite)
         .map((pic) => (
           <React.Fragment key={pic.picSRCCloudinarySlug}>
-            <PreviewPicture
-              imageSrc={pic.picSRCCloudinary}
-              imageName={pic.picSRCCloudinarySlug}
-            />
+            <StyledA
+              href={`/PreviewPage/${pic.picID}/${pic.picSRCCloudinarySlug}?option=optionB&variant=variant2`}
+            >
+              <PreviewPicture
+                imageSrc={pic.picSRCCloudinary}
+                imageName={pic.picSRCCloudinarySlug}
+              />
+            </StyledA>
             <StyledButton
               onClick={() =>
                 unFavoriteImage(
                   pic.picSRCCloudinary,
+                  pic.picSRCCloudinarySlug,
                   pic.picID,
-                  "decreaseFavorites"
+                  "decrease"
                 )
               }
             >

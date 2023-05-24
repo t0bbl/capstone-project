@@ -25,4 +25,5 @@ export const LoadingText = styled.h1`
   animation-name: ${pulse};
   animation-duration: 1s;
   animation-iteration-count: infinite;
+  margin-top: 0;
 `;
