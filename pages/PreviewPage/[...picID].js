@@ -132,11 +132,7 @@ export default function PreviewPage() {
       const picSRCCloudinary = favPictures.find(
         (picture) => picture.picID === `${picID[1]}`
       ).picSRCCloudinary;
-      await updateFavorites(
-        picSRCCloudinary,
-        `${picID[1]}`,
-        "increasefavorites"
-      );
+      await updateFavorites(picSRCCloudinary, `${picID[1]}`, "increase");
       setFavPictures(
         favPictures.map((picture) =>
           picture.picID === `${picID[1]}`
@@ -158,7 +154,7 @@ export default function PreviewPage() {
         (picture) => picture.picID === `${picID[1]}`
       ).picSRCCloudinary;
     }
-    await updateFavorites(picSRCCloudinary, `${picID[1]}`, "decreasefavorites");
+    await updateFavorites(picSRCCloudinary, `${picID[1]}`, "decrease");
     setFavPictures(
       favPictures.map((picture) =>
         picture.picSRCCloudinary === picSRCCloudinary

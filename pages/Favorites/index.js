@@ -14,9 +14,9 @@ export default function Favorit() {
     picSRCCloudinary,
     picSRCCloudinarySlug,
     picID,
-    decreasefavorites
+    decrease
   ) {
-    await updateFavorites(picSRCCloudinary, picID, decreasefavorites);
+    await updateFavorites(picSRCCloudinary, picID, decrease);
 
     setFavPictures(
       favPictures.map((picture) =>
@@ -47,7 +47,7 @@ export default function Favorit() {
                   pic.picSRCCloudinary,
                   pic.picSRCCloudinarySlug,
                   pic.picID,
-                  "decreasefavorites"
+                  "decrease"
                 )
               }
             >

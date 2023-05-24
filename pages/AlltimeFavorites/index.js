@@ -31,9 +31,9 @@ export default function AlltimeFavorites() {
     picSRCCloudinary,
     picSRCCloudinarySlug,
     picID,
-    increasefavorites
+    increase
   ) {
-    await updateFavorites(picSRCCloudinary, picID, increasefavorites);
+    await updateFavorites(picSRCCloudinary, picID, increase);
     if (!favPictures.some((picture) => picture.picID === picID)) {
       setFavPictures([
         {
@@ -54,8 +54,8 @@ export default function AlltimeFavorites() {
     }
   }
 
-  async function unFavoriteImage(picSRCCloudinary, picID, decreasefavorites) {
-    await updateFavorites(picSRCCloudinary, picID, decreasefavorites);
+  async function unFavoriteImage(picSRCCloudinary, picID, decrease) {
+    await updateFavorites(picSRCCloudinary, picID, decrease);
     setFavPictures(
       favPictures.map((picture) =>
         picture.picSRCCloudinary === picSRCCloudinary
@@ -92,7 +92,7 @@ export default function AlltimeFavorites() {
                       pic.picSRCCloudinary,
                       pic.picSRCCloudinarySlug,
                       pic.picID,
-                      "increasefavorites"
+                      "increase"
                     )
                   }
                 >
@@ -102,11 +102,7 @@ export default function AlltimeFavorites() {
                 <StyledButton
                   type="button"
                   onClick={() =>
-                    unFavoriteImage(
-                      pic.picSRCCloudinary,
-                      pic.picID,
-                      "decreasefavorites"
-                    )
+                    unFavoriteImage(pic.picSRCCloudinary, pic.picID, "decrease")
                   }
                   clicked
                 >
