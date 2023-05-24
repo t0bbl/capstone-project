@@ -99,12 +99,12 @@ export default function PreviewPage() {
     return <div>error...</div>;
   }
 
-  const downloadImage = () => {
-    saveAs(picSRC, picSRCSlug);
-  };
-
   const picSRC = shirts.picSRC;
   const picSRCSlug = shirts.picSRCSlug;
+
+  async function downloadImage(picSRC, picSRCCloudinary) {
+    saveAs(picSRC ? picSRC : picSRCCloudinary, "favorite");
+  }
 
   async function handleOnClick() {
     setIsLoadingState(true);
@@ -195,7 +195,11 @@ export default function PreviewPage() {
           )}
         </Container>
         <Container preview>
-          <StyledButton type="button" onClick={downloadImage}>
+          <StyledButton
+            type="button"
+            imageSrc={shirts.picSRCCloudinary}
+            onClick={() => downloadImage(picSRC, shirts.picSRCCloudinary)}
+          >
             SAVE
           </StyledButton>
           {!shownPic || !shownPic.isFavorite ? (
