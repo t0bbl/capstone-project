@@ -69,11 +69,11 @@ export default function AlltimeFavorites() {
     <Container alltimeFavorites>
       {fetchedFavorites
         .filter((pic) => pic.favorites >= 1)
+        .sort((a, b) => b.favorites - a.favorites)
         .map((pic) => {
           const shownPic = favPictures.find(
             (favPic) => favPic.picSRCCloudinary === pic.picSRCCloudinary
           );
-
           return (
             <React.Fragment key={pic.picID}>
               <StyledA
