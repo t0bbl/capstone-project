@@ -30,7 +30,7 @@ export default function FourPicsTable() {
   return (
     <>
       {shirts.map((shirt) => (
-        <FourPicsContainer key={shirt.picSRC}>
+        <FourPicsContainer key={shirt._id}>
           <StyledA
             href={`/PreviewPage/${picID}/${shirt.variation1.picSRCSlug}?option=optionB&variant=variant1`}
           >
