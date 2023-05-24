@@ -54,7 +54,7 @@ export default function Background() {
           style={{
             animationDelay: `${Math.ceil(rand.next() * 5000)}ms`,
             width: `${pixelWidth}px`,
-            height: `${PixelSize}px`,
+            height: `${pixelWidth}px`,
           }}
         />
       ))}
@@ -65,7 +65,7 @@ export default function Background() {
 const PixelContainer = styled.div`
   position: absolute;
   z-index: -100;
-  width: 100%;
+  width: 102%;
   top: 0;
   left: 0;
   overflow: hidden;

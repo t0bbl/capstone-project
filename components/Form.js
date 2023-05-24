@@ -73,6 +73,7 @@ export default function Form() {
         type="text"
         placeholder="FIRST"
         aria-label="input for the first keyword"
+        autocomplete="chrome-off"
         required
       />
       <label htmlFor="keywordTwo">Second keyword</label>
@@ -82,6 +83,7 @@ export default function Form() {
         type="text"
         placeholder="SECOND"
         aria-label="input for the second keyword"
+        autocomplete="chrome-off"
         required
       />
       <label htmlFor="keywordThree">Third keyword</label>
@@ -91,6 +93,7 @@ export default function Form() {
         type="text"
         placeholder="THIRD"
         aria-label="input for the third keyword"
+        autocomplete="chrome-off"
         required
       />
       <Container formButtons>
@@ -104,8 +107,8 @@ export default function Form() {
 }
 
 const FormContainer = styled.form`
-  width: 100%;
-  height: 100%;
+  width: 99%;
+  height: 99%;
   gap: 0.5rem;
   color: teal;
   display: flex;
