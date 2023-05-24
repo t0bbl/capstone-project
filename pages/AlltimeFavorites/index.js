@@ -9,7 +9,7 @@ import { isFavoriteState } from "../../store/isFavoriteState";
 import updateFavorites from "../../lib/updateFavorites";
 import { StyledA } from "../../components/styledComponents/StyledLink";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url) => fetch(url).then((response) => response.json());
 
 export default function AlltimeFavorites() {
   const [favPictures, setFavPictures] = useAtom(isFavoriteState);

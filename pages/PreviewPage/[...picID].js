@@ -44,7 +44,7 @@ async function putFavorite(cloudinaryData, picID) {
   return;
 }
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url) => fetch(url).then((response) => response.json());
 
 async function sendRequest(url, { arg, picID, picSRC, picSRCSlug }) {
   try {

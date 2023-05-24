@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import Rand from "rand-seed";
 
-const PixelSize = 40; // Size of a pixel (in pixels)
+const PixelSize = 40;
 
 export default function Background() {
   const [pixelCount, setPixelCount] = useState(0);
@@ -25,19 +25,15 @@ export default function Background() {
       setPixelCount(n);
       setDocumentHeight(documentHeight);
 
-      // Calculate the actual width of each pixel to fill the entire width of the viewport
       const actualPixelWidth = viewportWidth / columns;
       setPixelWidth(actualPixelWidth);
     }
 
-    // Initial update
     updatePixelCount();
 
-    // Update on resize and scroll
     window.addEventListener("resize", updatePixelCount);
     window.addEventListener("scroll", updatePixelCount);
 
-    // Cleanup
     return () => {
       window.removeEventListener("resize", updatePixelCount);
       window.removeEventListener("scroll", updatePixelCount);

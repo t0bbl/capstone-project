@@ -1,22 +1,22 @@
 import dbConnect from "/db/connect";
 import Favorite from "/db/models/Favorite";
 
-export default async function handler(req, res) {
+export default async function handler(request, response) {
   await dbConnect();
 
-  const { picSRCCloudinary } = req.body;
+  const { picSRCCloudinary } = request.body;
 
-  if (req.method === "PUT") {
+  if (request.method === "PUT") {
     try {
       const favorite = await Favorite.findOne({ picSRCCloudinary });
       favorite.favorites -= 1;
 
       await favorite.save();
 
-      res.status(201).json({ status: "favorite updated", doc: favorite });
+      response.status(201).json({ status: "favorite updated", doc: favorite });
     } catch (error) {
       console.error(error);
-      res.status(400).json({ error: "Error updating favorite" });
+      response.status(400).json({ error: "Error updating favorite" });
     }
   }
 }
