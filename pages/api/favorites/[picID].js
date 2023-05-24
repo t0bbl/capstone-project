@@ -11,7 +11,8 @@ export default async function handler(request, response) {
       await favorite.save();
       response.status(201).json({ status: "fav created" });
     } catch (error) {
-      response.status(400).json(console.error(error));
+      console.error(error);
+      response.status(400).json({ status: "Error", error: error.message });
     }
   }
   if (request.method === "GET") {
@@ -19,7 +20,8 @@ export default async function handler(request, response) {
       const favorites = await Favorite.find();
       response.status(200).json(favorites);
     } catch (error) {
-      response.status(400).json(console.error(error));
+      console.error(error);
+      response.status(400).json({ status: "Error", error: error.message });
     }
   } else {
     response.status(405).json({ status: "Error", error: "Method not allowed" });
