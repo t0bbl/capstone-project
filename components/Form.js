@@ -73,7 +73,6 @@ export default function Form() {
         type="text"
         placeholder="FIRST"
         aria-label="input for the first keyword"
-        autocomplete="off"
         required
       />
       <label htmlFor="keywordTwo">Second keyword</label>
@@ -83,7 +82,6 @@ export default function Form() {
         type="text"
         placeholder="SECOND"
         aria-label="input for the second keyword"
-        autocomplete="off"
         required
       />
       <label htmlFor="keywordThree">Third keyword</label>
@@ -93,7 +91,6 @@ export default function Form() {
         type="text"
         placeholder="THIRD"
         aria-label="input for the third keyword"
-        autocomplete="off"
         required
       />
       <Container formButtons>
