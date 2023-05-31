@@ -295,7 +295,7 @@ npm install
 - [ ] [📌 implement testing]
 - [ ] [📌 add user registration and login (oauth)]
 - [ ] [📌 integrate shop to make the Shirts available for order directly from the page]
-- [ ] [📌 get appropriate URL]
+- [x] [📌 get appropriate URL]
 - [ ] [📌 marketing]
 
 ---
