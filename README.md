@@ -245,15 +245,6 @@ repo
 
 </details>
 
-<details closed><summary>Root</summary>
-
-| File      | Summary                                                                                                                                                       | Module    |
-| :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------- |
-| .babelrc  | This code script sets up a Babel configuration with the "next/babel" preset and the "styled-components" plugin for server-side rendering(SSR).                | .babelrc  |
-| styles.js | This code script creates a global style for elements on a page by setting the box sizing, width, height, margin, padding, background and overflow properties. | styles.js |
-
-</details>
-
 <details closed><summary>Store</summary>
 
 | File               | Summary                                                                                                                                                    | Module                   |
@@ -263,17 +254,6 @@ repo
 
 </details>
 
-<details closed><summary>Styledcomponents</summary>
-
-| File            | Summary                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Module                                      |
-| :-------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------ |
-| StyledImage.js  | This code script imports styled and css from "styled-components" and imports Image from "next/image.js". It then creates a styled component'StyledImage' which has a width of 90vw and a height of auto by default. It also includes an additional conditional styling if the $fourpictures props is present, which sets the width to 45vw, height to auto, background-color to #333, and adds display: flex and margin: auto.                                    | components/styledComponents/StyledImage.js  |
-| StyledLink.js   | This code script imports the styled component library and creates a StyledA component with text-decoration set to none.                                                                                                                                                                                                                                                                                                                                           | components/styledComponents/StyledLink.js   |
-| StyledText.js   | This code script imports the styled-components library and creates a StyledText component with a font-weight of 600, a width and height of 100%, a color of cyan, a font-size of 3vh, text-alignment of center, and a margin of 10vw and 1vw.                                                                                                                                                                                                                     | components/styledComponents/StyledText.js   |
-| Container.js    | This code script creates a container div with a width of 100% and a height of 100% minus 15vh. It sets the position to relative and top to 15vh, then displays contents in a flex direction with space between contents. Depending on props, flex direction, margin, justify content, top, and height may change.                                                                                                                                                 | components/styledComponents/Container.js    |
-| StyledButton.js | This code script defines a StyledButton component with a transparent background, a width that fits its content, a cyan color, bold font-weight, no border, font-size inheriting from its parent, box-shadow of 2px 2px 10px cyan, and transform skew of 10deg. It also includes active state styling with a box-shadow of 2px 2px 20px cyan, and three optional props for generating and centering the component, and changing the background color when clicked. | components/styledComponents/StyledButton.js |
-
-</details>
 
 <details closed><summary>Variations</summary>
 
