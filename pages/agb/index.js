@@ -1,7 +1,10 @@
+import styled, { css } from "styled-components";
+
 export default function AGB() {
 
 return (
-`
+<AGBDiv>
+
     Allgemeine Geschäftsbedingungen der Firma AImyShirtUp<br />
 
 <br />
@@ -240,7 +243,19 @@ Es gelten die gesetzlichen Gewährleistungsregelungen.
 <p>Stand der AGB Jun.2023</p>
 
 <p><i><a href="http://www.agb.de">Gratis AGB</a> erstellt von agb.de</i></p>
-`)
+    </AGBDiv >
+)
 
 
 }
+
+
+const AGBDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+color: white;
+`;
