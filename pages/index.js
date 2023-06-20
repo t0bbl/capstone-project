@@ -4,10 +4,12 @@ import { texts } from "../data/text";
 import { useAtom } from "jotai";
 import IsLoading from "../components/Loading";
 import { loading } from "../store/isLoading";
-import { Container } from "../components/styledComponents/Container";
+import { Container, DesktopContainer, MobileContainer } from "../components/styledComponents/Container";
 
 export default function HomePage() {
   const [isLoadingState] = useAtom(loading);
+
+
 
   if (isLoadingState) {
     return (
@@ -18,8 +20,13 @@ export default function HomePage() {
   } else {
     return (
       <Container>
+        <DesktopContainer>
+          <Text texts={texts.desktop} />
+        </DesktopContainer>
+        <MobileContainer>
         <Text texts={texts.intro} />
         <Form />
+        </MobileContainer>
       </Container>
     );
   }

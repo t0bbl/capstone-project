@@ -53,3 +53,15 @@ export const Container = styled.div`
       justify-content: space-evenly;
     `}
 `;
+
+export const DesktopContainer = styled.div`
+  @media (max-width: 449px) {
+    display: none;
+  }
+`;
+
+export const MobileContainer = styled.div`
+  @media (min-width: 450px) {
+    display: none;
+  }
+`;
